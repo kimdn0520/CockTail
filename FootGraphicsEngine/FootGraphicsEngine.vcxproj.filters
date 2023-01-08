@@ -1,0 +1,379 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="GraphicsEngineFramework.h" />
+    <ClInclude Include="Builder\LineBuilder.h">
+      <Filter>Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="Builder\PBRBuilder.h">
+      <Filter>Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="Builder\SkyBoxBuilder.h">
+      <Filter>Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="Define\d3d11Utils.h">
+      <Filter>Define</Filter>
+    </ClInclude>
+    <ClInclude Include="Define\GraphicsInclude.h">
+      <Filter>Define</Filter>
+    </ClInclude>
+    <ClInclude Include="Define\GraphicsRenderingData.h">
+      <Filter>Define</Filter>
+    </ClInclude>
+    <ClInclude Include="Define\GraphicsTypedef.h">
+      <Filter>Define</Filter>
+    </ClInclude>
+    <ClInclude Include="Define\YAMLBinaryLayout.h">
+      <Filter>Define</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\Factory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsCore\DX11GraphicsCore.h">
+      <Filter>GraphicsCore</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsCore\RasterizerState.h">
+      <Filter>GraphicsCore</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsCore\RenderTargetDepth.h">
+      <Filter>GraphicsCore</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsCore\RenderTargetTexture.h">
+      <Filter>GraphicsCore</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsEngine\Pass\LightPass.h">
+      <Filter>GraphicsEngine\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsEngine\Pass\PassBase.h">
+      <Filter>GraphicsEngine\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsEngine\Renderer.h">
+      <Filter>GraphicsEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\IBuilder.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\IDXObject.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\IRenderer.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\BufferManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\BuilderManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\ImGUIManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\ResourceManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\SamplerManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\ShaderManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\UIUtilsManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Buffer\BufferBase.h">
+      <Filter>Object\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Buffer\ConstantBuffer.h">
+      <Filter>Object\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Shader\PixelShader.h">
+      <Filter>Object\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Shader\ShaderBase.h">
+      <Filter>Object\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Shader\VertexShader.h">
+      <Filter>Object\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UI\ButtonUI.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UI\Canvas.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UI\SpriteUI.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UI\TextUI.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UI\UIBase.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\LineObj.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PBRObj.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\SkyBox.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\InputLayout.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Mesh.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\ObjectResources.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\Texture.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\IMGUI\imconfig.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\IMGUI\imgui.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\IMGUI\imgui_impl_dx11.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\IMGUI\imgui_impl_win32.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\IMGUI\imgui_internal.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\IMGUI\imstb_rectpack.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\IMGUI\imstb_textedit.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\IMGUI\imstb_truetype.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\Animator.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\LightHelper.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\MathHelper.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\VertexStruct.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsPch.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\SpriteEffect.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Builder\SpriteEffectBuilder.h">
+      <Filter>Builder</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\RenderingMaterial.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Builder\LineBuilder.cpp">
+      <Filter>Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="Builder\PBRBuilder.cpp">
+      <Filter>Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="Builder\SkyBoxBuilder.cpp">
+      <Filter>Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory\Factory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsCore\DX11GraphicsCore.cpp">
+      <Filter>GraphicsCore</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsCore\RasterizerState.cpp">
+      <Filter>GraphicsCore</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsCore\RenderTargetDepth.cpp">
+      <Filter>GraphicsCore</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsCore\RenderTargetTexture.cpp">
+      <Filter>GraphicsCore</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsEngine\Pass\LightPass.cpp">
+      <Filter>GraphicsEngine\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsEngine\Pass\PassBase.cpp">
+      <Filter>GraphicsEngine\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsEngine\Renderer.cpp">
+      <Filter>GraphicsEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\BufferManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\BuilderManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\ImGUIManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\ResourceManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\SamplerManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\ShaderManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\UIUtilsManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Buffer\ConstantBuffer.cpp">
+      <Filter>Object\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Shader\PixelShader.cpp">
+      <Filter>Object\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Shader\VertexShader.cpp">
+      <Filter>Object\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UI\ButtonUI.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UI\Canvas.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UI\SpriteUI.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UI\TextUI.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\LineObj.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PBRObj.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\SkyBox.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\InputLayout.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\Mesh.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\Resource.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\Texture.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\IMGUI\imgui.cpp">
+      <Filter>Utils\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\IMGUI\imgui_demo.cpp">
+      <Filter>Utils\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\IMGUI\imgui_draw.cpp">
+      <Filter>Utils\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\IMGUI\imgui_impl_dx11.cpp">
+      <Filter>Utils\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\IMGUI\imgui_impl_win32.cpp">
+      <Filter>Utils\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\IMGUI\imgui_tables.cpp">
+      <Filter>Utils\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\IMGUI\imgui_widgets.cpp">
+      <Filter>Utils\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\Animator.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\MathHelper.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>DLLMain</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsPch.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\SpriteEffect.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Builder\SpriteEffectBuilder.cpp">
+      <Filter>Builder</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources\RenderingMaterial.cpp">
+      <Filter>Resources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Builder">
+      <UniqueIdentifier>{b7fb815a-ff1b-46d2-86fd-8ff57187a67c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{8f4ae34d-4835-4385-be80-59283902a8e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{8bb58e64-62cd-46c7-b9ad-7252dc42ac06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{9675c4ab-242a-4eef-bea9-0d0ac09a51b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\IMGUI">
+      <UniqueIdentifier>{e1cefcb0-9f3e-49b4-a036-11d4ee5016df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{fffbca1e-4f0d-4dc1-b240-b36516913f56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Define">
+      <UniqueIdentifier>{ad416596-4546-4259-8e07-6c65d7ffe1cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicsEngine">
+      <UniqueIdentifier>{2a4fd581-9984-46ac-8168-5700cec48fcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicsEngine\Pass">
+      <UniqueIdentifier>{b3ecfb59-ed50-47b9-bce2-3f9a790f0d80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicsCore">
+      <UniqueIdentifier>{538224c2-a52f-474b-b4fc-adc6ce0c3297}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{f2dfb554-836a-46f4-bfc1-d3c615781a8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Buffer">
+      <UniqueIdentifier>{6c11e66c-a9ac-4fb3-93cd-855567509888}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Shader">
+      <UniqueIdentifier>{32126e61-b926-47cd-b2c5-71404e1caf0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\UI">
+      <UniqueIdentifier>{3a3218dc-cb4b-4616-8ff2-7e1ddd2c2908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{ef49b8be-d363-4627-b55e-8ba9f4e87a33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DLLMain">
+      <UniqueIdentifier>{479a337a-e55c-4e28-b0fb-e70b66a2af21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PCH">
+      <UniqueIdentifier>{e8b42cce-37ef-4c45-a688-e47d79c6dfd5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

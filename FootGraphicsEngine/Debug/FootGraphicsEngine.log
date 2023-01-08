@@ -1,0 +1,62 @@
+﻿  ResourceManager.cpp
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(74,68): warning C4267: '=': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(23,43): warning C4251: 'GraphicsEngineSpace::ResourceManager::instance': class 'std::shared_ptr<GraphicsEngineSpace::ResourceManager>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(23): message : 'std::shared_ptr<GraphicsEngineSpace::ResourceManager>' 선언을 참조하십시오.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(33,63): warning C4251: 'GraphicsEngineSpace::ResourceManager::prefab': class 'std::unordered_map<std::string,std::shared_ptr<GraphicsEngineSpace::IDXObject>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<GraphicsEngineSpace::IDXObject>>>>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(33): message : 'std::unordered_map<std::string,std::shared_ptr<GraphicsEngineSpace::IDXObject>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<GraphicsEngineSpace::IDXObject>>>>' 선언을 참조하십시오.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(36,15): warning C4251: 'GraphicsEngineSpace::ResourceManager::meshPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4871): message : 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' 선언을 참조하십시오.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(37,15): warning C4251: 'GraphicsEngineSpace::ResourceManager::materialPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4871): message : 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' 선언을 참조하십시오.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(38,15): warning C4251: 'GraphicsEngineSpace::ResourceManager::AnimationPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4871): message : 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' 선언을 참조하십시오.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(39,15): warning C4251: 'GraphicsEngineSpace::ResourceManager::modelPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4871): message : 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' 선언을 참조하십시오.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(40,15): warning C4251: 'GraphicsEngineSpace::ResourceManager::prefabPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4871): message : 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' 선언을 참조하십시오.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(44,58): warning C4251: 'GraphicsEngineSpace::ResourceManager::basicMeshes': class 'std::unordered_map<std::string,std::shared_ptr<GraphicsEngineSpace::Mesh>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<GraphicsEngineSpace::Mesh>>>>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(44): message : 'std::unordered_map<std::string,std::shared_ptr<GraphicsEngineSpace::Mesh>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<GraphicsEngineSpace::Mesh>>>>' 선언을 참조하십시오.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(57,1): warning C4267: '=': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(92): message : 컴파일되는 함수 템플릿 인스턴스화 'void GraphicsEngineSpace::Mesh::CreateVertexBuffer<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex>(const std::vector<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex,std::allocator<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex>> &)'에 대한 참조를 확인하세요.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.cpp(98): message : 컴파일되는 함수 템플릿 인스턴스화 'const std::shared_ptr<GraphicsEngineSpace::Mesh> GraphicsEngineSpace::ResourceManager::CreateMesh<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex>(std::vector<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex,std::allocator<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex>>,std::vector<std::vector<std::_Vbase,std::allocator<std::_Vbase>>,std::allocator<std::vector<std::_Vbase,std::allocator<std::_Vbase>>>>,std::string,D3D_PRIMITIVE_TOPOLOGY,Microsoft::WRL::ComPtr<ID3D11RasterizerState>)'에 대한 참조를 확인하세요.
+  FootGraphicsEngine.vcxproj -> D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\FootGraphicsEngine_Debug_x64.dll

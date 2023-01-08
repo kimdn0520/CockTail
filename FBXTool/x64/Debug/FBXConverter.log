@@ -1,0 +1,4 @@
+﻿  BinarySerializer.cpp
+D:\GA3rdFinalProject_CarlTail\5_Project\FBXTool\inc\ParserData\ParserData.h(103,1): warning C4099: 'FBXModel': 처음에는 'struct'을(를) 사용하여 형식 이름을 표시했는데 이제는 'class'을(를) 사용하여 표시합니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FBXTool\inc\ParserData\ParserData.h(102): message : 'FBXModel' 선언을 참조하십시오.
+  FBXConverter.vcxproj -> D:\GA3rdFinalProject_CarlTail\5_Project\Output\FBXConverter.exe

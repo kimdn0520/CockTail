@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Component\BasicCameraController.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\BoxCollider.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Camera.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\ColliderBase.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\MeshRenderer.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\PosColorRenderer.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\RayCollider.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\RendererBase.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\SphereCollider.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Transform.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineMain\GameEngine.cpp">
+      <Filter>EngineMain</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\GraphicsManager.cpp">
+      <Filter>Manager\GraphicsManger</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\InputManager.cpp">
+      <Filter>Manager\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\PhysicsManager.cpp">
+      <Filter>Manager\PhysicsManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\SceneManager.cpp">
+      <Filter>Manager\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\SceneBase.cpp">
+      <Filter>Manager\SceneManager\SceneBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\Timer.cpp">
+      <Filter>Manager\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\UIManager.cpp">
+      <Filter>Manager\UIManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\WindowManager.cpp">
+      <Filter>Manager\WindowManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ComponentBase.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\GameObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Object.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Light.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="GamePch.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\SpriteEffect.cpp" />
+    <ClCompile Include="Component\NavMeshAgent.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\NavigationManager.cpp">
+      <Filter>Manager\NavigationManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Component\BasicCameraController.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\BoxCollider.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Camera.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\ColliderBase.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\MeshRenderer.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\PosColorRenderer.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\RayCollider.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\RendererBase.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\SphereCollider.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Transform.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Define\BoundingVolumes.h">
+      <Filter>Define</Filter>
+    </ClInclude>
+    <ClInclude Include="Define\CommentLib.h">
+      <Filter>Define</Filter>
+    </ClInclude>
+    <ClInclude Include="Define\FootEngineTypedef.h">
+      <Filter>Define</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineMain\GameEngine.h">
+      <Filter>EngineMain</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\GraphicsManager.h">
+      <Filter>Manager\GraphicsManger</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\InputManager.h">
+      <Filter>Manager\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\PhysicsManager.h">
+      <Filter>Manager\PhysicsManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\SceneManager.h">
+      <Filter>Manager\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\SceneBase.h">
+      <Filter>Manager\SceneManager\SceneBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\Timer.h">
+      <Filter>Manager\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\UIManager.h">
+      <Filter>Manager\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\WindowManager.h">
+      <Filter>Manager\WindowManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ComponentBase.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\GameObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ITriggerable.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MonoBehavior.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Object.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Light.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePch.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\SpriteEffect.h" />
+    <ClInclude Include="Component\NavMeshAgent.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\NavigationManager.h">
+      <Filter>Manager\NavigationManager</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Component">
+      <UniqueIdentifier>{7c3fb917-acd1-46f0-bd4a-48516e28f6d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Define">
+      <UniqueIdentifier>{5db9b672-27d9-42e4-b233-15b5ea8f683d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineMain">
+      <UniqueIdentifier>{a0869c8d-41ad-4d34-a1e7-7ea4f6b7ac04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{99f541b6-3758-4d42-af53-183d2cea76ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{7b59a34f-b198-43e3-8123-df8009d6c401}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\GraphicsManger">
+      <UniqueIdentifier>{e0481956-70ee-45b3-9775-581ad7f0ac4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\InputManager">
+      <UniqueIdentifier>{bc82abf7-ce2f-45df-9285-54c17916f127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\PhysicsManager">
+      <UniqueIdentifier>{56d5be92-9497-479c-9447-77f5596f277d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\SceneManager">
+      <UniqueIdentifier>{a6cbb3c8-55d3-4757-acf1-f15ef210695a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\SceneManager\SceneBase">
+      <UniqueIdentifier>{85343e37-bc14-4948-8fff-2f94ed2a6510}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\Timer">
+      <UniqueIdentifier>{3d62d115-e6b3-4b14-b3d3-b155ef1c1305}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\UIManager">
+      <UniqueIdentifier>{0b89a9cc-c04b-4154-b2fc-0a5bde6b7ff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\WindowManager">
+      <UniqueIdentifier>{922e008c-df46-4945-a2fa-b2b5e2c66d79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PCH">
+      <UniqueIdentifier>{38c715cb-ad13-40a1-b76b-5b5fe84b601d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\NavigationManager">
+      <UniqueIdentifier>{93988d00-682b-4643-b299-04cde914e0c4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

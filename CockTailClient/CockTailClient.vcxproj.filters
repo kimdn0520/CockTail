@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Main\ClientMain.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>PCH</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\DemoScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\MoveController.cpp">
+      <Filter>Scripts</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>PCH</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\DemoScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\MoveController.h">
+      <Filter>Scripts</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Main">
+      <UniqueIdentifier>{b773a067-1695-4e3c-baf8-19dc0efdc8e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PCH">
+      <UniqueIdentifier>{0e0eb75c-0f78-4f7a-8a97-f6823a3ed877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{f3506924-cea7-49c9-96bb-d1130cb3cb6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{34cc2bd9-6f22-4b0a-9caf-cb2f13968084}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
