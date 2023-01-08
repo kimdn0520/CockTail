@@ -1,5 +1,6 @@
-# CarlTail
+# [CarlTail]
 게임인재원 3기 Final Project
+
 # FBXLoader
 - **FBX sdk를 활용한 FBXLoader**
   - FBX Static/Skinned Mesh 불러오기
