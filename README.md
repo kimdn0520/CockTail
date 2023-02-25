@@ -30,3 +30,4 @@
 # Animator State 구조 구성 / Animation Blending
 - **유니티의 Animator를 참고하여 State, Transtion, Condition기능을 추가해서 적용**
   - transition duration(0~1) 의 값에 따라 Animation Blending 적용
+![ez1gif com-video-to-gif](https://user-images.githubusercontent.com/58064839/221354976-4ee21770-c8f0-401d-b6df-2e35b1fae446.gif)
