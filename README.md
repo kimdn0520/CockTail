@@ -18,3 +18,12 @@
 ![image](https://user-images.githubusercontent.com/58064839/211226383-b60b2f74-d28a-431e-8f7f-4c2849fa72db.png)
 ![image](https://user-images.githubusercontent.com/58064839/211226390-b9c861ef-34cc-4301-98ce-f6519f0371ff.png)
 ![image](https://user-images.githubusercontent.com/58064839/221354055-b48cdf9e-7ef6-460c-ba4a-f285fec8f9dd.png)
+
+# Nav Mesh / Nav Agent
+- **언리얼 엔진에서 사용하는 Recast & Detour library를 활용한 NavMesh**
+  - Recast & Detour Tool를 사용해서 navMesh.bin 을 뽑은뒤에 자체엔진으로 로드
+  - 내장된 함수 FindPath 를 사용해서 NavAgent 컴포넌트에 적용
+
+# Animator State 구조 구성 / Animation Blending
+- **유니티의 Animator를 참고하여 State, Transtion, Condition기능을 추가해서 적용**
+  - transition duration(0~1) 의 값에 따라 Animation Blending 적용
