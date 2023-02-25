@@ -1,4 +1,4 @@
-# [CarlTail]
+# [CockTail]
 게임인재원 3기 Final Project
 
 # FBXLoader / ResourceManager 
