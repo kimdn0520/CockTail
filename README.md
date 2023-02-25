@@ -23,6 +23,9 @@
 - **언리얼 엔진에서 사용하는 Recast & Detour library를 활용한 NavMesh**
   - Recast & Detour Tool를 사용해서 navMesh.bin 을 뽑은뒤에 자체엔진으로 로드
   - 내장된 함수 FindPath 를 사용해서 NavAgent 컴포넌트에 적용
+  - IMGUI를 래핑하여 DrawLine, DrawSpot, DrawTriangle로 NavMesh와 NavPath를 DebugDraw 할수 있도록 하였음
+  ![ezgif com-video-to-gif](https://user-images.githubusercontent.com/58064839/221354769-85a97b92-f1ab-417d-abe3-198a3d913284.gif)
+
 
 # Animator State 구조 구성 / Animation Blending
 - **유니티의 Animator를 참고하여 State, Transtion, Condition기능을 추가해서 적용**
