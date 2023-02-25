@@ -19,13 +19,14 @@ namespace GraphicsEngineSpace
 		~SpriteUI() override;
 
 		virtual void SetTexture(std::shared_ptr<Texture> texture);
+		virtual SimpleMath::Vector4 GetMaskColor() { return maskColor; }
 		virtual void SetMaskColor(SimpleMath::Vector4 color);
 		virtual void SetMaskColor(float r, float g, float b, float a);
 		virtual void SetMaskAlpha(float a);
 		virtual std::shared_ptr<Texture> GetTexture();
 
 	protected:
-		void Render(float tick) override;
+		void Render(std::shared_ptr<IRenderer> renderer, float tick) override;
 
 		friend Canvas;
 

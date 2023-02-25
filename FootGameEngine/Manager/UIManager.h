@@ -8,6 +8,7 @@ namespace GameEngineSpace
 {
 	class GraphicsManager;
 	class InputManager;
+	class UICreator;
 
 	using GraphicsEngineSpace::Canvas;
 	using GraphicsEngineSpace::UIBase;
@@ -27,6 +28,7 @@ namespace GameEngineSpace
 		// 내부적으로 그래픽스 매니저 캐싱
 		std::shared_ptr<GraphicsManager> graphicsInstance;
 		std::shared_ptr<InputManager> inputInstance;
+		std::shared_ptr<UICreator> creator;
 
 		// 캔버스
 			// 게임에 있는 모든 UI 캔버스들을 init시 만들 수 있지 않을까.
@@ -77,10 +79,6 @@ namespace GameEngineSpace
 
 		// ImGUI Render
 		void SelectGUIRender();
-
-	private:
-		void CreateTestCanvas();
-		void CreatePopUpCanvase();
 	};
 
 }

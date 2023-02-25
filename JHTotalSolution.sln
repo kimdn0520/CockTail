@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CockTailClient", "CockTailClient\CockTailClient.vcxproj", "{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}"
-	ProjectSection(ProjectDependencies) = postProject
-		{5734E107-DB70-4114-8DFD-82DA21BF4E8C} = {5734E107-DB70-4114-8DFD-82DA21BF4E8C}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FootGameEngine", "FootGameEngine\FootGameEngine.vcxproj", "{5734E107-DB70-4114-8DFD-82DA21BF4E8C}"
 	ProjectSection(ProjectDependencies) = postProject
+		{6D98A541-B872-47BA-9606-8E8E5E0C5A54} = {6D98A541-B872-47BA-9606-8E8E5E0C5A54}
 		{35FAD7CB-D8B3-4BFD-A74C-260C2EC4828B} = {35FAD7CB-D8B3-4BFD-A74C-260C2EC4828B}
 	EndProjectSection
 EndProject
@@ -28,7 +24,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shader", "Shader", "{9CA116
 		Output\Shader\PBRShader\PBRModelPS.hlsl = Output\Shader\PBRShader\PBRModelPS.hlsl
 		Output\Shader\PBRShader\PBRModelTypes.hlsli = Output\Shader\PBRShader\PBRModelTypes.hlsli
 		Output\Shader\PBRShader\PBRModelVS.hlsl = Output\Shader\PBRShader\PBRModelVS.hlsl
+		Output\Shader\Deferred\PostProcessPS.hlsl = Output\Shader\Deferred\PostProcessPS.hlsl
 		Output\Shader\Deferred\QuadVS.hlsl = Output\Shader\Deferred\QuadVS.hlsl
+		Output\Shader\Deferred\ShadowGS.hlsl = Output\Shader\Deferred\ShadowGS.hlsl
+		Output\Shader\Deferred\ShadowVS.hlsl = Output\Shader\Deferred\ShadowVS.hlsl
 		Output\Shader\SkyBoxShader\SkyBoxPS.hlsl = Output\Shader\SkyBoxShader\SkyBoxPS.hlsl
 		Output\Shader\SkyBoxShader\SkyBoxTypes.hlsli = Output\Shader\SkyBoxShader\SkyBoxTypes.hlsli
 		Output\Shader\SkyBoxShader\SkyBoxVS.hlsl = Output\Shader\SkyBoxShader\SkyBoxVS.hlsl
@@ -36,6 +35,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shader", "Shader", "{9CA116
 		Output\Shader\SpriteEffectShader\SpriteEffectTypes.hlsli = Output\Shader\SpriteEffectShader\SpriteEffectTypes.hlsli
 		Output\Shader\SpriteEffectShader\SpriteEffectVS.hlsl = Output\Shader\SpriteEffectShader\SpriteEffectVS.hlsl
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CockTailClient", "CockTailClient\CockTailClient.vcxproj", "{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5734E107-DB70-4114-8DFD-82DA21BF4E8C} = {5734E107-DB70-4114-8DFD-82DA21BF4E8C}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mooly", "Mooly\Mooly.vcxproj", "{6D98A541-B872-47BA-9606-8E8E5E0C5A54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,14 +51,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Debug|x64.ActiveCfg = Debug|x64
-		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Debug|x64.Build.0 = Debug|x64
-		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Debug|x86.ActiveCfg = Debug|Win32
-		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Debug|x86.Build.0 = Debug|Win32
-		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Release|x64.ActiveCfg = Release|x64
-		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Release|x64.Build.0 = Release|x64
-		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Release|x86.ActiveCfg = Release|Win32
-		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Release|x86.Build.0 = Release|Win32
 		{5734E107-DB70-4114-8DFD-82DA21BF4E8C}.Debug|x64.ActiveCfg = Debug|x64
 		{5734E107-DB70-4114-8DFD-82DA21BF4E8C}.Debug|x64.Build.0 = Debug|x64
 		{5734E107-DB70-4114-8DFD-82DA21BF4E8C}.Debug|x86.ActiveCfg = Debug|Win32
@@ -69,6 +67,22 @@ Global
 		{35FAD7CB-D8B3-4BFD-A74C-260C2EC4828B}.Release|x64.Build.0 = Release|x64
 		{35FAD7CB-D8B3-4BFD-A74C-260C2EC4828B}.Release|x86.ActiveCfg = Release|Win32
 		{35FAD7CB-D8B3-4BFD-A74C-260C2EC4828B}.Release|x86.Build.0 = Release|Win32
+		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Debug|x64.ActiveCfg = Debug|x64
+		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Debug|x64.Build.0 = Debug|x64
+		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Debug|x86.ActiveCfg = Debug|Win32
+		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Debug|x86.Build.0 = Debug|Win32
+		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Release|x64.ActiveCfg = Release|x64
+		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Release|x64.Build.0 = Release|x64
+		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Release|x86.ActiveCfg = Release|Win32
+		{70E4B2FC-C65E-485E-9D19-B066AB0F2E26}.Release|x86.Build.0 = Release|Win32
+		{6D98A541-B872-47BA-9606-8E8E5E0C5A54}.Debug|x64.ActiveCfg = Debug|x64
+		{6D98A541-B872-47BA-9606-8E8E5E0C5A54}.Debug|x64.Build.0 = Debug|x64
+		{6D98A541-B872-47BA-9606-8E8E5E0C5A54}.Debug|x86.ActiveCfg = Debug|Win32
+		{6D98A541-B872-47BA-9606-8E8E5E0C5A54}.Debug|x86.Build.0 = Debug|Win32
+		{6D98A541-B872-47BA-9606-8E8E5E0C5A54}.Release|x64.ActiveCfg = Release|x64
+		{6D98A541-B872-47BA-9606-8E8E5E0C5A54}.Release|x64.Build.0 = Release|x64
+		{6D98A541-B872-47BA-9606-8E8E5E0C5A54}.Release|x86.ActiveCfg = Release|Win32
+		{6D98A541-B872-47BA-9606-8E8E5E0C5A54}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

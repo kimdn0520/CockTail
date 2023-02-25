@@ -1,4 +1,12 @@
-﻿     D:\GA3rdFinalProject_CarlTail\5_Project\Output\CockTailClient.lib 라이브러리 및 D:\GA3rdFinalProject_CarlTail\5_Project\Output\CockTailClient.exp 개체를 생성하고 있습니다.
+﻿  Room1Scene.cpp
+  LINK : D:\GA3rdFinalProject_CarlTail\5_Project\Output\CockTailClient.exe을(를) 찾을 수 없거나 마지막 증분 링크에 의해 빌드되지 않았습니다. 전체 링크를 수행하고 있습니다.
+     D:\GA3rdFinalProject_CarlTail\5_Project\Output\CockTailClient.lib 라이브러리 및 D:\GA3rdFinalProject_CarlTail\5_Project\Output\CockTailClient.exp 개체를 생성하고 있습니다.
 DirectXTK_x64_Debug.lib(pch.obj) : warning LNK4099: 'DirectXTK.pdb' PDB를 'DirectXTK_x64_Debug.lib(pch.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DirectXTK.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
 DirectXTK_x64_Debug.lib(SimpleMath.obj) : warning LNK4099: 'DirectXTK.pdb' PDB를 'DirectXTK_x64_Debug.lib(SimpleMath.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DirectXTK.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Detour_Debug.lib(DetourAlloc.obj) : warning LNK4099: 'Detour.pdb' PDB를 'Detour_Debug.lib(DetourAlloc.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\Detour.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Detour_Debug.lib(DetourAssert.obj) : warning LNK4099: 'Detour.pdb' PDB를 'Detour_Debug.lib(DetourAssert.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\Detour.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Detour_Debug.lib(DetourCommon.obj) : warning LNK4099: 'Detour.pdb' PDB를 'Detour_Debug.lib(DetourCommon.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\Detour.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Detour_Debug.lib(DetourNavMesh.obj) : warning LNK4099: 'Detour.pdb' PDB를 'Detour_Debug.lib(DetourNavMesh.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\Detour.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Detour_Debug.lib(DetourNavMeshQuery.obj) : warning LNK4099: 'Detour.pdb' PDB를 'Detour_Debug.lib(DetourNavMeshQuery.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\Detour.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+Detour_Debug.lib(DetourNode.obj) : warning LNK4099: 'Detour.pdb' PDB를 'Detour_Debug.lib(DetourNode.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\Detour.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
   CockTailClient.vcxproj -> D:\GA3rdFinalProject_CarlTail\5_Project\Output\CockTailClient.exe

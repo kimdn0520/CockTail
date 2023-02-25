@@ -9,6 +9,7 @@
 
 #define WIN32_LEAN_AND_MEAN             // 거의 사용되지 않는 내용을 Windows 헤더에서 제외합니다.
 #define NOMINMAX						// windows에서 이미 정의 되어 있는 max 매크로와 min 매크로가 존재하기 때문에 이름이 충돌나는데 이걸 추가하면 해결!
+#define YAML_CPP_STATIC_DEFINE
 
 #include "afxwin.h"
 #include "fbxsdk.h"
@@ -41,12 +42,17 @@
 #include <boost/iostreams/filter/zlib.hpp>
 #include <boost/iostreams/device/file.hpp>
 #include <boost/property_tree/json_parser.hpp>
+
 #include "document.h"
 #include <rapidjson/filereadstream.h>
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
 #include "rapidjson/istreamwrapper.h"
 #include "rapidjson/ostreamwrapper.h"
+
+
+#pragma comment(lib, "yaml-cppd.lib")
+#include "yaml-cpp/yaml.h"
 
 namespace fs = std::filesystem;
 

@@ -32,7 +32,7 @@ namespace GraphicsEngineSpace
 
 	void ButtonUI::SetDefaultMaskColor(float r, float g, float b, float a)
 	{
-		defaultMaskColor = SimpleMath::Vector4{r, g, b, a};
+		defaultMaskColor = SimpleMath::Vector4{ r, g, b, a };
 	}
 
 	void ButtonUI::SetHoverTexture(std::shared_ptr<Texture> texture)
@@ -59,6 +59,10 @@ namespace GraphicsEngineSpace
 		// 각 이벤트가 존재하면 실행시킵니다.
 	void ButtonUI::SetButtonState(ButtonState state)
 	{
+		// DISABLE State는 SetButtonEnable 함수로만 변경 가능하도록 합니다.
+		if (this->state == ButtonState::DISABLE)
+			return;
+
 		// 현재 스테이트가 hover면서 들어온 State가 hover가 아니면
 			// 버튼 밖으로 나감
 		if (this->state == ButtonState::HOVER && state != ButtonState::HOVER)
@@ -70,47 +74,58 @@ namespace GraphicsEngineSpace
 
 		switch (state)
 		{
-			case ButtonState::ENTER:
-			{
-				if (enterEvent != nullptr)
-					enterEvent();
+		case ButtonState::ENTER:
+		{
+			if (enterEvent != nullptr)
+				enterEvent();
 
-				break;
-			}
+			break;
+		}
 
-			case ButtonState::PRESS:
-			{
-				if (pressEvent != nullptr)
-					pressEvent();
+		case ButtonState::PRESS:
+		{
+			if (pressEvent != nullptr)
+				pressEvent();
 
-				break;
-			}
+			break;
+		}
 
-			// 버튼을 눌렀다 떼는 순간 => click Event 실행
-			case ButtonState::UP:
-			{
-				if (clickEvent != nullptr)
-					clickEvent();
+		// 버튼을 눌렀다 떼는 순간 => click Event 실행
+		case ButtonState::UP:
+		{
+			if (clickEvent != nullptr)
+				clickEvent();
 
-				break;
-			}
+			break;
+		}
 
-			case ButtonState::HOVER:
-			{
-				if (hoverEvent != nullptr)
-					hoverEvent();
+		case ButtonState::HOVER:
+		{
+			if (hoverEvent != nullptr)
+				hoverEvent();
 
-				break;
-			}
+			break;
+		}
 
-			case ButtonState::DEFAULT:
-			case ButtonState::DOWN:
-			default:
+		case ButtonState::DEFAULT:
+		case ButtonState::DOWN:
+		default:
 			break;
 		}
 
 		// Button State 갱신
-		this->state = state;
+			// 어느 이벤트든 state가 DisAble로 갱신 되었으면 state를 변경하지 않습니다.
+		if(this->state != ButtonState::DISABLE)
+			this->state = state;
+	}
+
+	// 버튼의 선택 가능 여부를 결정하는 함수, True면 선택 가능, False면 선택 불가능 하도록.
+	void ButtonUI::SetButtonEnable(bool enable)
+	{
+		if (enable == true)
+			this->state = ButtonState::DEFAULT;
+		else
+			this->state = ButtonState::DISABLE;
 	}
 
 	void ButtonUI::SetClickEvent(std::function<void()> clickEvent)
@@ -143,7 +158,7 @@ namespace GraphicsEngineSpace
 		return state;
 	}
 
-	void ButtonUI::Render(float tick)
+	void ButtonUI::Render(std::shared_ptr<IRenderer> renderer, float tick)
 	{
 		// 현재의 버튼 상태에 따라 달라지는..
 		if (isEnable != true)
@@ -170,47 +185,65 @@ namespace GraphicsEngineSpace
 			// 실제로 Draw 함수를 호출하는 Switch 문
 			switch (state)
 			{
-				// 누르고 있을 때.
-				case ButtonState::DOWN:
-				case ButtonState::PRESS:
+				// Button이 DisAble 일 때
+			case ButtonState::DISABLE:
+			{
+					// 무조건 회색으로
+				batch->Draw(defaultTex->GetMapSRV().Get(), buttonSize, nullptr,
+					Colors::DarkGray, 0.0f, { 0.f, 0.f }, DirectX::SpriteEffects_None, screenPos.z);
+
+				break;
+			}
+
+			// 누르고 있을 때.
+			case ButtonState::DOWN:
+			case ButtonState::PRESS:
+			{
+
+				if (pressTex != nullptr)
 				{
-
-					if (pressTex != nullptr)
-						batch->Draw(pressTex->GetMapSRV().Get(), buttonSize, nullptr,
-							DirectX::Colors::White, 0.0f, { 0.f, 0.f }, DirectX::SpriteEffects_None, screenPos.z);
-
+					batch->Draw(pressTex->GetMapSRV().Get(), buttonSize, nullptr,
+						DirectX::Colors::White, 0.0f, { 0.f, 0.f }, DirectX::SpriteEffects_None, screenPos.z);
+				}
+				else
+				{
 					// 텍스쳐가 없으면.. color 마스크를 바꿔보자..
 					batch->Draw(defaultTex->GetMapSRV().Get(), buttonSize, nullptr,
 						pressMaskColor, 0.0f, { 0.f, 0.f }, DirectX::SpriteEffects_None, screenPos.z);
-
-					break;
 				}
 
-				// hover에 해당하는 State
-				case ButtonState::UP:
-				case ButtonState::HOVER:
-				case ButtonState::ENTER:
-				{
-					if (hoverTex != nullptr)
-						batch->Draw(hoverTex->GetMapSRV().Get(), buttonSize, nullptr,
-							DirectX::Colors::White, 0.0f, { 0.f, 0.f }, DirectX::SpriteEffects_None, screenPos.z);
+				break;
+			}
 
+			// hover에 해당하는 State
+			case ButtonState::UP:
+			case ButtonState::HOVER:
+			case ButtonState::ENTER:
+			{
+				if (hoverTex != nullptr)
+				{
+					batch->Draw(hoverTex->GetMapSRV().Get(), buttonSize, nullptr,
+						DirectX::Colors::White, 0.0f, { 0.f, 0.f }, DirectX::SpriteEffects_None, screenPos.z);
+				}
+				else
+				{
 					// 텍스쳐가 없으면.. color 마스크를 바꿔보자..
 					batch->Draw(defaultTex->GetMapSRV().Get(), buttonSize, nullptr,
 						hoverMaskColor, 0.0f, { 0.f, 0.f }, DirectX::SpriteEffects_None, screenPos.z);
-
-					break;
 				}
 
-				// 나머지 경우.. 그냥 그려줍니다.
-				case ButtonState::DEFAULT:
-				default:
-				{
-					batch->Draw(defaultTex->GetMapSRV().Get(), buttonSize, nullptr,
-						defaultMaskColor, 0.0f, { 0.f, 0.f }, DirectX::SpriteEffects_None, screenPos.z);
+				break;
+			}
 
-					break;
-				}
+			// 나머지 경우.. 그냥 그려줍니다.
+			case ButtonState::DEFAULT:
+			default:
+			{
+				batch->Draw(defaultTex->GetMapSRV().Get(), buttonSize, nullptr,
+					defaultMaskColor, 0.0f, { 0.f, 0.f }, DirectX::SpriteEffects_None, screenPos.z);
+
+				break;
+			}
 			}
 
 			batch->End();
@@ -219,7 +252,7 @@ namespace GraphicsEngineSpace
 		for (auto iter : children)
 		{
 			if (iter != nullptr)
-				iter->Render(tick);
+				iter->Render(renderer, tick);
 		}
 	}
 }

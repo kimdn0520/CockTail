@@ -10,17 +10,18 @@ namespace GameEngineSpace
 	enum class ComponentType
 	{
 		TRANSFORM = 0,
-		COLLIDER = 1,
+		RIGIDBODY = 1,
 		RENDERER = 2,
-		MONOBEHAVIOR = 3,
-		NAVAGENT = 4,
+		NAVAGENT = 3,
+		LIGHT = 4,
 		CAMERA = 5,
-		LIGHT = 6,
-		ANIMATOR = 7,
-		BONE = 8,
-		CANVAS = 9,
-		TEXT = 10,
-		NONE = 11
+		ANIMATOR = 6,
+		BONE = 7,
+		CANVAS = 8,
+		TEXT = 9,
+		MONOBEHAVIOR = 10,
+		COLLIDER = 11,
+		NONE = 12
 	};
 
 	/**

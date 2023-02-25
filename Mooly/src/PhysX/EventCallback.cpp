@@ -4,6 +4,7 @@
 MoolyEngine::EventCallback::~EventCallback()
 {
 	contactEvents.clear();
+
 	triggerEvents.clear();
 	triggerPersistEvents.clear();
 }
@@ -164,6 +165,7 @@ bool MoolyEngine::EventCallback::AddTriggerEvent(std::string eventHolder, IEvent
 	if (triggerEvents.end() == foundEvent)
 	{
 		triggerEvents.emplace(eventHolder, std::vector<IEventTrigger*>{callBackClass});
+		triggerPersistEvents.emplace(eventHolder, std::list<std::string>());
 		return true;
 	}
 
@@ -178,6 +180,12 @@ void MoolyEngine::EventCallback::DeleteEvents(std::string eventHolder)
 
 	contactEvents.erase(eventHolder);
 	triggerEvents.erase(eventHolder);
+	triggerPersistEvents.erase(eventHolder);
+}
+
+void MoolyEngine::EventCallback::CallOnCollisionEnter()
+{
+
 }
 
 void MoolyEngine::EventCallback::CallonTriggerPersist()

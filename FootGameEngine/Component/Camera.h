@@ -77,7 +77,7 @@ namespace GameEngineSpace
 		const Matrix& GetIsometricProjMatrix();
 
 		virtual void Update(float tick) override;
-		virtual void LateUpdate(float tick) override;
+		void Render();
 
 		// 프러스텀 설정.
 		void SetLens(float _fovY, float _aspect, float _nearZ, float _farZ);
@@ -87,6 +87,8 @@ namespace GameEngineSpace
 		void UpdateViewMatrix();
 
 		void UpdateProjMatrix(ProjType _projType);
+
+		std::vector<SimpleMath::Vector3> ScreenToRayOrigin(const Vector2& mousePos);
 
 		// ViewFrustumCulling을 위한 함수 세팅
 		//bool ViewFrustumCulling(std::shared_ptr<BoundingCube> boundingCube, const Matrix& worldMatrix);

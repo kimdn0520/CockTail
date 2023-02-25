@@ -42,7 +42,7 @@ namespace GraphicsEngineSpace
 		return texture;
 	}
 
-	void SpriteUI::Render(float tick)
+	void SpriteUI::Render(std::shared_ptr<IRenderer> renderer, float tick)
 	{
 		if (isEnable != true)
 			return;
@@ -70,7 +70,7 @@ namespace GraphicsEngineSpace
 			for(auto iter : children)
 			{
 				if(iter != nullptr)
-					iter->Render(tick);
+					iter->Render(renderer, tick);
 			}
 
 		}

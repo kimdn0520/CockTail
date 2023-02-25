@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GraphicsEngine\Pass\PostProcess.h" />
+    <ClInclude Include="Util\AnimatorParmeter.h" />
+    <ClInclude Include="Util\AnimatorState.h" />
+    <ClInclude Include="Util\AnimatorTransition.h" />
     <ClInclude Include="Builder\LineBuilder.h" />
     <ClInclude Include="Builder\PBRBuilder.h" />
     <ClInclude Include="Builder\SkyBoxBuilder.h" />
@@ -26,12 +30,12 @@
     <ClInclude Include="Define\GraphicsInclude.h" />
     <ClInclude Include="Define\GraphicsRenderingData.h" />
     <ClInclude Include="Define\GraphicsTypedef.h" />
-    <ClInclude Include="Define\YAMLBinaryLayout.h" />
     <ClInclude Include="Builder\SpriteEffectBuilder.h" />
     <ClInclude Include="Factory\Factory.h" />
+    <ClInclude Include="Object\Shader\GeometryShader.h" />
     <ClInclude Include="GraphicsCore\DX11GraphicsCore.h" />
     <ClInclude Include="GraphicsCore\RasterizerState.h" />
-    <ClInclude Include="GraphicsCore\RenderTargetDepth.h" />
+    <ClInclude Include="GraphicsCore\DepthStencilResource.h" />
     <ClInclude Include="GraphicsCore\RenderTargetTexture.h" />
     <ClInclude Include="GraphicsEngine\Pass\LightPass.h" />
     <ClInclude Include="GraphicsEngine\Pass\PassBase.h" />
@@ -62,12 +66,14 @@
     <ClInclude Include="Object\UI\SpriteUI.h" />
     <ClInclude Include="Object\UI\TextUI.h" />
     <ClInclude Include="Object\UI\UIBase.h" />
+    <ClInclude Include="Object\UI\ProgressBarUI.h" />
     <ClInclude Include="Resources\RenderingMaterial.h" />
     <ClInclude Include="Resources\InputLayout.h" />
     <ClInclude Include="Resources\Mesh.h" />
     <ClInclude Include="Resources\ObjectResources.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\Texture.h" />
+    <ClInclude Include="GraphicsEngine\Pass\ShadowPass.h" />
     <ClInclude Include="Util\Animator.h" />
     <ClInclude Include="Util\IMGUI\imconfig.h" />
     <ClInclude Include="Util\IMGUI\imgui.h" />
@@ -82,15 +88,20 @@
     <ClInclude Include="Util\VertexStruct.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GraphicsEngine\Pass\PostProcess.cpp" />
+    <ClCompile Include="Util\AnimatorParmeter.cpp" />
+    <ClCompile Include="Util\AnimatorState.cpp" />
+    <ClCompile Include="Util\AnimatorTransition.cpp" />
     <ClCompile Include="Builder\LineBuilder.cpp" />
     <ClCompile Include="Builder\PBRBuilder.cpp" />
     <ClCompile Include="Builder\SkyBoxBuilder.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Builder\SpriteEffectBuilder.cpp" />
     <ClCompile Include="Factory\Factory.cpp" />
+    <ClCompile Include="Object\Shader\GeometryShader.cpp" />
     <ClCompile Include="GraphicsCore\DX11GraphicsCore.cpp" />
     <ClCompile Include="GraphicsCore\RasterizerState.cpp" />
-    <ClCompile Include="GraphicsCore\RenderTargetDepth.cpp" />
+    <ClCompile Include="GraphicsCore\DepthStencilResource.cpp" />
     <ClCompile Include="GraphicsCore\RenderTargetTexture.cpp" />
     <ClCompile Include="GraphicsEngine\Pass\LightPass.cpp" />
     <ClCompile Include="GraphicsEngine\Pass\PassBase.cpp" />
@@ -117,11 +128,13 @@
     <ClCompile Include="Object\UI\Canvas.cpp" />
     <ClCompile Include="Object\UI\SpriteUI.cpp" />
     <ClCompile Include="Object\UI\TextUI.cpp" />
+    <ClCompile Include="Object\UI\ProgressBarUI.cpp" />
     <ClCompile Include="Resources\RenderingMaterial.cpp" />
     <ClCompile Include="Resources\InputLayout.cpp" />
     <ClCompile Include="Resources\Mesh.cpp" />
     <ClCompile Include="Resources\Resource.cpp" />
     <ClCompile Include="Resources\Texture.cpp" />
+    <ClCompile Include="GraphicsEngine\Pass\ShadowPass.cpp" />
     <ClCompile Include="Util\Animator.cpp" />
     <ClCompile Include="Util\IMGUI\imgui.cpp" />
     <ClCompile Include="Util\IMGUI\imgui_demo.cpp" />
@@ -272,7 +285,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)CommonLibrary\lib\;$(SolutionDir)Output\DLL\;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Recast.lib;DetourTileCache.lib;Detour.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -287,6 +300,7 @@
       <PrecompiledHeaderFile>GraphicsPch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)CommonLibrary\inc\</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -295,7 +309,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(SolutionDir)CommonLibrary\lib\;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;Recast.lib;DetourTileCache.lib;Detour.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

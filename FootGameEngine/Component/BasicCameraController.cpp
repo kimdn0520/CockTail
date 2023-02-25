@@ -3,6 +3,7 @@
 
 #include "Timer.h"
 #include "InputManager.h"
+#include "NavigationManager.h"
 
 #include "Object/GameObject.h"
 #include "Camera.h"
@@ -43,7 +44,6 @@ namespace GameEngineSpace
 	void BasicCameraController::PreUpdate(float tick)
 	{
 		
-
 	}
 
 	void BasicCameraController::LateUpdate(float tick)

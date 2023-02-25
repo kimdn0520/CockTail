@@ -7,9 +7,11 @@
 // 매니저
 #include "WindowManager.h"
 #include "SceneManager.h"
+#include "NavigationManager.h"
 #include "SceneBase.h"
 #include "InputManager.h"
 #include "Timer.h"
+#include "GraphicsManager.h"
 
 // 게임 오브젝트와 컴포넌트
 #include "Object/GameObject.h"
@@ -17,6 +19,7 @@
 #include "Component/BasicCameraController.h"
 #include "Component/Transform.h"
 #include "Component/MeshRenderer.h"
+#include "Component/NavMeshAgent.h"
 
 // 게임 엔진을 편하게 쓰기 위한..
 using namespace GameEngineSpace;

@@ -4,6 +4,10 @@
 
 // 자주 사용하는 헤더파일들을 정리해둔 헤더 파일
 #include <Windows.h>
+#ifdef max
+#undef max
+#undef min
+#endif
 #include <functional>
 #include <map>
 #include <memory>
@@ -17,6 +21,27 @@
 #include <map>
 #include <queue>
 
+#include <iostream>
+#include <sstream>
+#include <fstream>
+
+// boost
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/shared_ptr.hpp>
+#include <boost/archive/binary_iarchive.hpp> 
+#include <boost/archive/binary_oarchive.hpp> 
+#include <boost/asio/streambuf.hpp>
+#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/device/back_inserter.hpp>
+#include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/device/back_inserter.hpp>
+#include <boost/iostreams/stream_buffer.hpp>
+#include <boost/iostreams/stream.hpp>
+#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/filter/zlib.hpp>
+#include <boost/iostreams/device/file.hpp>
+
 // Recast Navigation
 #include "Recast/Include/Recast.h"
 #include "Recast/Include/RecastAlloc.h"
@@ -25,6 +50,17 @@
 #include "DetourTileCache/Include/DetourTileCacheBuilder.h"
 #include "Detour/Include/DetourNavMesh.h"
 #include "Detour/Include/DetourStatus.h"
+#include "Detour/Include/DetourNavMeshQuery.h"
+#include "Detour/Include/DetourCommon.h"
+#include "Detour/Include/DetourNavMeshBuilder.h"
+
+// RapidJson
+#include "rapidjson/document.h"
+#include <rapidjson/filereadstream.h>
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/istreamwrapper.h"
+#include "rapidjson/ostreamwrapper.h"
 
 // 현재 프로젝트 설정에 따라 스트링을 사용해주기 위해..
 #include <xstring>

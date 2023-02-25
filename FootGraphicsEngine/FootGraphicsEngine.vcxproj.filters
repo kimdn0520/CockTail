@@ -23,9 +23,6 @@
     <ClInclude Include="Define\GraphicsTypedef.h">
       <Filter>Define</Filter>
     </ClInclude>
-    <ClInclude Include="Define\YAMLBinaryLayout.h">
-      <Filter>Define</Filter>
-    </ClInclude>
     <ClInclude Include="Factory\Factory.h">
       <Filter>Factory</Filter>
     </ClInclude>
@@ -35,7 +32,7 @@
     <ClInclude Include="GraphicsCore\RasterizerState.h">
       <Filter>GraphicsCore</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicsCore\RenderTargetDepth.h">
+    <ClInclude Include="GraphicsCore\DepthStencilResource.h">
       <Filter>GraphicsCore</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsCore\RenderTargetTexture.h">
@@ -182,6 +179,27 @@
     <ClInclude Include="Resources\RenderingMaterial.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="Object\UI\ProgressBarUI.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsEngine\Pass\ShadowPass.h">
+      <Filter>GraphicsEngine\Pass</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Shader\GeometryShader.h">
+      <Filter>Object\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\AnimatorTransition.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\AnimatorParmeter.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\AnimatorState.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsEngine\Pass\PostProcess.h">
+      <Filter>GraphicsEngine\Pass</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Builder\LineBuilder.cpp">
@@ -202,7 +220,7 @@
     <ClCompile Include="GraphicsCore\RasterizerState.cpp">
       <Filter>GraphicsCore</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicsCore\RenderTargetDepth.cpp">
+    <ClCompile Include="GraphicsCore\DepthStencilResource.cpp">
       <Filter>GraphicsCore</Filter>
     </ClCompile>
     <ClCompile Include="GraphicsCore\RenderTargetTexture.cpp">
@@ -321,6 +339,27 @@
     </ClCompile>
     <ClCompile Include="Resources\RenderingMaterial.cpp">
       <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UI\ProgressBarUI.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsEngine\Pass\ShadowPass.cpp">
+      <Filter>GraphicsEngine\Pass</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Shader\GeometryShader.cpp">
+      <Filter>Object\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\AnimatorParmeter.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\AnimatorState.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\AnimatorTransition.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsEngine\Pass\PostProcess.cpp">
+      <Filter>GraphicsEngine\Pass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

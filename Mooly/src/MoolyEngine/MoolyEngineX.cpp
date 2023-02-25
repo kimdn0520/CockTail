@@ -26,6 +26,8 @@ bool MoolyEngine::MoolyEngineX::Initialize()
 	pvd = PxCreatePvd(*foundation);
 	pvdTransport = physx::PxDefaultPvdSocketTransportCreate(PVD_HOST, 5425, 10);
 	pvd->connect(*pvdTransport, physx::PxPvdInstrumentationFlag::eALL);
+#else
+	pvd = NULL;
 #endif
 
 	physics = PxCreatePhysics(PX_PHYSICS_VERSION, *foundation, toleranceScale, true, pvd);
@@ -102,6 +104,16 @@ bool MoolyEngine::MoolyEngineX::DeleteScene(const std::string& sceneName)
 
 	_foundedScene->second->Finalize();
 	scenes.erase(sceneName);
+	return true;
+}
+
+bool MoolyEngine::MoolyEngineX::ClearScene(const std::string& sceneName)
+{
+	auto _foundedScene = scenes.find(sceneName);
+	if (_foundedScene == scenes.end())
+		return false;
+
+	_foundedScene->second->Finalize();
 	return true;
 }
 
@@ -187,6 +199,12 @@ bool MoolyEngine::MoolyEngineX::CreateConvexMeshActor(const std::string& objName
 	return false;
 }
 
+bool MoolyEngine::MoolyEngineX::CreatePlayerController(Vector3 pos /*= Vector3(0.0f, 5.0f, 0.0f)*/)
+{
+	if (currentScene)
+		return currentScene->CreatePlayerController(Vector3ToPxVec3(pos));
+}
+
 bool MoolyEngine::MoolyEngineX::DeleteActor(const std::string& objName)
 {
 	if (currentScene)
@@ -269,6 +287,27 @@ bool MoolyEngine::MoolyEngineX::SetAngularVelocity(const std::string& objName, V
 	if (currentScene)
 		return currentScene->SetAnguarVelocity(objName, Vector3ToPxVec3(vel));
 
+	return false;
+}
+
+bool MoolyEngine::MoolyEngineX::MovePCC(const Vector3& disp)
+{
+	if (currentScene)
+		return currentScene->MovePCC(Vector3ToPxVec3(disp));
+
+	return false;
+}
+
+bool MoolyEngine::MoolyEngineX::MoveKinematicObject(const std::string& objName, Vector3 position)
+{
+	if (currentScene)
+		return currentScene->MoveKinematicObject(objName, Vector3ToPxVec3(position));
+
+	return false;
+}
+
+bool MoolyEngine::MoolyEngineX::SetFriction(const std::string& objName, float value, PhysicsType physicsType)
+{
 	return false;
 }
 
@@ -373,6 +412,14 @@ bool MoolyEngine::MoolyEngineX::Raycast(Vector3 origin, Vector3 dir, float dist,
 bool MoolyEngine::MoolyEngineX::Raycast(Vector3 origin, Vector3 dir, float distance, std::vector<std::string> filteredLayers, PhysicsType PhysicsFlags, RayCastHit& hit)
 {
 	if (currentScene->Raycast(Vector3ToPxVec3(origin), Vector3ToPxVec3(dir), distance, filteredLayers, PhysicsFlags, hit))
+		return true;
+
+	return false;
+}
+
+bool MoolyEngine::MoolyEngineX::CheckBox(Vector3 center, Vector3 halfExtents, std::vector<std::string> filteredLayers)
+{
+	if(currentScene->CheckBox(Vector3ToPxVec3(center), Vector3ToPxVec3(halfExtents), filteredLayers))
 		return true;
 
 	return false;

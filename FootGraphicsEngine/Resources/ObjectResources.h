@@ -149,12 +149,16 @@ namespace GraphicsEngineSpace
 		// Skinned 정보 또한 여기서 가지고 있는다.
 		bool isSkinnedMesh;
 
+		// Shadow Render를 할 obj 정보.
+		bool isShadow;
+
 		MeshResources()
 			: setMesh(false)
 			, setMaterial(false)
 			, ObjName("NULL")
 			, nodeTM(SimpleMath::Matrix::Identity)
 			, isSkinnedMesh(false)
+			, isShadow(false)
 		{}
 
 		~MeshResources()

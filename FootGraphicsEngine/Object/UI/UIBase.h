@@ -4,6 +4,7 @@
 	// 현재는 Render만 넣고 추후에 pivot, Anchor 등을 넣을 수 있다.
 
 #include <vector>
+#include "Interface/IRenderer.h"
 
 namespace GraphicsEngineSpace
 {
@@ -57,7 +58,7 @@ namespace GraphicsEngineSpace
 	public:
 		virtual ~UIBase() = default;
 
-		virtual void Render(float tick = 0.0f) abstract;
+		virtual void Render(std::shared_ptr<IRenderer> renderer, float tick = 0.0f) abstract;
 
 		// 각종 세터
 		void SetName(const std::string& name) { this->name = name; }

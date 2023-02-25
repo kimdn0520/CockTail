@@ -10,16 +10,10 @@
     <ClCompile Include="Component\Camera.cpp">
       <Filter>Component</Filter>
     </ClCompile>
-    <ClCompile Include="Component\ColliderBase.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
     <ClCompile Include="Component\MeshRenderer.cpp">
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="Component\PosColorRenderer.cpp">
-      <Filter>Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Component\RayCollider.cpp">
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="Component\RendererBase.cpp">
@@ -73,12 +67,35 @@
     <ClCompile Include="GamePch.cpp">
       <Filter>PCH</Filter>
     </ClCompile>
-    <ClCompile Include="Component\SpriteEffect.cpp" />
     <ClCompile Include="Component\NavMeshAgent.cpp">
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="Manager\NavigationManager.cpp">
       <Filter>Manager\NavigationManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\BehaviorTree.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\JsonReader.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Rigidbody.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\SpriteEffect.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\CapsuleCollider.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Collider.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\UICreator.cpp">
+      <Filter>Manager\UIManager\UICreator</Filter>
+    </ClCompile>
+    <ClCompile Include="Util\ObjectPool.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,16 +108,10 @@
     <ClInclude Include="Component\Camera.h">
       <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Component\ColliderBase.h">
-      <Filter>Component</Filter>
-    </ClInclude>
     <ClInclude Include="Component\MeshRenderer.h">
       <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="Component\PosColorRenderer.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\RayCollider.h">
       <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="Component\RendererBase.h">
@@ -169,12 +180,35 @@
     <ClInclude Include="GamePch.h">
       <Filter>PCH</Filter>
     </ClInclude>
-    <ClInclude Include="Component\SpriteEffect.h" />
     <ClInclude Include="Component\NavMeshAgent.h">
       <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="Manager\NavigationManager.h">
       <Filter>Manager\NavigationManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\BehaviorTree.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\JsonReader.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\SpriteEffect.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Rigidbody.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Collider.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\CapsuleCollider.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\UICreator.h">
+      <Filter>Manager\UIManager\UICreator</Filter>
+    </ClInclude>
+    <ClInclude Include="Util\ObjectPool.h">
+      <Filter>Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -223,5 +257,14 @@
     <Filter Include="Manager\NavigationManager">
       <UniqueIdentifier>{93988d00-682b-4643-b299-04cde914e0c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{97bd0d09-95a8-4025-94ab-718ca2293105}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\UIManager\UICreator">
+      <UniqueIdentifier>{2f6becab-e568-46cc-9e06-2e08a492b40b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

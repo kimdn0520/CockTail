@@ -56,6 +56,8 @@ public:
 	DirectX::SimpleMath::Vector4 ConvertVector4(fbxsdk::FbxVector4 v4);
 
 	DirectX::SimpleMath::Matrix ConvertMatrix(fbxsdk::FbxMatrix matrix);
+
+	void CutFilePath(std::string& path);
 };
 
 inline DirectX::SimpleMath::Vector4 FBXParser::ConvertVector4(fbxsdk::FbxVector4 v4)

@@ -50,6 +50,10 @@ namespace GraphicsEngineSpace
 		virtual void SetTexOffset(const SimpleMath::Vector2& offset);
 		virtual SimpleMath::Vector2 GetTexOffset();
 
+		virtual const SimpleMath::Matrix& GetWorld() override { return world; }
+		virtual const SimpleMath::Matrix& GetView() override { return view; }
+		virtual const SimpleMath::Matrix& GetProj() override { return proj; }
+
 	private:
 		std::shared_ptr<Mesh> CreateEffectMesh(std::string name);
 	};

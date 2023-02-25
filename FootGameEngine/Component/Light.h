@@ -15,7 +15,7 @@ namespace GameEngineSpace
 		Spot
 	};
 
-	class Light	: public ComponentBase
+	class Light	: public ComponentBase, public std::enable_shared_from_this<Light>
 	{
 	private:
 		std::shared_ptr<Transform> transform;
@@ -35,12 +35,18 @@ namespace GameEngineSpace
 
 		float range;
 
-		float halfAngle;
+		float innerSpotAngle;
+
+		float outerSpotAngle;
+
+		bool isShadow;
 
 	public:
 		Light(std::weak_ptr<GameObject> _gameObject);
 
 		virtual ~Light();
+
+		virtual void Awake() override;
 
 		virtual void Release() override;
 
@@ -58,7 +64,13 @@ namespace GameEngineSpace
 
 		void SetRange(float _range) { range = _range; }
 
-		void SetHalfAngle(float _halfAngle) { halfAngle = _halfAngle; }
+		void SetInnerSpotAngle(float _innerSpotAngle) { innerSpotAngle = _innerSpotAngle; }
+
+		void SetOuterSpotAngle(float _outerSpotAngle) { outerSpotAngle = _outerSpotAngle; }
+
+		void SetIsShadow(bool _isShadow) { isShadow = _isShadow; }
+
+		bool GetIsShadow() { return isShadow; }
 	};
 }
 

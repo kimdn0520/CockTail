@@ -89,7 +89,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(ProjectDir)inc;$(ProjectDir)physX\include</IncludePath>
-    <LibraryPath>$(ProjectDir)physX\lib\debug;$(ProjectDir)physX\lib\debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(ProjectDir)physX\lib\debug;$(LibraryPath)</LibraryPath>
     <SourcePath>${ProjectDir}src;${ProjectDir}src;$(SourcePath)</SourcePath>
     <OutDir>$(SolutionDir)Output\DLL\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
@@ -101,7 +101,7 @@
     <IntDir>$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)_$(Configuration)_$(LibrariesArchitecture)</TargetName>
     <IncludePath>$(ProjectDir)inc;$(ProjectDir)physX\include</IncludePath>
-    <LibraryPath>$(ProjectDir)physX\lib\debug;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <LibraryPath>$(ProjectDir)physX\lib\release;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
     <SourcePath>${ProjectDir}src;$(VC_SourcePath);</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -198,6 +198,7 @@ copy /Y "$(ProjectDir)inc\Export\dllDefine.h" "$(SolutionDir)CommonLibrary\inc"<
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

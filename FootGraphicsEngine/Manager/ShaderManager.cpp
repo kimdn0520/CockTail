@@ -2,6 +2,7 @@
 #include "ShaderManager.h"
 #include "Object/Shader/VertexShader.h"
 #include "Object/Shader/PixelShader.h"
+#include "Object/Shader/GeometryShader.h"
 #include "Resources/InputLayout.h"
 
 namespace GraphicsEngineSpace
@@ -43,10 +44,23 @@ namespace GraphicsEngineSpace
 		CreateVertexShader("Shader/SpriteEffectShader/SpriteEffectVS.hlsl", "main", "vs_5_0", "SpriteEffectVS", InputLayoutDesc::PosTex, 2, nullptr);
 
 		// PBRShader
-		D3D_SHADER_MACRO skinned_MacroVS[] = {{"Skinned"}, {NULL, NULL}};
+		D3D_SHADER_MACRO skinned_MacroVS[] = { {"Skinned"}, {NULL, NULL} };
 		CreateVertexShader("Shader/PBRShader/PBRModelVS.hlsl", "main", "vs_5_0", "PBRStaticVS", InputLayoutDesc::PBRStatic, 5, nullptr);
 		CreateVertexShader("Shader/PBRShader/PBRModelVS.hlsl", "main", "vs_5_0", "PBRSkinnedVS", InputLayoutDesc::PBRSkinned, 9, skinned_MacroVS);
-		CreateVertexShader("Shader/Deferred/QuadVS.hlsl", "main", "vs_5_0", "QuadVS", InputLayoutDesc::PBRStatic, 5, nullptr);
+		CreateVertexShader("Shader/Deferred/QuadVS.hlsl", "main", "vs_5_0", "QuadVS", InputLayoutDesc::PosTex, 2, nullptr);
+
+		// Shadow
+		D3D_SHADER_MACRO dir_MacroVS[] = { {"DirLightShadow"}, {NULL, NULL} };
+		D3D_SHADER_MACRO skinned_Dir_MacroVS[] = { {"Skinned"}, {"DirLightShadow"}, {NULL, NULL} };
+		CreateVertexShader("Shader/Deferred/ShadowVS.hlsl", "main", "vs_5_0", "ShadowStaticVS", InputLayoutDesc::PBRStatic, 5, dir_MacroVS);
+		CreateVertexShader("Shader/Deferred/ShadowVS.hlsl", "main", "vs_5_0", "ShadowSkinnedVS", InputLayoutDesc::PBRSkinned, 9, skinned_Dir_MacroVS);
+		// Geo가 붙은 것들은 PointLight shadow를 위한 버텍스 쉐이더이다..
+			// => Geometry 쉐이더에서 각 면에 해당하는 LightViewProj를 연산해준다.
+		CreateVertexShader("Shader/Deferred/ShadowVS.hlsl", "main", "vs_5_0", "GeoShadowStaticVS", InputLayoutDesc::PBRStatic, 5, nullptr);
+		CreateVertexShader("Shader/Deferred/ShadowVS.hlsl", "main", "vs_5_0", "GeoShadowSkinnedVS", InputLayoutDesc::PBRSkinned, 9, skinned_MacroVS);
+
+		// 그림자용 기하셰이더 생성
+		CreateGeometryShader("Shader/Deferred/ShadowGS.hlsl", "main", "gs_5_0", "ShadowGS", nullptr);
 
 		// 픽셀셰이더 생성
 		CreatePixelShader("Shader/LineShader/LinePS.hlsl", "main", "ps_5_0", "LinePS", nullptr);
@@ -54,8 +68,8 @@ namespace GraphicsEngineSpace
 		CreatePixelShader("Shader/SpriteEffectShader/SpriteEffectPS.hlsl", "main", "ps_5_0", "SpriteEffectPS", nullptr);
 
 		// Macro
-		D3D_SHADER_MACRO model_MacroPS_1[] = {{"USE_ALBEDO"}, {NULL, NULL}};
-		D3D_SHADER_MACRO model_MacroPS_2[] = { {"USE_ALBEDO"}, {"USE_NORMAL"}, {NULL, NULL}};
+		D3D_SHADER_MACRO model_MacroPS_1[] = { {"USE_ALBEDO"}, {NULL, NULL} };
+		D3D_SHADER_MACRO model_MacroPS_2[] = { {"USE_ALBEDO"}, {"USE_NORMAL"}, {NULL, NULL} };
 		D3D_SHADER_MACRO model_MacroPS_3[] = { {"USE_ALBEDO"}, {"USE_METALLIC"}, {"USE_ROUGHNESS"}, {NULL, NULL} };
 		D3D_SHADER_MACRO model_MacroPS_4[] = { {"USE_ALBEDO"}, {"USE_NORMAL"}, {"USE_METALLIC"}, {"USE_ROUGHNESS"}, {NULL, NULL} };
 		D3D_SHADER_MACRO model_MacroPS_5[] = { {"USE_ALBEDO"}, {"USE_NORMAL"}, {"USE_AO"}, {NULL, NULL} };
@@ -80,9 +94,25 @@ namespace GraphicsEngineSpace
 		// albedo + normal + metallic + roughness + ao + emissive
 		CreatePixelShader("Shader/PBRShader/PBRModelPS.hlsl", "main", "ps_5_0", "PBRFullPS", model_MacroPS_7);
 
+		D3D_SHADER_MACRO light_MacroPS_1[] = { {"IsShadow"}, {NULL, NULL} };
+		D3D_SHADER_MACRO light_MacroPS_2[] = { { "IsPointShadow" }, { NULL, NULL } };
+		D3D_SHADER_MACRO light_MacroPS_3[] = { { "IsSpotShadow" }, { NULL, NULL } };
+		D3D_SHADER_MACRO light_MacroPS_4[] = { {"IsPointShadow"}, {"IsSpotShadow"}, {NULL, NULL}};
+
 		// PBR Light
 		CreatePixelShader("Shader/PBRShader/PBRLightPS.hlsl", "main", "ps_5_0", "PBRLightPS", nullptr);
+		CreatePixelShader("Shader/PBRShader/PBRLightPS.hlsl", "main", "ps_5_0", "PBRLightShadowPS", light_MacroPS_1);
+		CreatePixelShader("Shader/PBRShader/PBRLightPS.hlsl", "main", "ps_5_0", "PBRLightPointShadowPS", light_MacroPS_2);
+		CreatePixelShader("Shader/PBRShader/PBRLightPS.hlsl", "main", "ps_5_0", "PBRLightSpotShadowPS", light_MacroPS_3);
+		CreatePixelShader("Shader/PBRShader/PBRLightPS.hlsl", "main", "ps_5_0", "PBRLightPointSpotShadowPS", light_MacroPS_4);
 
+		// PostPorcessing
+		D3D_SHADER_MACRO post_Macro_ToneMap[] = {{"UseToneMapping"}, {NULL, NULL}};
+		D3D_SHADER_MACRO post_Macro_All[] = {{"UseToneMapping"}, {"UseVignette"}, {NULL, NULL}};
+		CreatePixelShader("Shader/Deferred/PostProcessPS.hlsl", "main", "ps_5_0", "PostToneMappingPS", post_Macro_ToneMap);
+		CreatePixelShader("Shader/Deferred/PostProcessPS.hlsl", "main", "ps_5_0", "PostProcessAllPS", post_Macro_All);
+
+		// SkyBox
 		CreatePixelShader("Shader/SkyBoxShader/SkyBoxPS.hlsl", "main", "ps_5_0", "SkyBoxPS", nullptr);
 
 		return true;
@@ -198,6 +228,8 @@ namespace GraphicsEngineSpace
 		// 만들어준 버텍스 쉐이더를 맵에 넣어준다.
 		shaderMap.insert(std::pair{shaderName, tmpShader });
 
+		printf("%s Compile Complete! \n", shaderName.c_str());
+
 		// 여기까지 오면 성공
 		return true;
 	}
@@ -226,7 +258,6 @@ namespace GraphicsEngineSpace
 		if (CompileShaderFromFile(wpath.c_str(), entryName.c_str(), shaderModel.c_str(), &shaderBlob, macro) != true)
 			return false;
 
-		// 추가로 해당 버텍스 쉐이더를 사용하는 인풋 레이아웃을 만들어준다.
 		tmpShader.reset(new PixelShader(device, deviceContext, shaderBlob));
 
 		if (tmpShader == nullptr)
@@ -236,6 +267,47 @@ namespace GraphicsEngineSpace
 
 		// 만들어준 픽셀 쉐이더를 맵에 넣어준다.
 		shaderMap.insert(std::pair{ shaderName, tmpShader });
+
+		printf("%s Compile Complete! \n", shaderName.c_str());
+
+
+		// 여기까지 오면 성공
+		return true;
+	}
+
+	bool ShaderManager::CreateGeometryShader(const std::string& path, const std::string& entryName,
+		const std::string& shaderModel, const std::string& shaderName, const D3D_SHADER_MACRO* macro)
+	{
+		// 맵에 해당 이름의 쉐이더가 있으면 리턴해줍니다
+			// 다시 만들 필요 없기 때문입니다.
+		if (shaderMap.find(shaderName) != shaderMap.end())
+			return false;
+			
+		std::shared_ptr<ShaderBase> tmpShader;
+
+		// 혹시 모를 블롭 리셋
+		if (shaderBlob != nullptr)
+		{
+			shaderBlob = nullptr;
+		}
+
+		// 위의 인자를 사용합니다.
+		std::wstring wpath = std::wstring(path.begin(), path.end());
+
+		if (CompileShaderFromFile(wpath.c_str(), entryName.c_str(), shaderModel.c_str(), &shaderBlob, macro) != true)
+			return false;
+
+		tmpShader.reset(new GeometryShader(device, deviceContext, shaderBlob));
+
+		if (tmpShader == nullptr)
+		{
+			assert(0);		// 예외 처리
+		}
+
+		// 만들어준 지오메트리 쉐이더를 맵에 넣어준다.
+		shaderMap.insert(std::pair{ shaderName, tmpShader });
+
+		printf("%s Compile Complete! \n", shaderName.c_str());
 
 		// 여기까지 오면 성공
 		return true;

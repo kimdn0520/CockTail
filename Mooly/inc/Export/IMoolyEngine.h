@@ -19,6 +19,7 @@ namespace MoolyEngine
 		virtual bool AddScene(const std::string& sceneName) abstract;
 		virtual bool SetCurrentScene(const std::string& sceneName) abstract;
 		virtual bool DeleteScene(const std::string& sceneName) abstract;
+		virtual bool ClearScene(const std::string& sceneName) abstract;
 
 		// Actor Manage
 		virtual bool DisableActor(const std::string& objName) abstract;
@@ -32,6 +33,7 @@ namespace MoolyEngine
 		virtual bool CreateTriangleMeshActor(const std::string& objName, const std::string& shapeName, Vector3* vertices, float vertexCount, UINT32* indices, float indexCount, PhysicsType physicsType, Transform transform, float density) abstract;
 		virtual bool CreateConvexMeshActor(const std::string& objName, const std::string& shapeName, Vector3* vertices, float vertexCnt, UINT32* indices, float indexCnt, PhysicsType phsicsType, Transform transform, float density) abstract;
 
+		virtual bool CreatePlayerController(Vector3 pos = Vector3(0.0f, 5.0f, 0.0f)) abstract;
 
 		virtual bool DeleteActor(const std::string& objName) abstract;
 
@@ -51,6 +53,11 @@ namespace MoolyEngine
 		virtual bool SetLinearVelocity(const std::string& objName, Vector3 vel) abstract;
 		virtual bool SetAngularVelocity(const std::string& objName, Vector3 vel) abstract;
 
+		virtual bool MovePCC(const Vector3& disp) abstract;
+
+		virtual bool MoveKinematicObject(const std::string& objName, Vector3 position) abstract;
+
+		virtual bool SetFriction(const std::string& objName, float value, PhysicsType physicsType) abstract;
 		virtual bool SetMaxLinearVelocity(const std::string& objName, float vel) abstract;
 		virtual bool SetMaxAngularVelocity(const std::string& objName, float vel) abstract;
 
@@ -65,6 +72,8 @@ namespace MoolyEngine
 
 		virtual bool Raycast(Vector3 origin, Vector3 dir, float dist, RayCastHit& hit) abstract;
 		virtual bool Raycast(Vector3 origin, Vector3 dir, float distance, std::vector<std::string> filteredLayers, PhysicsType PhysicsFlags, RayCastHit& hit) abstract;
+
+		virtual bool CheckBox(Vector3 center, Vector3 halfExtents, std::vector<std::string> filteredLayers) abstract;
 
 		// Update
 		virtual bool Simulate(float deltaTime) abstract;

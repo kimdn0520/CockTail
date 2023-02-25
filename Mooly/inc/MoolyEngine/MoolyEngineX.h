@@ -19,6 +19,7 @@ namespace MoolyEngine
 		virtual bool AddScene(const std::string& sceneName) override;
 		virtual bool SetCurrentScene(const std::string& sceneName) override;
 		virtual bool DeleteScene(const std::string& sceneName) override;
+		virtual bool ClearScene(const std::string& sceneName) override;
 
 		// Actor Manage
 		virtual bool DisableActor(const std::string& objName) override;
@@ -30,6 +31,8 @@ namespace MoolyEngine
 		virtual bool CreateCapsuleActor(const std::string& objName, const std::string& shapeName, PhysicsType physicsType, Transform transform, float radius, float halfHeight, float density) override;
 		virtual bool CreateTriangleMeshActor(const std::string& objName, const std::string& shapeName, Vector3* vertices, float vertexCount, UINT32* indices, float indexCount, PhysicsType physicsType, Transform transform, float density) override;
 		virtual bool CreateConvexMeshActor(const std::string& objName, const std::string& shapeName, Vector3* vertices, float vertexCnt, UINT32* indices, float indexCnt, PhysicsType phsicsType, Transform transform, float density) override;
+
+		virtual bool CreatePlayerController(Vector3 pos = Vector3(0.0f, 5.0f, 0.0f)) override;
 
 		virtual bool DeleteActor(const std::string& objName) override;
 
@@ -49,6 +52,12 @@ namespace MoolyEngine
 		virtual bool SetLinearVelocity(const std::string& objName, Vector3 vel) override;
 		virtual bool SetAngularVelocity(const std::string& objName, Vector3 vel) override;
 
+		virtual bool MovePCC(const Vector3& disp) override;
+
+		virtual bool MoveKinematicObject(const std::string& objName, Vector3 position) override;
+
+		virtual bool SetFriction(const std::string& objName, float value, PhysicsType physicsType) override;
+
 		virtual bool SetMaxLinearVelocity(const std::string& objName, float vel) override;
 		virtual bool SetMaxAngularVelocity(const std::string& objName, float vel) override;
 
@@ -63,6 +72,8 @@ namespace MoolyEngine
 
 		virtual bool Raycast(Vector3 origin, Vector3 dir, float dist, RayCastHit& hit) override;
 		virtual bool Raycast(Vector3 origin, Vector3 dir, float distance, std::vector<std::string> filteredLayers, PhysicsType PhysicsFlags, RayCastHit& hit) override;
+
+		virtual bool CheckBox(Vector3 center, Vector3 halfExtents, std::vector<std::string> filteredLayers) override;
 
 		// Update
 		virtual bool Simulate(float deltaTime) override;

@@ -2,6 +2,8 @@
 #include "physX/Scene.h"
 #include "PxSceneLock.h"
 #include "PhysX/EventCallback.h"
+#include "characterkinematic/PxControllerManager.h"
+#include "characterkinematic/PxCapsuleController.h"
 
 bool MoolyEngine::Scene::Initialize(physx::PxPhysics* _physics, physx::PxCpuDispatcher* _dispatcher, physx::PxTolerancesScale& _scale)
 {
@@ -19,6 +21,8 @@ bool MoolyEngine::Scene::Initialize(physx::PxPhysics* _physics, physx::PxCpuDisp
 
 	m_scene = _physics->createScene(sceneDesc);
 
+	controllerManager = PxCreateControllerManager(*m_scene);
+
 #if defined(DEBUG) || defined(_DEBUG)
 
 	m_scene->setVisualizationParameter(physx::PxVisualizationParameter::eCOLLISION_SHAPES, 1.0f);
@@ -33,7 +37,7 @@ bool MoolyEngine::Scene::Initialize(physx::PxPhysics* _physics, physx::PxCpuDisp
 	}
 #endif
 
-	m_material = _physics->createMaterial(0.7f, 0.7f, 0.05f);
+	m_material = _physics->createMaterial(0.5f, 0.5f, 0.1f);
 
 	//m_eventCallback = new MoolyEngine::EventCallback();
 	//m_scene->setSimulationEventCallback((physx::PxSimulationEventCallback*)m_eventCallback);
@@ -45,6 +49,23 @@ bool MoolyEngine::Scene::Initialize(physx::PxPhysics* _physics, physx::PxCpuDisp
 	physx::PxU32 defaultLayerFilterMask = 0xFFFFFFFF;
 
 	m_layer.emplace("Default", std::make_pair(defaultLayerFilterID, defaultLayerFilterMask));
+
+	return true;
+}
+
+bool MoolyEngine::Scene::ClearScene()
+{
+	for (auto actors : m_rigidActors)
+	{
+		if (actors.second->userData != nullptr)
+		{
+			auto _data = reinterpret_cast<UserData*>(actors.second->userData);
+			delete _data;
+			actors.second->userData = nullptr;
+		}
+	}
+
+	m_rigidActors.clear();
 
 	return true;
 }
@@ -63,6 +84,8 @@ bool MoolyEngine::Scene::Finalize()
 
 	m_scene->release();
 	m_rigidActors.clear();
+	if(controllerManager != nullptr)
+		controllerManager->purgeControllers();
 
 	return true;
 }
@@ -83,6 +106,7 @@ bool MoolyEngine::Scene::Simulate(float _deltaTime)
 
 		m_scene->simulate(_deltaTime);
 		m_scene->fetchResults(true);
+		m_eventCallback->CallonTriggerPersist();
 	}
 
 	return true;
@@ -110,13 +134,13 @@ bool MoolyEngine::Scene::CreateBoxActor(physx::PxPhysics* _physics, const std::s
 	{
 		case PhysicsType::STATIC:
 		{
-			_box = physx::PxCreateStatic(*_physics, TransformToPxTransform(_transform), *_shape);
+			_box = physx::PxCreateStatic(*_physics, _pxTransform, *_shape);
 		}
 		break;
 
 		case PhysicsType::DYNAMIC:
 		{
-			_box = physx::PxCreateDynamic(*_physics, TransformToPxTransform(_transform), *_shape, density);
+			_box = physx::PxCreateDynamic(*_physics, _pxTransform, *_shape, density);
 		}
 		break;
 
@@ -178,6 +202,8 @@ bool MoolyEngine::Scene::CreateSphereActor(physx::PxPhysics* _physics, const std
 	physx::PxTransform _pxTransform = TransformToPxTransform(_transform);
 	physx::PxShape* _shape = _physics->createShape(physx::PxSphereGeometry(radius), *m_material, true);
 	_shape->setSimulationFilterData(_filterData);
+	_filterData.word1 = 0x00000000;
+	_shape->setQueryFilterData(_filterData);
 
 	physx::PxRigidActor* _sphere = nullptr;
 
@@ -229,6 +255,8 @@ bool MoolyEngine::Scene::CreateCapsuleActor(physx::PxPhysics* _physics, const st
 	physx::PxTransform _pxTransform = TransformToPxTransform(_transform);
 	physx::PxShape* _shape = _physics->createShape(physx::PxCapsuleGeometry(radius, halfHeight), *m_material, true);
 	_shape->setSimulationFilterData(_filterData);
+	_filterData.word1 = 0x00000000;
+	_shape->setQueryFilterData(_filterData);
 
 	physx::PxRigidActor* _capsule = nullptr;
 
@@ -280,7 +308,7 @@ bool MoolyEngine::Scene::CreateTriangleMeshActor(physx::PxPhysics* _physics, phy
 	physx::PxDefaultMemoryOutputStream _writeBuffer;
 	physx::PxTriangleMeshCookingResult::Enum _result;
 	bool _status = cooking->cookTriangleMesh(_meshDesc, _writeBuffer, &_result);
-	
+
 	if (_status == false)
 		return NULL;
 
@@ -402,6 +430,23 @@ bool MoolyEngine::Scene::CreateConvexMeshActor(physx::PxPhysics* physics, physx:
 	_convexShape->release();
 }
 
+bool MoolyEngine::Scene::CreatePlayerController(physx::PxVec3 pos)
+{
+	physx::PxCapsuleControllerDesc desc;
+	desc.height = 1.0f;
+	desc.material = m_material;
+	desc.slopeLimit = 0.5f;
+	desc.stepOffset = 0.5f;
+	desc.upDirection = physx::PxVec3(0.0f, 1.0f, 0.0f);
+	physx::PxExtendedVec3 _pos(pos.x, pos.y, pos.z);
+	desc.position = _pos;
+	controller = controllerManager->createController(desc);
+
+	controllerManager->setOverlapRecoveryModule(true);
+	controllerManager->setPreciseSweeps(true);
+	return true;
+}
+
 bool MoolyEngine::Scene::SetTriggerShape(const std::string& objName, bool flag)
 {
 	SCENE_LOCK sceneLock(*m_scene);
@@ -502,15 +547,15 @@ bool MoolyEngine::Scene::DisableActor(const std::string& objName)
 	if (_foundedActor == m_rigidActors.end())
 		return false;
 
-	UINT _numberOfShape = _foundedActor->second->getNbShapes();
-	std::vector<physx::PxShape*> _shapes;
-	_shapes.resize(_numberOfShape);
+	//UINT _numberOfShape = _foundedActor->second->getNbShapes();
+	//std::vector<physx::PxShape*> _shapes;
+	//_shapes.resize(_numberOfShape);
 
-	_foundedActor->second->getShapes(&_shapes.front(), _numberOfShape);
-	for (auto _temp : _shapes)
-	{
-		_temp->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, false);
-	}
+	//_foundedActor->second->getShapes(&_shapes.front(), _numberOfShape);
+	//for (auto _temp : _shapes)
+	//{
+	//	_temp->setFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, false);
+	//}
 	_foundedActor->second->setActorFlag(physx::PxActorFlag::eDISABLE_SIMULATION, true);
 
 	return true;
@@ -570,7 +615,6 @@ bool MoolyEngine::Scene::AddForce(const std::string& objName, physx::PxVec3 forc
 	if (_foundedActor->second->getType() == physx::PxActorType::eRIGID_DYNAMIC)
 	{
 		((physx::PxRigidDynamic*)_foundedActor->second)->addForce(force, physx::PxForceMode::eFORCE, true);
-
 		return true;
 	}
 
@@ -629,6 +673,40 @@ bool MoolyEngine::Scene::AddTorqueImpulse(const std::string& objName, physx::PxV
 	}
 
 	return false;
+}
+
+bool MoolyEngine::Scene::MoveKinematicObject(const std::string& objName, physx::PxVec3 position)
+{
+	SCENE_LOCK sceneLock(*m_scene);
+
+	auto _foundedActor = m_rigidActors.find(objName);
+	if (_foundedActor == m_rigidActors.end())
+		return false;
+
+	if (_foundedActor->second->getType() == physx::PxActorType::eRIGID_DYNAMIC)
+	{
+		//if (((physx::PxRigidDynamic*)_foundedActor->second)->getRigidBodyFlags() == physx::PxRigidBodyFlag::eKINEMATIC)
+		{
+			physx::PxTransform transform = _foundedActor->second->getGlobalPose();
+			transform.p = position;
+			((physx::PxRigidDynamic*)_foundedActor->second)->setKinematicTarget(transform);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool MoolyEngine::Scene::MovePCC(const physx::PxVec3& disp)
+{
+	if (controllerManager == nullptr)
+		return false;
+
+	if (controller == nullptr)
+		return false;
+
+	physx::PxControllerCollisionFlags collisionFlags = controller->move(disp, 0.01f, 1.0f / 60.0f, physx::PxControllerFilters());
+
 }
 
 bool MoolyEngine::Scene::SetLinearDamping(const std::string& objName, float damping)
@@ -738,6 +816,22 @@ bool MoolyEngine::Scene::SetMaxAngularVelocity(const std::string& objName, physx
 
 		return true;
 	}
+
+	return false;
+}
+
+bool MoolyEngine::Scene::SetFriction(const std::string& objName, float value, PhysicsType physicsType)
+{
+	SCENE_LOCK sceneLock(*m_scene);
+
+	auto _foundedActor = m_rigidActors.find(objName);
+	if (_foundedActor == m_rigidActors.end())
+		return false;
+
+	/*if (_foundedActor->second->getType() == physx::PxActorType::eRIGID_DYNAMIC)
+	{
+		(physx::PxRigidActor*)_foundedActor->first->setMaterial
+	}*/
 
 	return false;
 }
@@ -897,8 +991,10 @@ bool MoolyEngine::Scene::Raycast(physx::PxVec3 origin, physx::PxVec3 dir, float 
 		if (_buffer1.block.actor->getType() == physx::PxActorType::eRIGID_DYNAMIC)
 		{
 			hit.objectName = ((UserData*)_buffer1.block.actor->userData)->m_name;
-			hit._distance = _buffer1.block.distance;
+			hit.distance = _buffer1.block.distance;
 		}
+
+		hit.normal = PxVec3ToVector3(_buffer1.block.normal);
 
 		return true;
 	}
@@ -947,7 +1043,7 @@ bool MoolyEngine::Scene::Raycast(physx::PxVec3 origin, physx::PxVec3 dir, float 
 
 	physx::PxRaycastBuffer _buf01;
 
-	bool _result = m_scene->raycast(origin, dir, distance, _buf01, physx::PxHitFlags(physx::PxHitFlag::eDEFAULT), _filterData);
+	bool _result = m_scene->raycast(origin, dir, distance, _buf01, _outputFlags, _filterData);
 
 	if (_buf01.hasBlock)
 	{
@@ -957,12 +1053,44 @@ bool MoolyEngine::Scene::Raycast(physx::PxVec3 origin, physx::PxVec3 dir, float 
 		auto _type = _buf01.block.actor->getType();
 
 		hit.objectName = ((UserData*)_buf01.block.actor->userData)->m_name;
-		hit._distance = _buf01.block.distance;
+		hit.distance = _buf01.block.distance;
+		hit.normal = PxVec3ToVector3(_buf01.block.normal);
+		hit.hitPos = PxVec3ToVector3(_buf01.block.position);
 
 		return true;
 	}
 
 	return false;
+}
+
+bool MoolyEngine::Scene::CheckBox(physx::PxVec3 center, physx::PxVec3 halfExtents, std::vector<std::string> filteredLayers)
+{
+	SCENE_LOCK sceneLock(*m_scene);
+
+	physx::PxTransform transform(center);
+
+	physx::PxBoxGeometry geometry(halfExtents);
+
+	constexpr int bufSize = 128;
+	physx::PxOverlapHit hitBuffer[bufSize];
+	physx::PxOverlapBuffer buf(hitBuffer, bufSize);
+
+	physx::PxQueryFilterData filterData;
+
+	for (auto _filterLayer : filteredLayers)
+	{
+		auto _foundedLayer = m_layer.find(_filterLayer);
+		if (_foundedLayer == m_layer.end())
+		{
+			continue;
+		}
+
+		filterData.data.word0 -= _foundedLayer->second.first;
+	}
+
+	bool result = m_scene->overlap(geometry, transform, buf, filterData);
+
+	return result;
 }
 
 bool MoolyEngine::Scene::GetTransform(const std::string& objName, physx::PxTransform& transform)
@@ -1044,7 +1172,7 @@ bool MoolyEngine::Scene::SetLayerFilterData(const std::string& layerName, std::v
 	}
 
 	_currentSettingLayer->second.second = _filterMask;
-	return false;
+	return true;
 }
 
 bool MoolyEngine::Scene::SetLayer(const std::string& objName, const std::string& layerName)
@@ -1124,7 +1252,7 @@ physx::PxFilterFlags MoolyEngine::PhysicsWorldFilterShader(physx::PxFilterObject
 	if (physx::PxFilterObjectIsTrigger(attributes0) || physx::PxFilterObjectIsTrigger(attributes1))
 	{
 		pairFlags = physx::PxPairFlag::eTRIGGER_DEFAULT;
-		return physx::PxFilterFlags();
+		return physx::PxFilterFlag::eDEFAULT;
 	}
 
 	auto const _layerMask01 = filterData0.word0;

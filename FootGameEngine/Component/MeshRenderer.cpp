@@ -29,12 +29,12 @@ namespace GameEngineSpace
 		legacyBuilder->AddTexture(renderObj, diffuseID, "albedo", diffuseMap, RenderingData::TextureMapType::ALBEDO);
 		legacyBuilder->AddTexture(renderObj, normalID, "normal", normalMap, RenderingData::TextureMapType::NORMAL);*/
 
-		GraphicsManager::GetInstance()->GetRenderer()->AddRenderObj(renderObj);
+		GraphicsManager::GetInstance()->GetRenderer()->InitObject(renderObj);
 	}
 
 	void MeshRenderer::Render()
 	{
-		//renderObj->Render();
+		renderObj->Render();
 	}
 
 	void MeshRenderer::PrepareRender(float tick)

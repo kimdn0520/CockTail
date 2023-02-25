@@ -61,7 +61,7 @@ namespace GraphicsEngineSpace
 		samDesc3.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 		samDesc3.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 		samDesc3.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-			   
+
 		samDesc3.MipLODBias = 0.f;
 		samDesc3.MaxAnisotropy = 2;
 		samDesc3.ComparisonFunc = D3D11_COMPARISON_NEVER;
@@ -69,7 +69,7 @@ namespace GraphicsEngineSpace
 		samDesc3.BorderColor[1] = 0.f;
 		samDesc3.BorderColor[2] = 0.f;
 		samDesc3.BorderColor[3] = 0.f;
-			   
+
 		samDesc3.MinLOD = -FLT_MAX;
 		samDesc3.MaxLOD = FLT_MAX;
 
@@ -84,7 +84,7 @@ namespace GraphicsEngineSpace
 		samDesc4.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
 		samDesc4.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
 		samDesc4.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
-			   
+
 		samDesc4.MipLODBias = 0.f;
 		samDesc4.MaxAnisotropy = 2;
 		samDesc4.ComparisonFunc = D3D11_COMPARISON_NEVER;
@@ -92,7 +92,7 @@ namespace GraphicsEngineSpace
 		samDesc4.BorderColor[1] = 0.f;
 		samDesc4.BorderColor[2] = 0.f;
 		samDesc4.BorderColor[3] = 0.f;
-			   
+
 		samDesc4.MinLOD = -FLT_MAX;
 		samDesc4.MaxLOD = FLT_MAX;
 
@@ -101,6 +101,51 @@ namespace GraphicsEngineSpace
 		if (FAILED(hr) == true)
 			::MessageBoxA(nullptr, "Sampler Create Failed!", nullptr, MB_OK);
 
+		// ½¦µµ¿ì ¸Ê »ùÇÃ·¯ => ¿ëÃ¥¿¡¼­ Á¦½ÃÇÏ´Â..
+		D3D11_SAMPLER_DESC samDesc5;
+		samDesc5.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT;
+		samDesc5.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+		samDesc5.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+		samDesc5.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+		samDesc5.BorderColor[0] = 0.f;
+		samDesc5.BorderColor[1] = 0.f;
+		samDesc5.BorderColor[2] = 0.f;
+		samDesc5.BorderColor[3] = 0.f;
+
+		samDesc5.MipLODBias = 0.f;
+		samDesc5.MaxAnisotropy = 2;
+		samDesc5.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+
+		samDesc5.MinLOD = -FLT_MAX;
+		samDesc5.MaxLOD = FLT_MAX;
+
+		hr = device->CreateSamplerState(&samDesc5, comparisonLinearSamplerState.GetAddressOf());
+
+		if (FAILED(hr) == true)
+			::MessageBoxA(nullptr, "Sampler Create Failed!", nullptr, MB_OK);
+
+		// ½¦µµ¿ì Å¥ºê ¸Ê »ùÇÃ·¯
+		D3D11_SAMPLER_DESC samDesc6;
+		samDesc6.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT;
+		samDesc6.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		samDesc6.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		samDesc6.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		samDesc6.BorderColor[0] = 0.f;
+		samDesc6.BorderColor[1] = 0.f;
+		samDesc6.BorderColor[2] = 0.f;
+		samDesc6.BorderColor[3] = 0.f;
+
+		samDesc6.MipLODBias = 0.f;
+		samDesc6.MaxAnisotropy = 2;
+		samDesc6.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+
+		samDesc6.MinLOD = -FLT_MAX;
+		samDesc6.MaxLOD = FLT_MAX;
+
+		hr = device->CreateSamplerState(&samDesc6, comparisonLinearWrapSamplerState.GetAddressOf());
+
+		if (FAILED(hr) == true)
+			::MessageBoxA(nullptr, "Sampler Create Failed!", nullptr, MB_OK);
 	}
 
 	void SamplerManager::Release()

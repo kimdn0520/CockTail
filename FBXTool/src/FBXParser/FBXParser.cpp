@@ -139,23 +139,23 @@ void FBXParser::LoadMesh(fbxsdk::FbxNode* node, fbxsdk::FbxMesh* mesh, std::shar
 	DirectX::XMVECTOR det = XMMatrixDeterminant(nodeMatrix);
 
 	// 음수면 네거리브~
-	if (det.m128_f32[0] < 0)
-	{
-		// Decompose 했다가 scale -주고 다시 합쳐야함..
-		DirectX::XMVECTOR scale;
-		DirectX::XMVECTOR rotQuat;
-		DirectX::XMVECTOR trans;
-		DirectX::XMMatrixDecompose(&scale, &rotQuat, &trans, nodeMatrix);
-		DirectX::XMVECTOR minusScale = { -scale.m128_f32[0], -scale.m128_f32[1], -scale.m128_f32[2] };
-		scale = minusScale;
+	//if (det.m128_f32[0] < 0)
+	//{
+	//	// Decompose 했다가 scale -주고 다시 합쳐야함..
+	//	DirectX::XMVECTOR scale;
+	//	DirectX::XMVECTOR rotQuat;
+	//	DirectX::XMVECTOR trans;
+	//	DirectX::XMMatrixDecompose(&scale, &rotQuat, &trans, nodeMatrix);
+	//	DirectX::XMVECTOR minusScale = { -scale.m128_f32[0], -scale.m128_f32[1], -scale.m128_f32[2] };
+	//	scale = minusScale;
 
-		// 다시 SRT 조립
-		nodeMatrix = DirectX::XMMatrixScaling(scale.m128_f32[0], scale.m128_f32[1], scale.m128_f32[2]) *
-			DirectX::XMMatrixRotationQuaternion(rotQuat) *
-			DirectX::XMMatrixTranslation(trans.m128_f32[0], trans.m128_f32[1], trans.m128_f32[2]);
+	//	// 다시 SRT 조립
+	//	nodeMatrix = DirectX::XMMatrixScaling(scale.m128_f32[0], scale.m128_f32[1], scale.m128_f32[2]) *
+	//		DirectX::XMMatrixRotationQuaternion(rotQuat) *
+	//		DirectX::XMMatrixTranslation(trans.m128_f32[0], trans.m128_f32[1], trans.m128_f32[2]);
 
-		isNegativeScale = true;
-	}
+	//	isNegativeScale = true;
+	//}
 
 	const auto roll = -90.0f * DirectX::XM_PI / 180.0f;
 
@@ -418,6 +418,9 @@ void FBXParser::LoadMaterial(fbxsdk::FbxSurfaceMaterial* surfaceMaterial, std::s
 
 	material->materialName = surfaceMaterial->GetName();
 
+	std::transform(material->materialName.begin(), material->materialName.end(), material->materialName.begin(),
+		[](char c) { return tolower(c); });
+
 	if (surfaceMaterial->GetClassId().Is(FbxSurfacePhong::ClassId))
 	{
 		// Ambient Data
@@ -451,7 +454,7 @@ void FBXParser::LoadMaterial(fbxsdk::FbxSurfaceMaterial* surfaceMaterial, std::s
 		material->material_Transparency = static_cast<float>(((FbxSurfacePhong*)surfaceMaterial)->TransparencyFactor.Get());
 
 		// Shininess Data
-		material->roughness = material->roughness = 1.0f - float(sqrt(fmax(static_cast<float>(((FbxSurfacePhong*)surfaceMaterial)->Shininess.Get()), 0.0)) / 10.0);
+		material->roughness = 1.0f - float(sqrt(fmax(static_cast<float>(((FbxSurfacePhong*)surfaceMaterial)->Shininess.Get()), 0.0)) / 10.0);
 
 		// metallic 값인듯함?
 		material->metallic = static_cast<float>(((FbxSurfacePhong*)surfaceMaterial)->ReflectionFactor.Get());
@@ -490,6 +493,8 @@ void FBXParser::LoadMaterial(fbxsdk::FbxSurfaceMaterial* surfaceMaterial, std::s
 	material->normalMap = GetTextureRelativeName(surfaceMaterial, fbxsdk::FbxSurfaceMaterial::sNormalMap);
 	material->roughnessMap = GetTextureRelativeName(surfaceMaterial, fbxsdk::FbxSurfaceMaterial::sShininess);
 	material->emissiveMap = GetTextureRelativeName(surfaceMaterial, fbxsdk::FbxSurfaceMaterial::sEmissive);
+
+	material->metallicMap = GetTextureRelativeName(surfaceMaterial, fbxsdk::FbxSurfaceMaterial::sReflection);
 
 	// 머터리얼 리스트에 추가
 	fbxModel->materialList.push_back(material);
@@ -653,18 +658,18 @@ DirectX::SimpleMath::Vector3 FBXParser::GetNormal(fbxsdk::FbxMesh* mesh, int con
 
 		FbxVector4 vec = normal->GetDirectArray().GetAt(normalIdx);
 
-		if (isNegativeScale)
+		/*if (isNegativeScale)
 		{
 			fbxNormal.x = static_cast<float>(-vec.mData[0]);
 			fbxNormal.y = static_cast<float>(-vec.mData[2]);
 			fbxNormal.z = static_cast<float>(-vec.mData[1]);
 		}
 		else
-		{
+		{*/
 			fbxNormal.x = static_cast<float>(vec.mData[0]);
 			fbxNormal.y = static_cast<float>(vec.mData[2]);
 			fbxNormal.z = static_cast<float>(vec.mData[1]);
-		}
+		//}
 
 		return fbxNormal;
 	}
@@ -762,13 +767,17 @@ std::string FBXParser::GetTextureRelativeName(fbxsdk::FbxSurfaceMaterial* surfac
 
 	std::wstring wstr = L"";
 
-	wstr.assign(name.begin(), name.end());
+	CutFilePath(name);
 
-	std::wstring tempName = fs::path(name).filename();
+	//std::wstring tmp = fs::path(name).filename();
 
-	const std::string fileName(tempName.begin(), tempName.end());
+	//wstr.assign(name.begin(), name.end());
 
-	return fileName;
+	//std::wstring tempName = fs::path(name).filename();
+
+	//const std::string fileName(tmp.begin(), tmp.end());
+
+	return name;
 }
 
 FbxAMatrix FBXParser::GetTransformMatrix(FbxNode* node)
@@ -777,4 +786,16 @@ FbxAMatrix FBXParser::GetTransformMatrix(FbxNode* node)
 	const FbxVector4 rotation = node->GetGeometricRotation(FbxNode::eSourcePivot);
 	const FbxVector4 scaling = node->GetGeometricScaling(FbxNode::eSourcePivot);
 	return FbxAMatrix(translation, rotation, scaling);
+}
+
+void FBXParser::CutFilePath(std::string& path)
+{
+	if (path.find("\\") != std::string::npos)
+	{
+		int idx = path.find("\\") + 1;
+
+		path.erase(0, idx);
+
+		CutFilePath(path);
+	}
 }

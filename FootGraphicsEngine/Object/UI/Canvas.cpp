@@ -23,6 +23,10 @@ namespace GraphicsEngineSpace
 
 	std::shared_ptr<TextUI> Canvas::CreateTextUI(const std::string& name)
 	{
+		auto textUI = textUIMap.find(name);
+		if (textUI != textUIMap.end())
+			return textUI->second;
+
 		std::string newUIName = name;
 		std::shared_ptr<TextUI> newTextUI = std::make_shared<TextUI>();
 
@@ -45,6 +49,10 @@ namespace GraphicsEngineSpace
 
 	std::shared_ptr<SpriteUI> Canvas::CreateSpriteUI(const std::string& name)
 	{
+		auto spriteUI = spriteUIMap.find(name);
+		if (spriteUI != spriteUIMap.end())
+			return spriteUI->second;
+
 		std::string newUIName = name;
 		std::shared_ptr<SpriteUI> newSpriteUI = std::make_shared<SpriteUI>();
 
@@ -67,6 +75,10 @@ namespace GraphicsEngineSpace
 
 	std::shared_ptr<ButtonUI> Canvas::CreateButtonUI(const std::string& name)
 	{
+		auto buttonUI = buttonUIMap.find(name);
+		if (buttonUI != buttonUIMap.end())
+			return buttonUI->second;
+
 		std::string newUIName = name;
 		std::shared_ptr<ButtonUI> newButtonUI = std::make_shared<ButtonUI>();
 
@@ -89,6 +101,10 @@ namespace GraphicsEngineSpace
 
 	std::shared_ptr<Canvas> Canvas::CreateCanvasUI(const std::string& name, float width, float height)
 	{
+		auto canvasUI = canvasMap.find(name);
+		if (canvasUI != canvasMap.end())
+			return canvasUI->second;
+
 		std::string newUIName = name;
 		std::shared_ptr<Canvas> newCanvasUI = std::make_shared<Canvas>(width, height);
 
@@ -107,6 +123,32 @@ namespace GraphicsEngineSpace
 			return nullptr;
 
 		return canvasUI->second;
+	}
+
+	std::shared_ptr<ProgressBarUI> Canvas::CreateProgressBarUI(const std::string& name)
+	{
+		auto progressBar = progressBarUIMap.find(name);
+		if (progressBar != progressBarUIMap.end())
+			return progressBar->second;
+
+		std::string newUIName = name;
+		std::shared_ptr<ProgressBarUI> newProgressBar = std::make_shared<ProgressBarUI>();
+
+		newProgressBar->SetName(name);
+		newProgressBar->SetParent(shared_from_this());
+
+		progressBarUIMap.insert(std::pair{ name, newProgressBar });
+
+		return progressBarUIMap.at(name);
+	}
+
+	std::shared_ptr<ProgressBarUI> Canvas::GetProgressBarUI(const std::string& name)
+	{
+		auto progressBar = progressBarUIMap.find(name);
+		if (progressBar == progressBarUIMap.end())
+			return nullptr;
+
+		return progressBar->second;
 	}
 
 	void Canvas::CheckCollidedButton(float mouseX, float mouseY, bool isClicked)
@@ -191,7 +233,7 @@ namespace GraphicsEngineSpace
 		this->selectMode = selectMode;
 	}
 
-	void Canvas::Render(float tick)
+	void Canvas::Render(std::shared_ptr<IRenderer> renderer, float tick)
 	{
 		if (isEnable != true)
 			return;
@@ -202,7 +244,11 @@ namespace GraphicsEngineSpace
 		for (auto iter : children)
 		{
 			if (iter != nullptr)
-				iter->Render(tick);
+			{
+				renderer->GraphicsDebugBeginEvent(iter->GetName());
+				iter->Render(renderer, tick);
+				renderer->GraphicsDebugEndEvent();
+			}
 
 			if (selectMode == true)
 			{
@@ -310,6 +356,10 @@ namespace GraphicsEngineSpace
 				button.second->SetButtonState(ButtonState::DEFAULT);
 				continue;
 			}
+
+			// 버튼이 사용 불가능한 상태면.. 체크를 하지 않습니다.
+			if (button.second->state == ButtonState::DISABLE)
+				continue;
 
 			// AABB Check
 			auto buttonScreenPos = button.second->GetScreenPosition();

@@ -23,52 +23,54 @@ namespace GameEngineSpace
 
 	LRESULT WindowManager::MsgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
-		if(GraphicsEngineSpace::ImGUIManager::GetInstance()->SetWndProcHandler(hWnd, message, wParam, lParam) == true)
+		if (GraphicsEngineSpace::ImGUIManager::GetInstance()->SetWndProcHandler(hWnd, message, wParam, lParam) == true)
 			return true;
 
 		// 메시지 프로시저..
 			// 일단 가져와보자.
 		switch (message)
 		{
-			case WM_DESTROY:
+		case WM_DESTROY:
+		{
+			PostQuitMessage(0);
+		}
+		break;
+
+		// 리사이즈..
+		case WM_SIZE:
+		{
+			// 게임 엔진이 가지고 있는 렌더러에 OnResize를 해주는 식으로 짰었다..
+				// 그래픽스 엔진을 스태틱으로 가지고 있을 것인가..게임엔진이 물고 있는 식으로 할 것인가...
+				// 윈도우 매니저 내부에서 게임엔진을 가리키는 식으로..
+			clientHeight = HIWORD(lParam);
+			clientWidth = LOWORD(lParam);
+
+			if (wParam == SIZE_MINIMIZED)
 			{
-				PostQuitMessage(0);
+				isMinimized = true;
+				isMaximized = false;
 			}
-			break;
-
-			// 리사이즈..
-			case WM_SIZE:
+			else if (wParam == SIZE_MAXIMIZED)
 			{
-				// 게임 엔진이 가지고 있는 렌더러에 OnResize를 해주는 식으로 짰었다..
-					// 그래픽스 엔진을 스태틱으로 가지고 있을 것인가..게임엔진이 물고 있는 식으로 할 것인가...
-					// 윈도우 매니저 내부에서 게임엔진을 가리키는 식으로..
-				clientHeight = HIWORD(lParam);
-				clientWidth = LOWORD(lParam);
-
-				if (wParam == SIZE_MINIMIZED)
-				{
-					isMinimized = true;
-					isMaximized = false;
-				}
-				else if (wParam == SIZE_MAXIMIZED)
+				isMinimized = false;
+				isMaximized = true;
+			}
+			else if (wParam == SIZE_RESTORED)
+			{
+				// 최소화 되어 있다 복구
+				if (isMinimized == true)
 				{
 					isMinimized = false;
-					isMaximized = true;
 				}
-				else if (wParam == SIZE_RESTORED)
+				else if (isMaximized == true)
 				{
-					// 최소화 되어 있다 복구
-					if (isMinimized == true)
-					{
-						isMinimized = false;						
-					}
-					else if (isMaximized == true)
-					{
-						isMaximized = false;
-					}
-					
+					isMaximized = false;
 				}
 
+			}
+
+			if (wParam != SIZE_MINIMIZED)
+			{
 				// 현재 크기 얻어와서 on Resize
 				RECT rect;
 				GetClientRect(hWnd, &rect);
@@ -77,50 +79,50 @@ namespace GameEngineSpace
 
 				// 현재 씬의 메인카메라의 비율을 바꿔준다.
 				SceneManager::GetInstance()->UpdateMainCameraAspectRatio(clientWidth, clientHeight);
-
-				break;
 			}
+			break;
+		}
 
-			// 윈도우창 활성화
-			case WM_ACTIVATE:
-			{
-				if (wParam != false)
-					InputManager::GetInstance()->isWindowActivated = true;
-				else
-					InputManager::GetInstance()->isWindowActivated = false;
+		// 윈도우창 활성화
+		case WM_ACTIVATE:
+		{
+			if (wParam != false)
+				InputManager::GetInstance()->isWindowActivated = true;
+			else
+				InputManager::GetInstance()->isWindowActivated = false;
 
-				break;
-			}
+			break;
+		}
 
-			// 타이머 종료 관련..
-			case WM_ENTERSIZEMOVE:
-			{
-				isResizing = true;
+		// 타이머 종료 관련..
+		case WM_ENTERSIZEMOVE:
+		{
+			isResizing = true;
 
-				Timer::GetInstance()->Stop();
+			Timer::GetInstance()->Stop();
 
-				break;
-			}
-			case WM_EXITSIZEMOVE:
-			{
-				isResizing = false;
+			break;
+		}
+		case WM_EXITSIZEMOVE:
+		{
+			isResizing = false;
 
-				Timer::GetInstance()->Start();
+			Timer::GetInstance()->Start();
 
-				// 리사이즈.
-				RECT rect;
-				GetClientRect(hWnd, &rect);
-				this->SetWndSize(rect);
-				this->OnResize();
+			// 리사이즈.
+			RECT rect;
+			GetClientRect(hWnd, &rect);
+			this->SetWndSize(rect);
+			this->OnResize();
 
-				break;
-			}
-			case WM_MOUSEMOVE:
-			{
-				this->OnMouseMove(lParam);
+			break;
+		}
+		case WM_MOUSEMOVE:
+		{
+			this->OnMouseMove(lParam);
 
-				break;
-			}
+			break;
+		}
 		}
 
 		return DefWindowProc(hWnd, message, wParam, lParam);
@@ -160,7 +162,7 @@ namespace GameEngineSpace
 		RegisterClass(&wndClass);
 
 		_hWnd = CreateWindow(szAppName, szAppName, WS_OVERLAPPEDWINDOW, 100, 100,
-			screenWidth + 100, screenHeight + 100, NULL, NULL, hInst, NULL);
+			screenWidth, screenHeight, NULL, NULL, hInst, NULL);
 
 		if (_hWnd == nullptr)
 		{
@@ -172,9 +174,13 @@ namespace GameEngineSpace
 		// 윈도우 핸들 보관
 		hWnd = _hWnd;
 
+		printf("Window Init Clear\n");
+
 		//ImGui초기화
 		ImGUIManager::GetInstance()->Init();
 		ImGUIManager::GetInstance()->InitImplWin(hWnd);
+
+		printf("IMGUI Window Init Clear\n");
 	}
 
 	void WindowManager::StartWindow()

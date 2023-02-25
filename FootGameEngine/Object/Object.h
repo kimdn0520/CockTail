@@ -51,6 +51,8 @@ namespace GameEngineSpace
 
 		virtual void Start();
 
+		virtual void FixedUpdate(float tick);
+
 		virtual void PreUpdate(float tick);
 
 		virtual void Update(float tick);

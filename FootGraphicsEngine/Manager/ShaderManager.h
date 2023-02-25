@@ -47,10 +47,12 @@ namespace GraphicsEngineSpace
 		// 쉐이더 컴파일 코드
 		bool CompileShaderFromFile(const TCHAR* path, const char* entryName, const char* shaderModel, ID3DBlob** blobOut, const D3D_SHADER_MACRO* macro);
 
-		bool CreateVertexShader(const std::string& path, const std::string& entryName, const std::string& shaderModel, const std::string& shaderName, D3D11_INPUT_ELEMENT_DESC* desc, UINT elementsSize, const
-		                        D3D_SHADER_MACRO* macro);
-		bool CreatePixelShader(const std::string& path, const std::string& entryName, const std::string& shaderModel, const std::string& shaderName, const
-		                       D3D_SHADER_MACRO* macro);
+		bool CreateVertexShader(const std::string& path, const std::string& entryName, const std::string& shaderModel, const std::string& shaderName, D3D11_INPUT_ELEMENT_DESC* desc, UINT elementsSize,
+			const D3D_SHADER_MACRO* macro);
+		bool CreatePixelShader(const std::string& path, const std::string& entryName, const std::string& shaderModel, const std::string& shaderName,
+			const D3D_SHADER_MACRO* macro);
+		bool CreateGeometryShader(const std::string& path, const std::string& entryName, const std::string& shaderModel, const std::string& shaderName,
+			const D3D_SHADER_MACRO* macro);
 	};
 
 }

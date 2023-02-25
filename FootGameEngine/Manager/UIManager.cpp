@@ -6,6 +6,7 @@
 #include "SceneManager.h"
 #include "WindowManager.h"
 #include "Timer.h"
+#include "UICreator.h"
 
 namespace GameEngineSpace
 {
@@ -34,24 +35,32 @@ namespace GameEngineSpace
 		mainCanvas = renderer->CreateCanvas("MainCanvas", nowWidth, nowHeight);
 
 		// 각종 캔버스들을 이 아래에서 미리 생성해둔다.
-		mainCanvas->CreateCanvasUI("TestCanvas", width, height);
-		mainCanvas->CreateCanvasUI("PopUpCanvas", width / 2, height / 2)->SetPosition({ static_cast<float>(width / 2), static_cast<float>(height / 2), 0.1f });
+		mainCanvas->CreateCanvasUI("TitleCanvas", width / 2, height / 2)->SetPosition({ static_cast<float>(width / 2), static_cast<float>(height / 2), 0.1f });
+		mainCanvas->CreateCanvasUI("CombinationCanvas", width / 2, height / 2)->SetPosition({ static_cast<float>(width / 2), static_cast<float>(height / 2), 0.1f });
+		mainCanvas->CreateCanvasUI("DialogCanvas", width / 2, height / 2)->SetPosition({ static_cast<float>(width / 2), static_cast<float>(height / 2), 0.1f });
+		mainCanvas->CreateCanvasUI("SettingCanvase", width / 2, height / 2)->SetPosition({ static_cast<float>(width / 2), static_cast<float>(height / 2), 0.1f });
+		mainCanvas->CreateCanvasUI("InGameCanvas", width / 2, height / 2)->SetPosition({ static_cast<float>(width / 2), static_cast<float>(height / 2), 0.1f });
+		mainCanvas->CreateCanvasUI("InGameMenuCanvas", width / 2, height / 2)->SetPosition({ static_cast<float>(width / 2), static_cast<float>(height / 2), 0.1f });
+		mainCanvas->CreateCanvasUI("SceneTestCanvas", width / 2, height / 2)->SetPosition({ static_cast<float>(width / 2), static_cast<float>(height / 2), 0.1f });
 
 		// ImGUI포인터를 미리 보관해둔다.
 		imgui = ImGUIManager::GetInstance();
+
+		creator = std::make_shared<UICreator>();
+
+		printf("UIManager Init Clear\n");
 	}
 
 	// WIC 텍스쳐 로드 가능한 시점에 호출
 	void UIManager::CreateCanvasAll()
 	{
-		CreateTestCanvas();
-		CreatePopUpCanvase();
+		creator->CreateCanvasAll();
 	}
 
 	void UIManager::Render(float tick)
 	{
 		GraphicsManager::GetInstance()->GetRenderer()->GraphicsDebugBeginEvent("Canvas");
-		mainCanvas->Render(tick);
+		mainCanvas->Render(GraphicsManager::GetInstance()->GetRenderer(), tick);
 		GraphicsManager::GetInstance()->GetRenderer()->GraphicsDebugEndEvent();
 	}
 
@@ -107,7 +116,7 @@ namespace GameEngineSpace
 	{
 		auto pickedUI = mainCanvas->GetSelectedUI();
 
-		if (imgui->Begin("SelectedUI"))
+		if (imgui->UISelectBegin())
 		{
 			if (pickedUI == nullptr)
 				imgui->Text("None");
@@ -123,81 +132,44 @@ namespace GameEngineSpace
 				float UIHeight = pickedUI->GetHeight();
 
 				imgui->DragFloat2("UI Position", UIPos);
-				imgui->DragFloat("UI Float Z", &UIPosZ, 0.05, 0.0f, 1.0f);
+				imgui->DragFloat("UI Float Z", &UIPosZ, 0.05f, 0.0f, 1.0f);
 				imgui->DragFloat("UI Width", &UIWidth);
 				imgui->DragFloat("UI Height", &UIHeight);
-				
+
 				pickedUI->SetPosition({ UIPos[0], UIPos[1], UIPosZ });
 				pickedUI->SetWidth(UIWidth);
 				pickedUI->SetHeight(UIHeight);
+
+				if (std::dynamic_pointer_cast<ProgressBarUI>(pickedUI) != nullptr)
+				{
+					float fill = std::dynamic_pointer_cast<ProgressBarUI>(pickedUI)->GetFillPercent();
+
+					imgui->DragFloat("Fill Percent", &fill, 0.01f, 0.0f, 1.0f);
+
+					std::dynamic_pointer_cast<ProgressBarUI>(pickedUI)->SetFillPercent(fill);
+				}
+
+				if (std::dynamic_pointer_cast<TextUI>(pickedUI))
+				{
+					float fontSize = std::dynamic_pointer_cast<TextUI>(pickedUI)->GetFontSize();
+
+					imgui->DragFloat("Font Size", &fontSize);
+
+					std::dynamic_pointer_cast<TextUI>(pickedUI)->SetFontSize(fontSize);
+				}
+
+				if (std::dynamic_pointer_cast<SpriteUI>(pickedUI))
+				{
+					auto maskColor = std::dynamic_pointer_cast<SpriteUI>(pickedUI)->GetMaskColor();
+					float color[4] = { maskColor.x, maskColor.y, maskColor.z, maskColor.w };
+
+					imgui->ColorPicker4("Sprite Mask Color", color);
+
+					std::dynamic_pointer_cast<SpriteUI>(pickedUI)->SetMaskColor(color[0], color[1], color[2], color[3]);
+				}
 			}
 		}
 		imgui->End();
 	}
 
-	void UIManager::CreateTestCanvas()
-	{
-		auto canvas = mainCanvas->GetCanvasUI("TestCanvas");
-
-		auto sampleButton = canvas->CreateButtonUI("sampleButton");
-		sampleButton->SetPosition(Vector3{ 200.f, 100.f, 0.5f });
-
-		auto texture = GraphicsManager::GetInstance()->LoadTexture(L"Resources/UI/DummyButton.png");
-		sampleButton->SetDefaultTexture(texture);
-		sampleButton->SetWidth(100.f);
-		sampleButton->SetHeight(20.f);
-
-		sampleButton->SetClickEvent([&]
-			{
-				mainCanvas->GetCanvasUI("PopUpCanvas")->SetEnable(true);
-			});
-
-		auto sampleButton2 = canvas->CreateButtonUI("sampleButton2");
-		sampleButton2->SetPosition(Vector3{ 200.f, 130.f, 0.5f });
-		sampleButton2->SetDefaultTexture(texture);
-		sampleButton2->SetWidth(100.f);
-		sampleButton2->SetHeight(20.f);
-
-		sampleButton2->SetClickEvent([&]
-			{
-				mainCanvas->GetCanvasUI("PopUpCanvas")->SetEnable(false);
-				mainCanvas->GetCanvasUI("TestCanvas")->GetButtonUI("sampleButton")->SetDefaultMaskColor({0.5f, 0.5f, 0.5f, 0.8f});
-			});
-	}
-
-	void UIManager::CreatePopUpCanvase()
-	{
-		auto canvas = mainCanvas->GetCanvasUI("PopUpCanvas");
-
-		auto sprite = canvas->CreateSpriteUI("PopupTest");
-
-		auto texture = GraphicsManager::GetInstance()->LoadTexture(L"Resources/UI/DummyPopup.png");
-
-		sprite->SetPosition(Vector3{ 0.f, 0.f, 0.2f });
-		sprite->SetTexture(texture);
-		sprite->SetWidth(400.f);
-		sprite->SetHeight(600.f);
-
-		auto text = canvas->CreateTextUI("PopupText");
-
-		text->SetPosition(Vector3{ 0.f, -100.f, 0.1f });
-		std::wstring test = L"Test용 string입니다.";
-		text->SetText(test);
-		text->SetWidth(100.f);
-		text->SetHeight(40.f);
-
-		auto button = canvas->CreateButtonUI("PopupButton");
-		texture = ResourceManager::GetInstance()->LoadTexture(L"Resources/UI/DummyButton.png");
-		button->SetDefaultTexture(texture);
-		button->SetWidth(100.f);
-		button->SetHeight(20.f);
-
-		button->SetClickEvent([&]
-		{
-			mainCanvas->GetCanvasUI("PopUpCanvas")->GetSpriteUI("PopupTest")->SetMaskAlpha(0.5);
-		});
-
-		canvas->SetEnable(false);
-
-	}
 }

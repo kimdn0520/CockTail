@@ -2,6 +2,8 @@
 
 namespace GraphicsEngineSpace
 {
+	class RenderTargetTexture;
+
 	/**
 	* \brief Device, DeviceContext, SwapChain, RasterizerState 들을 관리하는 코어 클래스
 	*
@@ -44,9 +46,13 @@ namespace GraphicsEngineSpace
 		void Finalize();
 
 		// 렌더에 해당되는 각종 함수들 래핑
-		void ResetView(ComPtr<ID3D11RenderTargetView> _nowRT, ComPtr<ID3D11DepthStencilView> _nowDSV, const FLOAT color[4]);
+		void ResetRenderTargetView(ComPtr<ID3D11RenderTargetView> nowRTV, const FLOAT color[4]);
+		void ResetDepthStencilView(ComPtr<ID3D11DepthStencilView> nowDSV, UINT clearFlag, float depth, UINT8 stencil);
 		void ResetRS();
 		void PresentSwapChain();
+
+		// 렌더 타겟을 받아서 후면 버퍼를 세팅해준다.
+		void CreateMainRenderTarget(std::shared_ptr<RenderTargetTexture> mainRenderTarget, int clientWidth, int clientHeight, DXGI_FORMAT bufferFormat);
 
 		// 간단한? 게터를 만들어 주자.
 			// 세터는 딱히 필요가 없다..

@@ -1,58 +1,29 @@
 #pragma once
-#include "ColliderBase.h"
+#include "Collider.h"
 
 namespace GameEngineSpace
 {
-	class BoxCollider;
-
-	/**
-	 * \brief 구 충돌을 판정하는 콜라이더 컴포넌트
-	 * 따로 바운딩 볼륨은 사용하지 않고.. 중심과 거리로 판별한다.
-	 *
-	 * 2022.08.03 DevBlackFoot.
-	 */
-	class SphereCollider : public ColliderBase
+	class SphereCollider : public Collider
 	{
-	private:
-		// 해당 오브젝트의 로컬 상에서의 중앙값
-		Vector3 localCenter;
-		// 월드에서의 중앙값
-		Vector3 worldCenter;
-		// 반지름
-		float radius;
+	protected:
+		float radius = 1.0f;
+		bool bDebug = false;
 
 	public:
-		SphereCollider(std::weak_ptr<GameObject> gameObj);
+		SphereCollider(std::weak_ptr<GameObject> _object);
+		SphereCollider(std::weak_ptr<GameObject> _object, Vector3 _pivot, float _radius);
 		virtual ~SphereCollider();
 
-	private:
-		// 각 경우의 충돌 체크
-		bool CheckForSphere(std::shared_ptr<SphereCollider> other);
-		bool CheckForBox(std::shared_ptr<BoxCollider> other);
+		void Update(float tick) override;
 
-	public:
-		void Release() override;
+		float GetRadius() const { return radius; }
+		void SetRadius(float _value) { radius = _value; }
 
-		// Getter & Setter
-		const Vector3& GetLocalCenter() { return localCenter; }
-		const Vector3& GetWorldCenter() { return worldCenter; }
-		const float& GetRadius() { return radius; }
+		void SetDebugRender(bool _value) { bDebug = _value; }
+		void DrawDebugRender();
 
-		void SetLocalCenter(const Vector3& newCenter) { localCenter = newCenter; }
-		void SetRadius(const float& _radius) { radius = _radius; }
-
-		// 충돌 체크
-		bool CheckCollision(std::shared_ptr<ColliderBase> other) override;
-
-		// 콜라이더 렌더
+		void InitRenderObj() override;
 		void ColliderRender() override;
-
-		void LateUpdate(float tick) override;
-
-		friend class PhysicsManager;
-
-		friend class BoxCollider;
-		friend class RayCollider;
 	};
 
 }

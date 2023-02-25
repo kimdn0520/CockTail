@@ -48,6 +48,14 @@ namespace GraphicsEngineSpace
 		// 실제 imGui를 생성할 함수.
 			// imGUI의 함수를 래핑함
 		bool Begin(std::string guiTitle);
+		bool UISelectBegin();
+		bool CollapsingHeader(std::string label);
+		bool TreeNode(std::string label);
+		bool TreeNode(std::string parentLabel, std::string label);
+
+		// 화면에 무언가를 그리고싶을때 쓰자
+		// gui를 fullscreen + nomove + layer back + 투명 시켜줌.
+		bool DrawBegin(std::string guiTitle);
 
 		bool SliderFloat(std::string label, float* value, float minValue, float maxValue);
 		bool SliderFloat2(std::string label, float value[2], float minValue, float maxValue);
@@ -74,11 +82,27 @@ namespace GraphicsEngineSpace
 		bool InputInt3(std::string label, int value[3]);
 		bool InputInt4(std::string label, int value[4]);
 
+		bool ColorPicker4(std::string label, float col[4]);
+
+		bool CheckBox(std::string label, bool* check);
+
 		// 포맷으로 써도 괜찮지만.. string을 이용해서 +로 사용해도 괜찮을 것 같다.
 		void Text(std::string text);
 		// Printf()와 비슷한 포맷 버전
 		void Text(const char* text, ...);
 
+		void DrawLine(SimpleMath::Vector3 pos1, SimpleMath::Vector3 pos2);
+
+		void DrawSpot(SimpleMath::Vector3 pos);
+
+		void DrawTriangle(SimpleMath::Vector3 pos1, SimpleMath::Vector3 pos2, SimpleMath::Vector3 pos3);
+
+		void Spacing();
+
 		void End();
+
+		// Tree Node 끝내기..
+		void TreePop();
+		void Separator();
 	};
 }

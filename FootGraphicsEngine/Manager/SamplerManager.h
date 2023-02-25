@@ -12,6 +12,8 @@ namespace GraphicsEngineSpace
 		ComPtr<ID3D11SamplerState> anisotropicClampSamplerState;
 		ComPtr<ID3D11SamplerState> linearWrapSamplerState;
 		ComPtr<ID3D11SamplerState> linearClampSamplerState;
+		ComPtr<ID3D11SamplerState> comparisonLinearSamplerState;
+		ComPtr<ID3D11SamplerState> comparisonLinearWrapSamplerState;
 
 	public:
 		SamplerManager()
@@ -19,6 +21,8 @@ namespace GraphicsEngineSpace
 			, anisotropicClampSamplerState(nullptr)
 			, linearWrapSamplerState(nullptr)
 			, linearClampSamplerState(nullptr)
+			, comparisonLinearSamplerState(nullptr)
+			, comparisonLinearWrapSamplerState(nullptr)
 		{
 			
 		}
@@ -33,6 +37,9 @@ namespace GraphicsEngineSpace
 		ComPtr<ID3D11SamplerState> GetAnisotropicClamp() { return anisotropicClampSamplerState; }
 		ComPtr<ID3D11SamplerState> GetLinearWrap() { return linearWrapSamplerState; }
 		ComPtr<ID3D11SamplerState> GetLinearClamp() { return linearClampSamplerState; }
+		ComPtr<ID3D11SamplerState> GetComparisonLinear() { return comparisonLinearSamplerState; }
+		ComPtr<ID3D11SamplerState> GetComparisonLinearWrap() { return comparisonLinearWrapSamplerState; }
+
 	};
 
 }

@@ -39,8 +39,6 @@ namespace GraphicsEngineSpace
 	public:
 		RESOURCE_TYPE GetType() { return resourceType; }
 
-		uint32 GetID() { return id; }
-
 		void SetName(const std::string& _name) { name = _name; }
 
 		const std::string& GetName() { return name; }

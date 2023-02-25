@@ -57,9 +57,14 @@ PS_Output main(VS_Output pin) : SV_Target
     float4 emissive = float4(0.0f, 0.0f, 0.0f, 1.0f);
 
 #ifdef USE_ALBEDO
-    color = pow(AlbedoMap.Sample(Sampler, pin.Tex), 2.2f);
+    // Diffuse(Albdeo texture)를 감마 디코딩 하여 샘플 한 뒤,
+    color = SRGBToLinear(AlbedoMap.Sample(Sampler, pin.Tex));
+
+	// 유니티에서 가져온 rgb 컬러 머테리얼을 디코딩 해서 블렌딩(곱 연산) 해줍니다.
+    //color.rgb *= SRGBToLinear(AddColor.rgb);
 #else
-    color.rgb += AddColor.rgb;
+    // rgb컬러 머테리얼을 디코딩 해서(기본적으로 컬러 값을 감마 인코딩 해서 값을 넣어준다고 가정) 넣어줍니다.
+    color.rgb = SRGBToLinear(AddColor.rgb);
 #endif
 
 #ifdef USE_NORMAL

@@ -71,7 +71,7 @@ namespace GraphicsEngineSpace
 	inline void GraphicsEngineSpace::Mesh::CreateIndexBuffer(const std::vector<unsigned int>& indices)
 	{
 		D3D11_BUFFER_DESC indexBufferDesc;
-		indexBufferDesc.ByteWidth = sizeof(unsigned int) * indices.size();
+		indexBufferDesc.ByteWidth = sizeof(unsigned int) * (unsigned int)indices.size();
 		indexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
 		indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 		indexBufferDesc.CPUAccessFlags = 0;

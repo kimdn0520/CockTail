@@ -1,6 +1,7 @@
 #include "GraphicsPch.h"
 #include "DX11GraphicsCore.h"
 #include "RasterizerState.h"
+#include "RenderTargetTexture.h"
 
 namespace GraphicsEngineSpace
 {
@@ -141,20 +142,26 @@ namespace GraphicsEngineSpace
 		SafeReset(instance);
 	}
 
-	/**
-	* \brief 렌더 시작전 지워주는 단계.
-	* \param _nowRT 현재 렌더 타겟 뷰
-	* \param _nowDSV 현재 뎁스 스텐실 뷰
-	*/
-	void DX11GraphicsCore::ResetView(ComPtr<ID3D11RenderTargetView> _nowRT, ComPtr<ID3D11DepthStencilView> _nowDSV, const FLOAT color[4])
+	void DX11GraphicsCore::ResetRenderTargetView(ComPtr<ID3D11RenderTargetView> nowRTV, const FLOAT color[4])
 	{
 		assert(D3DImmediateContext);
 		assert(swapChain);
 
-		// 렌더타겟과 스텐실 버퍼를 초기화한다.
-		D3DImmediateContext->ClearRenderTargetView(_nowRT.Get(), color);
-		if(_nowDSV != nullptr)
-			D3DImmediateContext->ClearDepthStencilView(_nowDSV.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+		if (nowRTV == nullptr)
+			return;
+
+		D3DImmediateContext->ClearRenderTargetView(nowRTV.Get(), color);
+	}
+
+	void DX11GraphicsCore::ResetDepthStencilView(ComPtr<ID3D11DepthStencilView> nowDSV, UINT clearFlag, float depth, UINT8 stencil)
+	{
+		assert(D3DImmediateContext);
+		assert(swapChain);
+
+		if (nowDSV == nullptr)
+			return;
+
+		D3DImmediateContext->ClearDepthStencilView(nowDSV.Get(), clearFlag, depth, stencil);
 	}
 
 	void DX11GraphicsCore::ResetRS()
@@ -169,4 +176,36 @@ namespace GraphicsEngineSpace
 		HR(swapChain->Present(1, 0));
 	}
 
+	void DX11GraphicsCore::CreateMainRenderTarget(std::shared_ptr<RenderTargetTexture> mainRenderTarget,
+		int clientWidth, int clientHeight, DXGI_FORMAT bufferFormat)
+	{
+		assert(swapChain);
+		HRESULT hr;
+
+		// 받아온 RenderTargetTexture에 backbuffer Texture를 붙여준다.
+			// 추가로 SRV도 만들어본다.
+		HR(swapChain->ResizeBuffers(1, clientWidth, clientHeight, bufferFormat, 0));
+
+		// 임시 BackBuffer Texture
+		ID3D11Texture2D* backBuffer;
+		swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D),
+			reinterpret_cast<void**>(&backBuffer));
+
+		if (backBuffer == nullptr)
+		{
+			::MessageBoxA(nullptr, "BackBuffer Get Failed!", nullptr, MB_OK);
+			return;
+
+		}
+
+		hr = D3DDevice->CreateRenderTargetView(backBuffer, 0, mainRenderTarget->renderTarget.GetAddressOf());
+
+		if (FAILED(hr) == true)
+		{
+			::MessageBoxA(nullptr, "RTV Create Failed!", nullptr, MB_OK);
+			return;
+		}
+
+		ReleaseCOM(backBuffer);
+	}
 }

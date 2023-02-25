@@ -32,6 +32,10 @@ namespace GameEngineSpace
 	{
 	}
 
+	void Object::FixedUpdate(float tick)
+	{
+	}
+
 	void Object::PreUpdate(float tick)
 	{
 	}

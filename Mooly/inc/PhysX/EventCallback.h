@@ -25,6 +25,8 @@ namespace MoolyEngine
 
 		void DeleteEvents(std::string eventHolder);
 
+		void CallOnCollisionEnter();
+
 		void CallonTriggerPersist();
 
 	private:
@@ -32,6 +34,7 @@ namespace MoolyEngine
 
 		//void(타겟 오브젝트 이름)반환. 함수를 바인딩함. 이름과 똑같은 대상의 함수를 불러온다.
 		std::unordered_map<std::string, std::vector<IEventCollider*>> contactEvents;
+
 		//트리거만 가능
 		std::unordered_map<std::string, std::vector<IEventTrigger*>> triggerEvents;
 		std::unordered_map<std::string, std::list<std::string>> triggerPersistEvents;

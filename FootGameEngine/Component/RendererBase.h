@@ -47,6 +47,8 @@ namespace GameEngineSpace
 		virtual void PrepareRender(float tick) abstract;
 		//virtual void Render(std::shared_ptr<GraphicsEngineSpace::GraphicsEngine>graphicsEngine) abstract;
 		virtual void BoundingRender() {}
+
+		std::shared_ptr<GraphicsEngineSpace::IDXObject> GetRenderObj() { return renderObj; }
 	};
 }
 

@@ -48,13 +48,9 @@ namespace GraphicsEngineSpace
 	std::shared_ptr<MeshResources> PBRBuilder::BuildGeometry(std::shared_ptr<IDXObject> DXObject,
 		std::string objectPath)
 	{
-		std::shared_ptr<MeshResources> _tmpObjRes = std::make_shared<MeshResources>();
-
-		_tmpObjRes->ObjName = objectPath;
-
 		// 오브젝트 이름을 판별합니다.
 		std::string extension = objectPath;
-		int _extensionIdx = objectPath.rfind(".");
+		size_t _extensionIdx = objectPath.rfind(".");
 		if (_extensionIdx != -1)
 		{
 			extension = objectPath.substr(_extensionIdx);
@@ -73,8 +69,6 @@ namespace GraphicsEngineSpace
 
 			ia >> modelData;
 
-			_tmpObjRes.reset();
-
 			// 애니메이션이 없으면, 정적 메시 생성
 			if (modelData.isSkinnedAnimation != true)
 			{
@@ -91,7 +85,6 @@ namespace GraphicsEngineSpace
 		}
 		else
 		{
-			_tmpObjRes.reset();
 			return nullptr;
 		}
 	}
@@ -118,6 +111,8 @@ namespace GraphicsEngineSpace
 
 			objRes->ObjName = mesh;
 
+			objRes->isShadow = true;
+
 			DXObject->SetMeshResources(objRes);
 		}
 	}
@@ -134,6 +129,8 @@ namespace GraphicsEngineSpace
 			objRes->setMesh = true;
 
 			objRes->setMaterial = true;
+
+			objRes->isShadow = true;
 
 			objRes->ObjName = mesh;
 

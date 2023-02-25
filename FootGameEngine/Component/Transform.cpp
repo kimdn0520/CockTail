@@ -111,6 +111,12 @@ namespace GameEngineSpace
 		}
 	}
 
+	const DirectX::SimpleMath::Quaternion& Transform::GetWorldRotationQuat()
+	{
+		DirectX::SimpleMath::Quaternion _wRot = EulerToQuat(worldRotation);
+		return _wRot;
+	}
+
 	void Transform::LookAt(const Vector3& targetPos)
 	{
 		Vector3 nowPos = Vector3{GetWorldTM().m[3][0], GetWorldTM().m[3][1], GetWorldTM().m[3][2]};
@@ -148,8 +154,13 @@ namespace GameEngineSpace
 		look.Normalize(look);
 
 		matrix.Invert(matrix);
+		Vector3 rotation = matrix.ToEuler();
 
-		SetRotation(matrix.ToEuler(), Space::LOCAL);
+		rotation.x = XMConvertToDegrees(rotation.x);
+		rotation.y = XMConvertToDegrees(rotation.y);
+		rotation.z = XMConvertToDegrees(rotation.z);
+
+		SetRotation(rotation, Space::LOCAL);
 	}
 
 	void Transform::SetLook(const Vector3& _look)
@@ -170,6 +181,27 @@ namespace GameEngineSpace
 		//right.Cross(look, up);
 		//up = -up;
 		up.Normalize(up);
+
+		Matrix matrix = Matrix{ right, up, look };
+		matrix.Transpose(matrix);
+
+		right = Vector3{ matrix.m[0][0], matrix.m[1][0], matrix.m[2][0] };
+		up = -Vector3{ matrix.m[0][1], matrix.m[1][1], matrix.m[2][1] };
+		look = Vector3{ matrix.m[0][2], matrix.m[1][2], matrix.m[2][2] };
+
+		// 각 벡터 정규화
+		right.Normalize(right);
+		up.Normalize(up);
+		look.Normalize(look);
+
+		matrix.Invert(matrix);
+		Vector3 rotation = matrix.ToEuler();
+
+		rotation.x = XMConvertToDegrees(rotation.x);
+		rotation.y = XMConvertToDegrees(rotation.y);
+		rotation.z = XMConvertToDegrees(rotation.z);
+
+		SetRotation(rotation, Space::LOCAL);
 	}
 
 	// 현재 코드에 문제가 있습니다..
@@ -184,7 +216,6 @@ namespace GameEngineSpace
 
 		right.Cross(up, look);
 		look.Normalize(look);
-
 	}
 
 	void Transform::SetRight(const Vector3& _right)
@@ -267,7 +298,7 @@ namespace GameEngineSpace
 
 		// 로컬 변경후 update
 		UpdateLocalTM();
-		//UpdateWorldTM();
+		UpdateWorldTM();
 	}
 
 	void Transform::SetRotation(const Vector3& _eulerAngle, Space relativeTo)
@@ -295,6 +326,39 @@ namespace GameEngineSpace
 		else
 		{
 			localRotation = _eulerAngle;
+		}
+
+		// 로컬의 특정 스케일, 회전값, 위치가 변경되면 바로 TM을 변경해준다.
+		UpdateLocalTM();
+		UpdateWorldTM();
+	}
+
+	void Transform::SetRotation(const Quaternion& _quat, Space relativeTo /*= Space::WORLD*/)
+	{
+		Vector3 _eular = QuatToEuler(_quat);
+
+		if (relativeTo == Space::WORLD)
+		{
+			worldRotation = _eular;
+
+			// 월드를 바꾼 뒤 로컬을 바꿔준다.
+			std::shared_ptr<GameObject> _parent = GetGameObject()->GetParent();
+
+			Vector3 _parentEulerAngle = Vector3::Zero;
+
+			// 부모 여부 확인
+			if (_parent != nullptr)
+			{
+				_parentEulerAngle = _parent->GetComponent<Transform>()->GetWorldRotation();
+			}
+
+			Vector3 _newLocalRot = _eular - _parentEulerAngle;
+
+			localRotation = _newLocalRot;
+		}
+		else
+		{
+			localRotation = _eular;
 		}
 
 		// 로컬의 특정 스케일, 회전값, 위치가 변경되면 바로 TM을 변경해준다.
@@ -374,11 +438,17 @@ namespace GameEngineSpace
 	void Transform::Rotate(const Vector3& rot)
 	{
 		localRotation += rot;
+
+		UpdateLocalTM();
+		UpdateWorldTM();
 	}
 
 	void Transform::TransLate(const Vector3& pos)
 	{
 		localPosition += pos;
+
+		UpdateLocalTM();
+		UpdateWorldTM();
 	}
 
 	Vector4 Transform::EulerToQuat(Vector3 euler)
@@ -402,5 +472,36 @@ namespace GameEngineSpace
 		result.w = (cosY * cosX * cosZ) + (sinY * sinX * sinZ);
 
 		return result;
+	}
+
+	Vector3 Transform::QuatToEuler(Quaternion value)
+	{
+		Vector3 rotation;
+
+		double x = value.x;
+		double y = value.y;
+		double z = value.z;
+		double w = value.w;
+		double sqx = x * x;
+		double sqy = y * y;
+		double sqz = z * z;
+		double sqw = w * w;
+		float exceptCheck = 2.0f * (w * x - y * z);
+		float eulerX = 0.f;
+
+		if (abs(exceptCheck) >= 1.f)
+			eulerX = copysign(3.141592f / 2, exceptCheck);
+		else
+			eulerX = asin(2.0f * (w * x - y * z));
+
+		float eulerY = atan2(2.0f * (x * z + w * y), (-sqx - sqy + sqz + sqw));
+		float eulerZ = atan2(2.0f * (x * y + z * w), (-sqx + sqy - sqz + sqw));
+		rotation = Vector3{ eulerX, eulerY, eulerZ };
+
+		rotation = Vector3{ XMConvertToDegrees(rotation.x),
+					   XMConvertToDegrees(rotation.y),
+					   XMConvertToDegrees(rotation.z) };
+
+		return rotation;
 	}
 }

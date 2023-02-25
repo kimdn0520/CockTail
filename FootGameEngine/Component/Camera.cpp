@@ -37,7 +37,7 @@ namespace GameEngineSpace
 
 		//skyBoxBuilder->AddTexture(skyBox, 1, "skyBoxTex", L"Resources/Texture/snowcube1024.dds", RenderingData::TextureMapType::CUBE);
 
-		GraphicsManager::GetInstance()->GetRenderer()->AddRenderObj(skyBox);
+		GraphicsManager::GetInstance()->GetRenderer()->InitObject(skyBox);
 	}
 
 	Camera::~Camera()
@@ -57,7 +57,7 @@ namespace GameEngineSpace
 		// ViewMatrix는 결국.. 카메라의 월드 TM의 역행렬이다.
 			// 카메라의 WorldTM => 카메라를 월드의 위치로 이동시켜주는 행렬(view => World로)
 			// 카메라의 WorldTM의 역행렬 => 특정 오브젝트에 곱해주면.. 카메라를 중심으로 한 좌표계로 옮겨줄 수 있다.
-		transform->GetWorldTM().Invert(view);
+		//transform->GetWorldTM().Invert(view);
 
 		//view = ViewMatrix(GetGameObject()->GetComponent<Transform>()->GetWorldPosition(), GetGameObject()->GetComponent<Transform>()->GetWorldRotation());
 
@@ -73,21 +73,21 @@ namespace GameEngineSpace
 			// view * UnitZ가 되어야한다..
 			// 여기서는 벡터가 먼저 곱해지므로, 해당 값을 얻기 위해서 전치를 해줘야한다.
 			// 해당 값이 카메라의 look을 명확하게 나타내고자 한다면 view 매트릭스의 UnitZ 성분이 현재 카메라의 look을 나타내야함.
-		Vector4 newLook = Vector4::Transform(Vector4::UnitZ, transform->GetWorldTM());
+		//Vector4 newLook = Vector4::Transform(Vector4::UnitZ, transform->GetWorldTM());
 		//auto worldTM = transform->GetWorldTM();
 
 
-		transform->SetLook(Vector3{newLook.x, newLook.y, newLook.z});
+		//transform->SetLook(Vector3{newLook.x, newLook.y, newLook.z});
 
-		/*Vector3 axisX = transform->GetRight();			// 카메라 x축
-		Vector3 axisY = transform->GetUp();				// 카메라 y축
-		Vector3 axisZ = transform->GetLook();			// 카메라 z축 (look벡터를 z축 삼는다.) - 카메라가 바라보는 지점
+		Vector3 axisX = transform->GetRight();			// 카메라 x축
+		Vector3 axisY = transform->GetUp();					// 카메라 y축
+		Vector3 axisZ = transform->GetLook();				// 카메라 z축 (look벡터를 z축 삼는다.) - 카메라가 바라보는 지점
 		Vector3 camPos = transform->GetLocalPosition();
 
-		axisZ.Normalize();										// z normalize
-		axisY = axisZ.Cross(axisX);								// x축이랑 외적해서 y 구하고
+		axisZ.Normalize();									// z normalize
+		axisY = axisZ.Cross(axisX);							// x축이랑 외적해서 y 구하고
 		axisY.Normalize();
-		axisX = axisY.Cross(axisZ);								// y구한거를 z랑 외적해서 x구하고
+		axisX = axisY.Cross(axisZ);							// y구한거를 z랑 외적해서 x구하고
 
 		float x = -camPos.Dot(axisX);
 		float y = -camPos.Dot(axisY);
@@ -101,8 +101,7 @@ namespace GameEngineSpace
 			x, y, z, 1.0f
 		};
 
-		view = V;*/
-		
+		view = V;
 	}
 
 	void Camera::UpdateProjMatrix(ProjType _projType)
@@ -112,7 +111,7 @@ namespace GameEngineSpace
 
 		if (_projType == ProjType::PERSPECTIVE)
 		{
-			if (nearZ < 0.0f)
+			if (nearZ <= 0.0f)
 			{
 				float tmpNearZ = 0.1f;
 				proj = XMMatrixPerspectiveFovLH(fovY, aspect, tmpNearZ, farZ);
@@ -127,6 +126,44 @@ namespace GameEngineSpace
 			proj = XMMatrixOrthographicLH(width / 50, height / 50, nearZ, farZ);
 
 		projType = _projType;
+	}
+
+	std::vector<SimpleMath::Vector3> Camera::ScreenToRayOrigin(const Vector2& mousePos)
+	{
+		float viewX;
+		float viewY;
+		XMVECTOR origin;
+		XMVECTOR direction;
+		
+		if(projType == ProjType::PERSPECTIVE)
+		{
+			// Screen에서 받은 mousePos를 ViewSpace로 바꾸는 과정
+			// 스크린 -> NDC -> View
+			viewX = (+2.0f * mousePos.x / WindowManager::GetInstance()->GetClientWidth() - 1.0f) / proj(0, 0);
+			viewY = (-2.0f * mousePos.y / WindowManager::GetInstance()->GetClientHeight() + 1.0f) / proj(1, 1);
+			origin = { 0.f, 0.f, 0.f, 1.f };
+			direction = { viewX, viewY, nearZ, 0.f };
+		}
+		else
+		{
+			auto ret = proj.Invert();
+
+
+			// Screen에서 받은 mousePos를 ViewSpace로 바꾸는 과정
+			// 스크린 -> NDC -> View
+			viewX = (+2.0f * mousePos.x / WindowManager::GetInstance()->GetClientWidth() - 1.0f) * ret(0, 0);
+			viewY = (-2.0f * mousePos.y / WindowManager::GetInstance()->GetClientHeight() + 1.0f) * ret(1, 1);
+			origin = { viewX, viewY, nearZ, 1.f };
+			direction = { 0.f, 0.f, 1.f, 1.f };
+		}
+
+		// ViewSpace -> WorldSpace로 바꿔서 ray를 정의한다.
+		Matrix viewMatrixInv = XMMatrixInverse(nullptr, view);
+		Vector3 rayOrigin = XMVector3TransformCoord(origin, viewMatrixInv);				// 월드 스페이스로~
+		Vector3 rayDirection = XMVector3TransformNormal(direction, viewMatrixInv);		// 월드 스페이스로~
+ 		rayDirection.Normalize();	// 방향은 정규화 시켜준다.
+
+		return std::vector<SimpleMath::Vector3>({ rayOrigin, rayDirection });
 	}
 
 	/*
@@ -491,9 +528,8 @@ namespace GameEngineSpace
 		skyBox->Update(Matrix::Identity, _view, proj);
 	}
 
-	void Camera::LateUpdate(float tick)
+	void Camera::Render()
 	{
-		// 스카이 박스 그려주기
 		skyBox->Render();
 	}
 

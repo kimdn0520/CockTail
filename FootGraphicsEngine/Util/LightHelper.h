@@ -11,7 +11,7 @@ namespace GraphicsEngineSpace
 	// PBR용 및 추가
 	namespace PBR
 	{
-		struct DirectionalLight
+		__declspec(align(16)) struct DirectionalLight
 		{
 			DirectionalLight()
 				: color(SimpleMath::Vector3::Zero)
@@ -32,16 +32,22 @@ namespace GraphicsEngineSpace
 			SimpleMath::Matrix lightViewProj;
 		};
 
-		struct PointLight
+		__declspec(align(16)) struct PointLight
 		{
 			PointLight()
 				: color(SimpleMath::Vector3::Zero)
 				, power(0.0f)
 				, position(SimpleMath::Vector3::Zero)
 				, range(0.0f)
-				, lightViewProj(SimpleMath::Matrix::Identity)
+				, padVector(SimpleMath::Vector3::Zero)
+				, isShadow(1.0f)
 			{
 				ZeroMemory(this, sizeof(this));
+
+				for (int i = 0; i < 6; i++)
+				{
+					lightViewProj[i] = SimpleMath::Matrix::Identity;
+				}
 			}
 
 			SimpleMath::Vector3 color;
@@ -50,16 +56,23 @@ namespace GraphicsEngineSpace
 			SimpleMath::Vector3 position;
 			float range;
 
-			SimpleMath::Matrix lightViewProj;
+			SimpleMath::Vector3 padVector;
+			float isShadow;		
+
+			// 각 면에 따른 6개의 매트릭스가 존재
+			SimpleMath::Matrix lightViewProj[6];
 		};
 
-		struct SpotLight
+		__declspec(align(16)) struct SpotLight
 		{
 			SpotLight()
 				: color(SimpleMath::Vector3::Zero)
 				, power(0.0f)
 				, direction(SimpleMath::Vector3::Zero)
-				, halfAngle(0.0f)
+				, innerAngle(0.0f)
+				, padVector(SimpleMath::Vector2::Zero)
+				, outerAngle(0.0f)
+				, isShadow(1.0f)
 				, position(SimpleMath::Vector3::Zero)
 				, range(0.0f)
 				, lightViewProj(SimpleMath::Matrix::Identity)
@@ -71,7 +84,11 @@ namespace GraphicsEngineSpace
 			float power;
 
 			SimpleMath::Vector3 direction;
-			float halfAngle;
+			float innerAngle;
+
+			SimpleMath::Vector2 padVector;
+			float outerAngle;
+			float isShadow;
 
 			SimpleMath::Vector3 position;
 			float range;

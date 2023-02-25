@@ -242,9 +242,21 @@ namespace GraphicsEngineSpace
 
 		LoadWireCubeMesh();
 
+		LoadWireSphereMesh();
+
+		LoadCapsuleMesh();
+
 		LoadPlaneMesh();
 
 		LoadPrefab();
+	}
+
+	void ResourceManager::Release()
+	{
+		for (auto& mesh : basicMeshes)
+		{
+			mesh.second.reset();
+		}
 	}
 
 	void ResourceManager::LoadCubeMesh()
@@ -518,7 +530,7 @@ namespace GraphicsEngineSpace
 	void ResourceManager::LoadScreenMesh()
 	{
 		// Screen Mesh 생성
-		std::vector<VertexStruct::PBRStaticVertex> vertices(6);
+		std::vector<VertexStruct::TexVertex> vertices(6);
 
 		// 좌 하단
 		vertices[0].Pos = SimpleMath::Vector3(-1.f, -1.f, 0.f);
@@ -686,6 +698,210 @@ namespace GraphicsEngineSpace
 		basicMeshes.insert(std::make_pair("SkyBoxMesh", skyMesh));
 	}
 
+	void ResourceManager::LoadWireSphereMesh()
+	{
+		float radius = 1.0f;	// 구의 반지름
+		uint32 stackCount = 20; // 가로 분할
+		uint32 sliceCount = 20; // 세로 분할
+
+		std::vector<VertexStruct::PosVertex> vertices;
+
+		VertexStruct::PosVertex v;
+
+		// 북극
+		v.Pos = SimpleMath::Vector3(0.0f, radius, 0.0f);
+		vertices.push_back(v);
+
+		float stackAngle = XM_PI / stackCount;
+		float sliceAngle = XM_2PI / sliceCount;
+
+		float deltaU = 1.f / static_cast<float>(sliceCount);
+		float deltaV = 1.f / static_cast<float>(stackCount);
+
+		// 고리마다 돌면서 정점을 계산한다 (북극/남극 단일점은 고리가 X)
+		for (uint32 y = 1; y <= stackCount - 1; ++y)
+		{
+			float phi = y * stackAngle;
+
+			// 고리에 위치한 정점
+			for (uint32 x = 0; x <= sliceCount; ++x)
+			{
+				float theta = x * sliceAngle;
+
+				v.Pos.x = radius * sinf(phi) * cosf(theta);
+				v.Pos.y = radius * cosf(phi);
+				v.Pos.z = radius * sinf(phi) * sinf(theta);
+
+				vertices.push_back(v);
+			}
+		}
+
+		// 남극
+		v.Pos = SimpleMath::Vector3(0.0f, -radius, 0.0f);
+		vertices.push_back(v);
+
+		std::vector<std::vector<unsigned int>> idx(1);
+
+		// 북극 인덱스
+		for (uint32 i = 0; i <= sliceCount; ++i)
+		{
+			//  [0]
+			//   |  \
+			//  [i+1]-[i+2]
+			idx[0].push_back(0);
+			idx[0].push_back(i + 2);
+			idx[0].push_back(i + 1);
+		}
+
+		// 몸통 인덱스
+		uint32 ringVertexCount = sliceCount + 1;
+		for (uint32 y = 0; y < stackCount - 2; ++y)
+		{
+			for (uint32 x = 0; x < sliceCount; ++x)
+			{
+				//  [y, x]-[y, x+1]
+				//  |		/
+				//  [y+1, x]
+				idx[0].push_back(1 + (y)*ringVertexCount + (x));
+				idx[0].push_back(1 + (y)*ringVertexCount + (x + 1));
+				idx[0].push_back(1 + (y + 1) * ringVertexCount + (x));
+				//		 [y, x+1]
+				//		 /	  |
+				//  [y+1, x]-[y+1, x+1]
+				idx[0].push_back(1 + (y + 1) * ringVertexCount + (x));
+				idx[0].push_back(1 + (y)*ringVertexCount + (x + 1));
+				idx[0].push_back(1 + (y + 1) * ringVertexCount + (x + 1));
+			}
+		}
+
+		// 남극 인덱스
+		uint32 bottomIndex = static_cast<uint32>(vertices.size()) - 1;
+		uint32 lastRingStartIndex = bottomIndex - ringVertexCount;
+		for (uint32 i = 0; i < sliceCount; ++i)
+		{
+			//  [last+i]-[last+i+1]
+			//  |      /
+			//  [bottom]
+			idx[0].push_back(bottomIndex);
+			idx[0].push_back(lastRingStartIndex + i);
+			idx[0].push_back(lastRingStartIndex + i + 1);
+		}
+
+		auto mesh = CreateMesh(
+			vertices,
+			idx,
+			"WireSphereMesh",
+			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+			RasterizerState::GetWireFrameRS()
+		);
+
+		basicMeshes.insert(std::make_pair("WireSphereMesh", mesh));
+	}
+
+	void ResourceManager::LoadCapsuleMesh()
+	{
+		float radius = 0.5f;	// 구의 반지름
+		float height = 0.5f;	// 캡슐의 높이 => 해당 높이 + 지름 => 캡슐 전체의 높이
+		uint32 stackCount = 20; // 가로 분할
+		uint32 sliceCount = 20; // 세로 분할
+
+		std::vector<VertexStruct::PosVertex> vertices;
+
+		VertexStruct::PosVertex v;
+
+		// 북극
+		v.Pos = SimpleMath::Vector3(0.0f, radius + height, 0.0f);
+		vertices.push_back(v);
+
+		float stackAngle = XM_PI / stackCount;
+		float sliceAngle = XM_2PI / sliceCount;
+
+		float deltaU = 1.f / static_cast<float>(sliceCount);
+		float deltaV = 1.f / static_cast<float>(stackCount);
+
+		// 고리마다 돌면서 정점을 계산한다 (북극/남극 단일점은 고리가 X)
+		for (uint32 y = 1; y <= stackCount - 1; ++y)
+		{
+			float phi = y * stackAngle;
+
+			// 고리에 위치한 정점
+			for (uint32 x = 0; x <= sliceCount; ++x)
+			{
+				float theta = x * sliceAngle;
+				
+				v.Pos.x = radius * sinf(phi) * cosf(theta);
+				if(y < 10)
+					v.Pos.y = radius * cosf(phi) + height;
+				else
+					v.Pos.y = radius * cosf(phi) - height;
+				v.Pos.z = radius * sinf(phi) * sinf(theta);
+
+				vertices.push_back(v);
+			}
+		}
+
+		// 남극
+		v.Pos = SimpleMath::Vector3(0.0f, -(radius + height), 0.0f);
+		vertices.push_back(v);
+
+		std::vector<std::vector<unsigned int>> idx(1);
+
+		// 북극 인덱스
+		for (uint32 i = 0; i <= sliceCount; ++i)
+		{
+			//  [0]
+			//   |  \
+			//  [i+1]-[i+2]
+			idx[0].push_back(0);
+			idx[0].push_back(i + 2);
+			idx[0].push_back(i + 1);
+		}
+
+		// 몸통 인덱스
+		uint32 ringVertexCount = sliceCount + 1;
+		for (uint32 y = 0; y < stackCount - 2; ++y)
+		{
+			for (uint32 x = 0; x < sliceCount; ++x)
+			{
+				//  [y, x]-[y, x+1]
+				//  |		/
+				//  [y+1, x]
+				idx[0].push_back(1 + (y)*ringVertexCount + (x));
+				idx[0].push_back(1 + (y)*ringVertexCount + (x + 1));
+				idx[0].push_back(1 + (y + 1) * ringVertexCount + (x));
+				//		 [y, x+1]
+				//		 /	  |
+				//  [y+1, x]-[y+1, x+1]
+				idx[0].push_back(1 + (y + 1) * ringVertexCount + (x));
+				idx[0].push_back(1 + (y)*ringVertexCount + (x + 1));
+				idx[0].push_back(1 + (y + 1) * ringVertexCount + (x + 1));
+			}
+		}
+
+		// 남극 인덱스
+		uint32 bottomIndex = static_cast<uint32>(vertices.size()) - 1;
+		uint32 lastRingStartIndex = bottomIndex - ringVertexCount;
+		for (uint32 i = 0; i < sliceCount; ++i)
+		{
+			//  [last+i]-[last+i+1]
+			//  |      /
+			//  [bottom]
+			idx[0].push_back(bottomIndex);
+			idx[0].push_back(lastRingStartIndex + i);
+			idx[0].push_back(lastRingStartIndex + i + 1);
+		}
+
+		auto mesh = CreateMesh(
+			vertices,
+			idx,
+			"WireCapsuleMesh",
+			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+			RasterizerState::GetWireFrameRS()
+		);
+
+		basicMeshes.insert(std::make_pair("WireCapsuleMesh", mesh));
+	}
+
 	void ResourceManager::LoadPlaneMesh()
 	{
 		// Plane Mesh 생성
@@ -746,6 +962,34 @@ namespace GraphicsEngineSpace
 	void ResourceManager::LoadPrefab()
 	{
 		
+	}
+
+	void ResourceManager::MakeMesh(std::string name, std::vector<FBXBinaryData::VertexData> vertex, std::vector<std::vector<unsigned int>> indices)
+	{
+		// 내부에 저장된 기본 메시를 찾는지 확인한다.
+		auto findIt = basicMeshes.find(name);
+
+		// 있으면 만들지마!
+		if (findIt != basicMeshes.end())
+			return;
+
+		std::vector<VertexStruct::PBRStaticVertex> vertices(vertex.size());
+
+		for (int i = 0; i < vertices.size(); i++)
+		{
+			vertices[i].Pos = SimpleMath::Vector3{ vertex[i].position.x, vertex[i].position.y, vertex[i].position.z };
+			vertices[i].Color = SimpleMath::Vector4{ vertex[i].color.x, vertex[i].color.y, vertex[i].color.z, vertex[i].color.w };
+		}
+
+		auto mesh = CreateMesh(
+			vertices,
+			indices,
+			name,
+			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+			RasterizerState::GetSolidRS()
+		);
+
+		basicMeshes.insert(std::make_pair(name, mesh));
 	}
 
 	std::shared_ptr<YAMLBinaryData::Scene> ResourceManager::LoadUnityScene(std::string path)

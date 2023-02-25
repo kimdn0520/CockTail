@@ -47,9 +47,46 @@ namespace GraphicsEngineSpace
 		virtual std::string GetObjName() abstract;
 		virtual std::vector<std::shared_ptr<MeshResources>> GetMeshResources() abstract;
 		virtual std::shared_ptr<BoneResources> GetBoneResources() { return nullptr; }
-		virtual std::shared_ptr<AnimationResources> GetAnimationResources() { return nullptr; }
+		//virtual std::shared_ptr<AnimationResources> GetAnimationResources() { return nullptr; }
 
+		// 각종 Matrix Getter
+		virtual const SimpleMath::Matrix& GetWorld() abstract;
+		virtual const SimpleMath::Matrix& GetView() abstract;
+		virtual const SimpleMath::Matrix& GetProj() abstract;
+
+		////////////////////////////////////////////////////////////////////////////////////////////////
+		//										Animator 관련
+		////////////////////////////////////////////////////////////////////////////////////////////////
+		 
 		// 애니메이션 실행용
 		virtual void PlayAnim(std::string animClipName, bool isLoop) {};
+
+		// State 이름, 클립 이름, 재생 속도, 루프 여부
+		virtual void AddAnimationState(const std::string& stateName, const std::string& animClipName, float speed, bool loop) {};
+
+		// Transition을 추가할 State이름, 시작 State이름, 끝 State이름, hasExitTime, exitTime, Transition Duration
+		virtual void SettingAnimationStateTransition(const std::string& stateName, const std::string& stateStart, const std::string& stateEnd, bool hasExitTime, float exitTime, float transitionDuration) {};
+		
+		// Entry로 설정할 Aniamtion State
+		virtual void EntryPlayAnimationState(const std::string& stateName) {};
+		
+		// Transition 이름, Parameter 이름, 조건 이름, 값(없는건 트리거)
+		virtual void AddCondition(const std::string& transitionName, const std::string& parameterName, const std::string& conditionName, float val) {};
+		virtual void AddCondition(const std::string& transitionName, const std::string& parameterName, const std::string& conditionName, int val) {};
+		virtual void AddCondition(const std::string& transitionName, const std::string& parameterName, const std::string& conditionName, bool val) {};
+		virtual void AddCondition(const std::string& transitionName, const std::string& parameterName, const std::string& conditionName) {};
+
+		virtual void AddFloat(const std::string& name, float val) {};
+		virtual void AddInteger(const std::string&, int val) {};
+		virtual void AddBool(const std::string&, bool val) {};
+		virtual void AddTrigger(const std::string& name) {};
+
+		virtual void SetFloat(const std::string& name, float val) {};
+		virtual void SetInteger(const std::string& name, int val) {};
+		virtual void SetBool(const std::string& name, bool val) {};
+		virtual void SetTrigger(const std::string& name) {};
+
+		virtual int GetAnimCurrentFrame() { return 0; }
+		virtual int GetAnimCurrentTotalFrame() { return 0; }
 	};
 }

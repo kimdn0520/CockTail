@@ -39,14 +39,17 @@ namespace GraphicsEngineSpace
 		GRAPHICSENGINE_DECLSPEC SkyBox();
 		~SkyBox() override;
 
-		bool Init(ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pDeviceContext) override;
-		void Update(const XMMATRIX& _world, const XMMATRIX& _view, const XMMATRIX& _proj) override;
-		void PreRender(float tick) override {}
-		void Render() override;
-		void SetMeshResources(std::shared_ptr<MeshResources> objResources) override;
-		std::string GetObjName() override;
-		std::vector<std::shared_ptr<MeshResources>> GetMeshResources() override;
-		
+		virtual bool Init(ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pDeviceContext) override;
+		virtual void Update(const XMMATRIX& _world, const XMMATRIX& _view, const XMMATRIX& _proj) override;
+		virtual void PreRender(float tick) override {}
+		virtual void Render() override;
+		virtual void SetMeshResources(std::shared_ptr<MeshResources> objResources) override;
+		virtual std::string GetObjName() override;
+		virtual std::vector<std::shared_ptr<MeshResources>> GetMeshResources() override;
+
+		virtual const SimpleMath::Matrix& GetWorld() override { return world; }
+		virtual const SimpleMath::Matrix& GetView() override { return view; }
+		virtual const SimpleMath::Matrix& GetProj() override { return proj; }
 	};
 
 }

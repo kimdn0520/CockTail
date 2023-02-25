@@ -1,9 +1,8 @@
 #pragma once
 
-// 픽셀 쉐이더와 관련된 요소들이 모여있는 클래스
 #include "ShaderBase.h"
 
-// 버텍스 쉐이더와 관련된 요소들이 모여있는 클래스
+// 픽셀 쉐이더와 관련된 요소들이 모여있는 클래스
 namespace GraphicsEngineSpace
 {
 	class PixelShader : public ShaderBase

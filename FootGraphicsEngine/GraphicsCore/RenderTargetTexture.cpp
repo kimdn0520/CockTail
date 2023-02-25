@@ -70,7 +70,6 @@ namespace GraphicsEngineSpace
 		{
 			::MessageBoxA(nullptr, "SRV Create Failed!", nullptr, MB_OK);
 			return false;
-			
 		}
 
 		return true;
@@ -78,6 +77,8 @@ namespace GraphicsEngineSpace
 
 	void RenderTargetTexture::Finalize()
 	{
-		
+		renderTarget = nullptr;
+		renderTexture = nullptr;
+		shaderResource = nullptr;
 	}
 }

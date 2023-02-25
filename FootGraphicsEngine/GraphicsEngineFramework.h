@@ -33,6 +33,7 @@
 #include "Object/UI/TextUI.h"
 #include "Object/UI/SpriteUI.h"
 #include "Object/UI/ButtonUI.h"
+#include "Object/UI/ProgressBarUI.h"
 
 #include "Manager/ResourceManager.h"
 #include "Manager/ImGUIManager.h"

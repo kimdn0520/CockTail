@@ -10,8 +10,96 @@
     <ClCompile Include="Scenes\DemoScene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Scenes\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Scripts\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleMenuUIController.cpp">
+      <Filter>Scripts\Controllers\UI</Filter>
+    </ClCompile>
     <ClCompile Include="Scripts\MoveController.cpp">
-      <Filter>Scripts</Filter>
+      <Filter>Scripts\Controllers\CharacterMove</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingUIController.cpp">
+      <Filter>Scripts\Controllers\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\PlayerController.cpp">
+      <Filter>Scripts\Controllers\CharacterMove</Filter>
+    </ClCompile>
+    <ClCompile Include="EventCollider.cpp">
+      <Filter>Scripts\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Trigger.cpp">
+      <Filter>Scripts\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAttackController.cpp">
+      <Filter>Scripts\Controllers\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="TriggerManager.cpp">
+      <Filter>Scripts\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackBoxColliderEvent.cpp">
+      <Filter>Scripts\Controllers\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="OnHitCollider.cpp">
+      <Filter>Scripts\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraController.cpp">
+      <Filter>Scripts\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryController.cpp">
+      <Filter>Scripts\Controllers\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="InGameUIController.cpp">
+      <Filter>Scripts\Controllers\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerControllerMK2.cpp" />
+    <ClCompile Include="Scenes\LobbyScene.cpp">
+      <Filter>Scenes\LobbyScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\TutorialScene.cpp">
+      <Filter>Scenes\TutorialScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\Room1Scene.cpp">
+      <Filter>Scenes\Room1Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageTest.cpp">
+      <Filter>Scripts\Enemy\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyHitTrigger.cpp">
+      <Filter>Scripts\Enemy\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\OnHitTrigger.cpp">
+      <Filter>Scripts\Enemy\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyController.cpp">
+      <Filter>Scripts\Enemy\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyNavAgent.cpp">
+      <Filter>Scripts\Enemy\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyAttackRange.cpp">
+      <Filter>Scripts\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySightRange.cpp">
+      <Filter>Scripts\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\BarOperationScene.cpp">
+      <Filter>Scenes\BarOperationScene</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="NextSceneTrigger.cpp">
+      <Filter>Scripts\Event\Scene Triggers</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerControllerMK3.cpp" />
+    <ClCompile Include="PlayerRellyPointTrigger.cpp">
+      <Filter>Scripts\Event\Scene Triggers</Filter>
+    </ClCompile>
+    <ClCompile Include="InteractionTrigger.cpp" />
+    <ClCompile Include="EnemySpawner.cpp">
+      <Filter>Scripts\Event\Scene Triggers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -21,8 +109,97 @@
     <ClInclude Include="Scenes\DemoScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Scenes\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Scripts\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleMenuUIController.h">
+      <Filter>Scripts\Controllers\UI</Filter>
+    </ClInclude>
     <ClInclude Include="Scripts\MoveController.h">
-      <Filter>Scripts</Filter>
+      <Filter>Scripts\Controllers\CharacterMove</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingUIController.h">
+      <Filter>Scripts\Controllers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\PlayerController.h">
+      <Filter>Scripts\Controllers\CharacterMove</Filter>
+    </ClInclude>
+    <ClInclude Include="EventCollider.h">
+      <Filter>Scripts\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Trigger.h">
+      <Filter>Scripts\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAttackController.h">
+      <Filter>Scripts\Controllers\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="TriggerManager.h">
+      <Filter>Scripts\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackBoxColliderEvent.h">
+      <Filter>Scripts\Controllers\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="OnHitCollider.h">
+      <Filter>Scripts\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraController.h">
+      <Filter>Scripts\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryController.h">
+      <Filter>Scripts\Controllers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="InGameUIController.h">
+      <Filter>Scripts\Controllers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerControllerMK2.h" />
+    <ClInclude Include="Scenes\LobbyScene.h">
+      <Filter>Scenes\LobbyScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\TutorialScene.h">
+      <Filter>Scenes\TutorialScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\Room1Scene.h">
+      <Filter>Scenes\Room1Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageTest.h">
+      <Filter>Scripts\Enemy\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHitTrigger.h">
+      <Filter>Scripts\Enemy\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\OnHitTrigger.h">
+      <Filter>Scripts\Enemy\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyController.h">
+      <Filter>Scripts\Enemy\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyNavAgent.h">
+      <Filter>Scripts\Enemy\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyAttackRange.h">
+      <Filter>Scripts\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySightRange.h">
+      <Filter>Scripts\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\BarOperationScene.h">
+      <Filter>Scenes\BarOperationScene</Filter>
+    </ClInclude>
+    <ClInclude Include="test.h" />
+    <ClInclude Include="NextSceneTrigger.h">
+      <Filter>Scripts\Event\Scene Triggers</Filter>
+    </ClInclude>
+    <ClInclude Include="ScenePCH.h" />
+    <ClInclude Include="PlayerControllerMK3.h" />
+    <ClInclude Include="PlayerRellyPointTrigger.h">
+      <Filter>Scripts\Event\Scene Triggers</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractionTrigger.h" />
+    <ClInclude Include="EnemySpawner.h">
+      <Filter>Scripts\Event\Scene Triggers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +214,51 @@
     </Filter>
     <Filter Include="Scripts">
       <UniqueIdentifier>{34cc2bd9-6f22-4b0a-9caf-cb2f13968084}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\TitleScene">
+      <UniqueIdentifier>{cfcc127d-f240-4d0a-b1c1-c0d32a1edc57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Controllers">
+      <UniqueIdentifier>{0dc54ba1-9efa-4086-9b0a-3bd39308d035}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Manager">
+      <UniqueIdentifier>{ca594cd1-f699-431a-832a-ff4f47fc65fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Controllers\UI">
+      <UniqueIdentifier>{e6c589e4-cdbd-4560-9c5a-f9c7cea4b568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Controllers\CharacterMove">
+      <UniqueIdentifier>{094132a6-14a9-460a-b366-4c3d529bade1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Event">
+      <UniqueIdentifier>{d6ca5a47-aad8-4b4e-ae55-1df820a7c7c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Controllers\Attack">
+      <UniqueIdentifier>{51f988ed-c453-43ab-9b25-797f1f8d03cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\LobbyScene">
+      <UniqueIdentifier>{a1192467-c1d6-421c-87ec-cf2325bde098}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\TutorialScene">
+      <UniqueIdentifier>{36ff743b-b19e-4522-8fd2-af704713c55b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\Room1Scene">
+      <UniqueIdentifier>{77eaecfc-342b-457d-9be6-25ccc83fc24f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Enemy">
+      <UniqueIdentifier>{81eacd3d-003b-4bf3-9281-da070aeb6a10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Enemy\Trigger">
+      <UniqueIdentifier>{a8d1c5ac-6030-4e8c-8cc5-f0c99e0b56f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Enemy\Controller">
+      <UniqueIdentifier>{2c4b3f47-5650-4864-92e3-205a923eb79c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes\BarOperationScene">
+      <UniqueIdentifier>{e1f5f015-538b-4647-9f57-5de92a4e7a66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Event\Scene Triggers">
+      <UniqueIdentifier>{881b84c7-f05d-492d-b88b-a15767f8c02d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

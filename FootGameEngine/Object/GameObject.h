@@ -1,10 +1,11 @@
 #pragma once
 #include "Object.h"
+#include "Component/Collider.h"
 #include "Component/Transform.h"
+#include "Component/Rigidbody.h"
 
 namespace GameEngineSpace
 {
-
 	class ComponentBase;
 	class Transform;
 	class MeshRenderer;
@@ -27,7 +28,7 @@ namespace GameEngineSpace
 		// 오브젝트의 이름
 		tstring name;
 		// 태그
-		tstring tag;
+		std::string tag;
 		// 레이어
 		uint32 layer;
 		// 부모 포인터
@@ -36,7 +37,7 @@ namespace GameEngineSpace
 			// 자식은 여러개가 될 수 있습니다.
 		std::vector<std::shared_ptr<GameObject>> children;
 		// 중복되지 않는 컴포넌트
-		std::set<std::shared_ptr<ComponentBase>> components;
+		std::vector<std::shared_ptr<ComponentBase>> components;
 		// 트랜스폼을 가지고 있습니다.
 		std::shared_ptr<Transform> transform;
 		// 트리거 가능한 컴포넌트들을 가지고 있는 벡터.
@@ -56,6 +57,7 @@ namespace GameEngineSpace
 		// 오버 라이딩 된 함수들
 		void Awake() override;
 		void Start() override;
+		void FixedUpdate(float tick) override;
 		void PreUpdate(float tick) override;
 		void Update(float tick) override;
 		void LateUpdate(float tick) override;
@@ -65,8 +67,8 @@ namespace GameEngineSpace
 		const tstring& GetName() { return name; }
 		void SetName(const tstring& _name) { name = _name; }
 
-		const tstring& GetTag() { return tag; }
-		void SetTag(const tstring& _tag) { tag = _tag; }
+		const std::string& GetTag() { return tag; }
+		void SetTag(const std::string& _tag) { tag = _tag; }
 
 		const uint32& GetLayer() { return layer; }
 		void SetLayer(const uint32& _layer) { layer = _layer; }
@@ -83,6 +85,10 @@ namespace GameEngineSpace
 		void SetFileID(std::string id) { fileID = id; }
 
 		void EraseParent();
+
+		bool CompareTag(const std::string& tagName);
+
+		std::vector<std::shared_ptr<ComponentBase>> GetComponents() { return components; }
 
 	private:
 		void SetParent(std::shared_ptr<GameObject> _parent);
@@ -142,19 +148,28 @@ namespace GameEngineSpace
 			// 위와 마찬가지로 컴포넌트 인지 확인해준다.
 			static_assert(std::is_base_of<ComponentBase, TComponent>::value, "TComponent는 ComponentBase를 상속받아야 합니다.");
 
+			auto tmp = GetComponent<TComponent>();
+
+			// 이미있던거라면 넣어주지않는다.
+			if (tmp != nullptr)
+				return tmp;
+
 			if constexpr (std::is_same<TComponent, Transform>::value == true)
 			{
 				// 트랜스 폼이면 그냥 m_TransForm에 넣어준다.
 				transform = std::make_shared<Transform>(this->shared_from_this());
 
-				components.emplace(transform);
+				components.emplace_back(transform);
 
 				return transform;
 			}
 
 			std::shared_ptr<TComponent> tmpComponent = std::make_shared<TComponent>(this->shared_from_this());
 
-			components.emplace(tmpComponent);
+			components.emplace_back(tmpComponent);
+
+			// ComponetType에 따라 Update순서를 지정해준다.
+			sort(components.begin(), components.end(), [](std::shared_ptr<ComponentBase>& a, std::shared_ptr<ComponentBase>& b) { return a->componentType < b->componentType; });
 
 			// 트리거 가능한 컴포넌트면 해당 컴포넌트를 따로 캐싱해준다.
 				// 이후에 이벤트를 보내주기 위함 
@@ -162,7 +177,6 @@ namespace GameEngineSpace
 				triggerables.push_back(static_cast<std::shared_ptr<ITriggerable>>(tmpComponent));
 
 			return tmpComponent;
-
 		}
 	};
 

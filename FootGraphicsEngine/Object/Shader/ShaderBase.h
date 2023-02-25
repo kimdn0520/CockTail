@@ -12,7 +12,8 @@ namespace GraphicsEngineSpace
 	{
 		NONE,
 		VERTEX,
-		PIXEL
+		PIXEL,
+		GEOMETRY
 	};
 
 	// 쉐이더 구조체 => 밖으로 보여줄 것.

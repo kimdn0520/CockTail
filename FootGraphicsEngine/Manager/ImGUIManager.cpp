@@ -5,6 +5,7 @@
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
+#include "imgui_internal.h"
 
 namespace GraphicsEngineSpace
 {
@@ -98,6 +99,47 @@ namespace GraphicsEngineSpace
 	{
 		//Frame();
 		return ImGui::Begin(guiTitle.c_str());
+	}
+
+	// UISelect 한정적으로 Window 창을 만들어줍니다.
+	bool ImGUIManager::UISelectBegin()
+	{
+		bool UIBegin = ImGui::Begin("UI Select", 0, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+
+		auto UIBeginHWnd = ImGui::FindWindowByName("UI Select");
+		ImGui::SetWindowPos(ImVec2(ImGui::GetIO().DisplaySize.x - 300.f, 0.f));
+		ImGui::SetWindowSize(ImVec2(300.f, ImGui::GetIO().DisplaySize.y));
+
+		return UIBegin;
+	}
+
+	bool ImGUIManager::CollapsingHeader(std::string label)
+	{
+		return ImGui::CollapsingHeader(label.c_str());
+	}
+
+	bool ImGUIManager::TreeNode(std::string label)
+	{
+		return ImGui::TreeNode(label.c_str());
+	}
+
+	bool ImGUIManager::TreeNode(std::string parentLabel, std::string label)
+	{
+		auto parentID = ImGui::GetID(parentLabel.c_str());
+		
+		if(ImGui::GetStateStorage()->GetBool(parentID) == false)
+			return false;
+
+		bool treeNode = ImGui::TreeNode(label.c_str());
+		
+		return treeNode;
+	}
+
+	bool ImGUIManager::DrawBegin(std::string guiTitle)
+	{
+		ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoBringToFrontOnFocus;
+		
+		return ImGui::Begin(guiTitle.c_str(), NULL, window_flags);
 	}
 
 	bool ImGUIManager::SliderFloat(std::string label, float* value, float minValue, float maxValue)
@@ -203,6 +245,16 @@ namespace GraphicsEngineSpace
 		return ImGui::InputInt4(label.c_str(), value);
 	}
 
+	bool ImGUIManager::ColorPicker4(std::string label, float col[4])
+	{
+		return ImGui::ColorPicker4(label.c_str(), col);
+	}
+
+	bool ImGUIManager::CheckBox(std::string label, bool* check)
+	{
+		return ImGui::Checkbox(label.c_str(), check);
+	}
+
 	void GraphicsEngineSpace::ImGUIManager::Text(std::string text)
 	{
 		ImGui::Text(text.c_str());
@@ -217,8 +269,64 @@ namespace GraphicsEngineSpace
 		va_end(args);
 	}
 
+	void ImGUIManager::DrawLine(SimpleMath::Vector3 pos1, SimpleMath::Vector3 pos2)
+	{
+		ImGui::SetWindowPos(ImVec2(0, 0));
+		ImGui::SetWindowSize(ImVec2(ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y));
+		
+		ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+		ImVec2 screenPos = ImVec2(pos1.x, pos1.y);
+
+		ImVec2 screenPos2 = ImVec2(pos2.x, pos2.y);
+
+		draw_list->AddLine(screenPos, screenPos2, ImColor(255, 0, 0));
+	}
+
+	void ImGUIManager::DrawSpot(SimpleMath::Vector3 pos)
+	{
+		ImGui::SetWindowPos(ImVec2(0, 0));
+		ImGui::SetWindowSize(ImVec2(ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y));
+
+		ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+		ImVec2 screenPos = ImVec2(pos.x, pos.y);
+
+		draw_list->AddCircleFilled(screenPos, 2.0f, ImColor(0, 0, 255));
+	}
+
+	void ImGUIManager::DrawTriangle(SimpleMath::Vector3 pos1, SimpleMath::Vector3 pos2, SimpleMath::Vector3 pos3)
+	{
+		ImGui::SetWindowPos(ImVec2(0, 0));
+		ImGui::SetWindowSize(ImVec2(ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y));
+
+		ImDrawList* draw_list = ImGui::GetWindowDrawList();
+
+		ImVec2 screenPos1 = ImVec2(pos1.x, pos1.y);
+		ImVec2 screenPos2 = ImVec2(pos2.x, pos2.y);
+		ImVec2 screenPos3 = ImVec2(pos3.x, pos3.y);
+
+		draw_list->AddTriangleFilled(screenPos1, screenPos2, screenPos3, ImColor(80, 140, 200, 50));
+	}
+
+	void ImGUIManager::Spacing()
+	{
+		ImGui::Spacing();
+	}
+
 	void ImGUIManager::End()
 	{
 		ImGui::End();
+	}
+
+	void ImGUIManager::TreePop()
+	{
+		ImGui::TreePop();
+	}
+
+	void ImGUIManager::Separator()
+	{
+		
+		ImGui::Separator();
 	}
 }

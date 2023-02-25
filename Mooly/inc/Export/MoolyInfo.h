@@ -75,7 +75,9 @@ namespace MoolyEngine
 	struct MOOLY_ENGINE RayCastHit
 	{
 		std::string objectName;
-		float _distance = 0;
+		float distance = 0;
+		Vector3 normal;
+		Vector3 hitPos;
 	};
 
 	class MOOLY_ENGINE IEventTrigger

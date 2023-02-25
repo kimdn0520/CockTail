@@ -57,7 +57,7 @@ namespace GraphicsEngineSpace
 
 		SafeReset(spriteBatch)
 
-		SafeReset(instance);
+		SafeReset(instance)
 	}
 
 	void UIUtilsManager::CreateSpriteFont(const std::string& name, const std::string& path)

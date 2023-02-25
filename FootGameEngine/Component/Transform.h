@@ -66,6 +66,7 @@ namespace GameEngineSpace
 		// 변경할 위치 정보와, 기반이 되는 공간을 지정해줍니다.
 		void SetPosition(const Vector3& _newPos, Space relativeTo = Space::WORLD);
 		void SetRotation(const Vector3& _eulerAngle, Space relativeTo = Space::WORLD);
+		void SetRotation(const Quaternion& _quat, Space relativeTo = Space::WORLD);
 		void AddRotation(const Vector3& _eulerAngle, Space relativeTo = Space::WORLD);
 		// Scale의 경우 월드를 고려해주지 않습니다..
 		void SetScale(const Vector3& _newLocalScale);
@@ -78,6 +79,9 @@ namespace GameEngineSpace
 		const Vector3& GetWorldPosition() { return worldPosition; }
 		const Vector3& GetWorldRotation() { return worldRotation; }
 		const Vector3& GetWorldScale() { return worldScale; }
+
+		//추가합니다
+		const Quaternion& GetWorldRotationQuat();
 
 
 		void LookAt(const Vector3& targetPos);
@@ -103,6 +107,9 @@ namespace GameEngineSpace
 
 		// 오일러를 쿼터니언으로~
 		Vector4 EulerToQuat(Vector3 euler);
+		// 반대도 필요하다 이거야
+		Vector3 QuatToEuler(Quaternion value);
+
 
 	private:
 		// 로컬 TM의 변경

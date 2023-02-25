@@ -8,6 +8,7 @@
 #include "FBXConverterDlg/FBXConverterDlg.h"
 #include "afxdialogex.h"
 #include "FBXParser/FBXParser.h"
+#include "YAMLParser\YAMLParser.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -62,12 +63,24 @@ void CFBXConverterDlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 }
 
+std::vector<std::string> CFBXConverterDlg::GetFilesInDirectory(const std::string& path)
+{
+	std::vector<std::string> fileNameList;
+
+	
+
+	return fileNameList;
+}
+
 BEGIN_MESSAGE_MAP(CFBXConverterDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_CONVERT, &CFBXConverterDlg::OnBnClickedConvert)
 	ON_BN_CLICKED(IDC_LOAD, &CFBXConverterDlg::OnBnClickedLoad)
+	ON_BN_CLICKED(IDC_SBUTTON, &CFBXConverterDlg::OnBnClickedSbutton)
+	ON_BN_CLICKED(IDC_SCONVERT, &CFBXConverterDlg::OnBnClickedSconvert)
+	ON_BN_CLICKED(IDC_All_CONVERT, &CFBXConverterDlg::OnBnClickedAllFBXConvert)
 END_MESSAGE_MAP()
 
 
@@ -168,7 +181,7 @@ void CFBXConverterDlg::OnBnClickedConvert()
 		
 		std::string strPath = std::string(CT2CA(m_loadFilePath));
 
-		fbxParser->LoadFbx(strPath, finalName);
+		fbxParser->LoadFbx(strPath, fbxFileName);
 
 		MessageBox(L"Convert Complete!", L"FBXConverter", MB_OK);
 	}
@@ -199,6 +212,111 @@ void CFBXConverterDlg::OnBnClickedLoad()
 
 		std::string strFileName = std::string(CT2CA(fileName.c_str()));
 
-		finalName = strFileName.substr(0, strFileName.size() - 4);
+		fbxFileName = strFileName.substr(0, strFileName.size() - 4);
 	}
+}
+
+void CFBXConverterDlg::OnBnClickedSbutton()
+{
+	CFileDialog dlg(TRUE, L"unity", L"*.unity", OFN_OVERWRITEPROMPT, L"UNITY File(*.unity) | *.unity|| *.UNITY||", this);
+
+	TCHAR szPath[MAX_PATH] = L"";
+
+	GetCurrentDirectory(MAX_PATH, szPath);
+	PathRemoveFileSpec(szPath);
+	lstrcat(szPath, L"\\UNITY");
+	dlg.m_ofn.lpstrInitialDir = szPath;
+
+	if (dlg.DoModal())
+	{
+		m_loadSceneFilePath = dlg.GetPathName();
+		SetDlgItemText(IDC_EDIT2, m_loadSceneFilePath);
+
+		std::wstring strName = std::wstring(m_loadSceneFilePath.operator LPCWSTR());
+
+		std::wstring fileName = fs::path(strName).filename();
+
+		std::string strFileName = std::string(CT2CA(fileName.c_str()));
+
+		sceneFileName = strFileName.substr(0, strFileName.size() - 6);
+	}
+}
+
+void CFBXConverterDlg::OnBnClickedSconvert()
+{
+	if (m_loadSceneFilePath != "")
+	{
+		std::shared_ptr<YAMLParser> yamlParser = std::make_shared<YAMLParser>();
+
+		std::string strPath = std::string(CT2CA(m_loadSceneFilePath));
+
+		yamlParser->OpenFile(strPath, sceneFileName);
+
+		MessageBox(L"Convert Complete!", L"SceneConverter", MB_OK);
+	}
+}
+
+void CFBXConverterDlg::OnBnClickedAllFBXConvert()
+{
+	// BinaryFile에 있던 Mesh, Material, Animation을 모두 삭제
+	std::string meshPath = "BinaryFile/Mesh";
+	std::string materialPath = "BinaryFile/Material";
+	std::string animationPath = "BinaryFile/Animation";
+	std::string modelPath = "BinaryFile/Model";
+
+	for (const auto& entry : std::filesystem::directory_iterator(meshPath))
+	{
+		std::filesystem::remove(entry.path());
+	}
+
+	for (const auto& entry : std::filesystem::directory_iterator(materialPath))
+	{
+		std::filesystem::remove(entry.path());
+	}
+
+	for (const auto& entry : std::filesystem::directory_iterator(animationPath))
+	{
+		std::filesystem::remove(entry.path());
+	}
+
+	for (const auto& entry : std::filesystem::directory_iterator(modelPath))
+	{
+		std::filesystem::remove(entry.path());
+	}
+
+	// Material 폴더에는 Material.json 파일 하나 다시 생성
+	rapidjson::Document doc;
+	doc.SetObject();
+
+	rapidjson::Value material_array(rapidjson::kArrayType);
+	doc.AddMember("Materials", material_array, doc.GetAllocator());
+
+	std::ofstream ofs{ R"(BinaryFile/Material/MaterialList.json)" };
+	rapidjson::OStreamWrapper osw{ ofs };
+	rapidjson::Writer<rapidjson::OStreamWrapper> writer{ osw };
+	doc.Accept(writer);
+
+	std::string fbxPath = "Resources/Model";
+
+	std::vector<std::string> fbxFileNameList;
+
+	for (const auto& entry : std::filesystem::directory_iterator(fbxPath))
+	{
+		fbxFileNameList.emplace_back(entry.path().filename().string());
+	}
+
+	for (int i = 0; i < fbxFileNameList.size(); i++)
+	{
+		std::shared_ptr<FBXParser> fbxParser = std::make_shared<FBXParser>();
+		
+		std::wstring fileName = fs::path(fbxFileNameList[i]).filename();
+
+		std::string strFileName = std::string(CT2CA(fileName.c_str()));
+
+		std::string tmpFbxFileName = strFileName.substr(0, strFileName.size() - 4);
+
+		fbxParser->LoadFbx(fbxPath + '/' + fbxFileNameList[i], tmpFbxFileName);
+	}
+
+	MessageBox(L"ALL FBX ReConvert Complete!", L"ALL FBX Converter", MB_OK);
 }

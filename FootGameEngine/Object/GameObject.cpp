@@ -9,10 +9,10 @@ namespace GameEngineSpace
 
 	GameObject::GameObject() :
 		name(TEXT("GameObject"))
-		, tag(TEXT("Default"))
+		, tag("Default")
 		, parent(std::weak_ptr<GameObject>())
 		, children(std::vector<std::shared_ptr<GameObject>>())
-		, components(std::set<std::shared_ptr<ComponentBase>>())
+		, components(std::vector<std::shared_ptr<ComponentBase>>())
 		, layer(0)
 	{
 		// 생성 시에는 현재 객체와 관련된 스마트 포인터가 생성되지 않았기 때문에.. 일단은 빈공간으로 만들어준다.
@@ -63,6 +63,14 @@ namespace GameEngineSpace
 				// 스타트를 실행 했으니..
 				component->SetIsStarted(true);
 			}
+		}
+	}
+
+	void GameObject::FixedUpdate(float tick)
+	{
+		for (auto& component : components)
+		{
+			component->FixedUpdate(tick);
 		}
 	}
 
@@ -203,6 +211,11 @@ namespace GameEngineSpace
 
 		// 부모 포인터를 null로 만듭니다
 		parent = std::weak_ptr<GameObject>();
+	}
+
+	bool GameObject::CompareTag(const std::string& tagName)
+	{
+		return tag == tagName;
 	}
 
 	void GameObject::SetParent(std::shared_ptr<GameObject> _parent)

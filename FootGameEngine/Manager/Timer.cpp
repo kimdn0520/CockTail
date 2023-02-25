@@ -29,6 +29,9 @@ namespace GameEngineSpace
 
 		QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&_countsPerSec));
 		secondsPerCount = 1.0f / static_cast<float>(_countsPerSec);
+
+		printf("Timer Init Clear\n");
+
 	}
 
 	void Timer::Release()
@@ -106,7 +109,7 @@ namespace GameEngineSpace
 		currTime = _currTime;
 
 		// 델타 타임을 구한다..
-		deltaTime = (currTime - prevTime) * secondsPerCount;
+		deltaTime = static_cast<float>(currTime - prevTime) * secondsPerCount;
 
 		// 다음 프레임을 준비하고.
 		prevTime = currTime;

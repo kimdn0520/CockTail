@@ -13,7 +13,7 @@ namespace GraphicsEngineSpace
 
 	ConstantBuffer::~ConstantBuffer()
 	{
-		
+
 	}
 
 	bool ConstantBuffer::SetUpBuffer(unsigned slot, void* data, ShaderType targetType)
@@ -30,22 +30,29 @@ namespace GraphicsEngineSpace
 
 		switch (targetType)
 		{
-			case ShaderType::VERTEX:
-			{
-				// 한 슬롯에 버퍼 하나씩..
-					// 한 쉐이더에 constBuffer가 여러개이면 여러개의 버퍼를 만들어서 넣을 수 있다.
-					// 그래서 중복되는 버퍼 관리하려고 이렇게 한건가
-				deviceContext->VSSetConstantBuffers(slot, 1, buffer.GetAddressOf());
+		case ShaderType::VERTEX:
+		{
+			// 한 슬롯에 버퍼 하나씩..
+				// 한 쉐이더에 constBuffer가 여러개이면 여러개의 버퍼를 만들어서 넣을 수 있다.
+				// 그래서 중복되는 버퍼 관리하려고 이렇게 한건가
+			deviceContext->VSSetConstantBuffers(slot, 1, buffer.GetAddressOf());
 
-				return true;
-			}
+			return true;
+		}
 
-			case ShaderType::PIXEL:
-			{
-				deviceContext->PSSetConstantBuffers(slot, 1, buffer.GetAddressOf());
+		case ShaderType::PIXEL:
+		{
+			deviceContext->PSSetConstantBuffers(slot, 1, buffer.GetAddressOf());
 
-				return true;
-			}
+			return true;
+		}
+
+		case ShaderType::GEOMETRY:
+		{
+			deviceContext->GSSetConstantBuffers(slot, 1, buffer.GetAddressOf());
+
+			return true;
+		}
 		}
 
 		return false;

@@ -19,31 +19,8 @@ namespace GameEngineSpace
 
 	bool GraphicsManager::Init(HWND hWnd, uint32 screenWidth, uint32 screenHeight)
 	{
-		// 여기서 Dll을 로드해줍니다.
+		// 여기서 Dll을 로드해줍니다. => 암시적 링킹이기 때문에 해당 부분이 필요하지 않습니다.
 			// TODO : 내 구조에 맞게 재 설계.
-#ifdef x64
-#ifdef _DEBUG
-		graphicsDLL = LoadLibrary(_T("DLL/FootGraphicsEngine_Debug_x64.dll"));
-#else
-		graphicsDLL = LoadLibrary(_T("DLL/FootGraphicsEngine_Release_x64.dll"));
-#endif
-#else
-#ifdef _DEBUG
-		graphicsDLL = LoadLibrary(_T("DLL/FootGraphicsEngine_Debug_x86.dll"));
-#else
-		graphicsDLL = LoadLibrary(_T("DLL/FootGraphicsEngine_Release_x86.dll"));
-#endif
-#endif
-
-		if (graphicsDLL == nullptr)
-		{
-			// TO DO
-			// DLL 로드 실패
-			OutputDebugString(_T("Load graphics engine dll failed.\n"));
-			return false;
-		}
-
-		OutputDebugString(_T("Load graphics engine dll success.\n"));
 
 		// 초기 리사이즈를 제대로 하기위한 클라이언트 정보 얻어오기.
 		RECT rect;
@@ -54,8 +31,15 @@ namespace GameEngineSpace
 		// 렌더러를 생성해봅시다.
 		renderer.reset(CreateRenderer());
 
+
 		if (renderer->Initialize(hWnd, _width, _height) != true)
+		{
+			printf("Create Renderer FAIL!\n");
+			system("PAUSE");
 			return false;
+		}
+		
+		printf("Create Renderer Clear\n");
 
 		static uint32 nowWidth = _width;
 		static uint32 nowHeight = _height;
@@ -76,6 +60,8 @@ namespace GameEngineSpace
 			}
 		);
 
+		printf("Graphics Manager Init Clear\n");
+		
 		return true;
 	}
 
@@ -98,8 +84,8 @@ namespace GameEngineSpace
 			renderer->Finalize();
 		renderer.reset();
 
-		if (graphicsDLL != nullptr)
-			FreeLibrary(graphicsDLL);
+		/*if (graphicsDLL != nullptr)
+			FreeLibrary(graphicsDLL);*/
 	}
 
 	void GraphicsManager::PassDirectionalLight(SimpleMath::Vector3 color, SimpleMath::Vector3 direction, float power, SimpleMath::Matrix lightViewProj)
@@ -107,14 +93,20 @@ namespace GameEngineSpace
 		renderer->PassDirectionalLight(color, direction, power, lightViewProj);
 	}
 
-	void GraphicsManager::PassPointLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, float power, float range, SimpleMath::Matrix lightViewProj)
+	void GraphicsManager::PassPointLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, float power, float range, bool isShadow, std::vector<SimpleMath::Matrix> lightViewProj)
 	{
-		renderer->PassPointLight(color, position, power, range, lightViewProj);
+		renderer->PassPointLight(color, position, power, range, isShadow, lightViewProj);
 	}
 
-	void GraphicsManager::PassSpotLight(SimpleMath::Vector3 color, SimpleMath::Vector3 direction, float power, float halfAngle, float range, SimpleMath::Matrix lightViewProj)
+	void GraphicsManager::PassSpotLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, SimpleMath::Vector3 direction, float power, float innerSpotAngle, float outerSpotAngle, float range, bool
+	                                    isShadow, SimpleMath::Matrix lightViewProj)
 	{
-		renderer->PassSpotLight(color, direction, power, halfAngle, range, lightViewProj);
+		renderer->PassSpotLight(color, position, direction, power, innerSpotAngle, outerSpotAngle, range, isShadow, lightViewProj);
+	}
+
+	void GraphicsManager::PassAmbientSkyColor(SimpleMath::Vector4 color)
+	{
+		renderer->PassAmbientSkyColor(color);
 	}
 
 	void GraphicsManager::CreateUITest(HWND hWnd)
@@ -143,6 +135,11 @@ namespace GameEngineSpace
 		auto resourceManager = ResourceManager::GetInstance();
 
 		return resourceManager->LoadTexture(path);
+	}
+
+	void GraphicsManager::MakeMesh(std::string name, std::vector<FBXBinaryData::VertexData> vertex, std::vector<std::vector<unsigned int>> indices)
+	{
+		ResourceManager::GetInstance()->MakeMesh(name, vertex, indices);
 	}
 
 	std::shared_ptr<GraphicsManager> GraphicsManager::GetInstance()

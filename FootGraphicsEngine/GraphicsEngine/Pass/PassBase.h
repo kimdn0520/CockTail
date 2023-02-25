@@ -1,11 +1,14 @@
 #pragma once
+#include <memory>
+
+#include "GraphicsCore/RenderTargetTexture.h"
 
 
 namespace GraphicsEngineSpace
 {
 	class DX11GraphicsCore;
 
-	class RenderTargetDepth;
+	class DepthStencilResource;
 
 	/**
 	 * \brief 디퍼드 렌더링의 기본이 되는 Pass Rendering의 Base Class
@@ -24,7 +27,7 @@ namespace GraphicsEngineSpace
 		static void Reset();
 
 	public:
-		virtual void Start(const std::shared_ptr<RenderTargetDepth>& mainRTV) {}
+		virtual void Start(const std::shared_ptr<RenderTargetTexture>& mainRTV, const std::shared_ptr<DepthStencilResource>& mainDSV) {}
 		virtual void Release() abstract;
 		virtual void OnResize(int width, int height) {}
 	};

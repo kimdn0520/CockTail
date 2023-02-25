@@ -26,7 +26,18 @@ namespace GameEngineSpace
 
 
 	public:
-		Timer() = default;
+		Timer()
+			: secondsPerCount(0.0f)
+			, deltaTime(0.0f)
+			, baseTime(0)
+			, pausedTime(0)
+			, stopTime(0)
+			, prevTime(0)
+			, currTime(0)
+			, isStopped(false)
+		{
+			
+		}
 		~Timer() = default;
 		Timer(const Timer& _other) = delete;
 		const Timer& operator=(const Timer& _other) = delete;

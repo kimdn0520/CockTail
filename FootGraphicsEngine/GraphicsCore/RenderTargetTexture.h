@@ -2,6 +2,8 @@
 
 namespace GraphicsEngineSpace
 {
+	class DX11GraphicsCore;
+
 	/**
 	 * \brief Deferred Rendering, 각종 디버그 정보를 확인하기 위한 렌더 타겟 텍스쳐 클래스이다.
 	 *
@@ -24,6 +26,7 @@ namespace GraphicsEngineSpace
 
 		// init. 텍스쳐의 크기를 받아서 생성해준다.
 		bool Init(ComPtr<ID3D11Device> device, int width, int height, UINT MSAAQuality);
+		
 		// COM 변수들 해제 (리사이즈 할 때 불러준다)
 		void Finalize();
 
@@ -34,6 +37,8 @@ namespace GraphicsEngineSpace
 		// 셰이더 리소스 뷰를 던져줍니다.
 			// 이를 셰이더에 보냄으로써 다른 셰이더 들이 해당 텍스쳐 데이터에 접근 가능해집니다.
 		ComPtr<ID3D11ShaderResourceView> GetShaderResourceView() { return shaderResource; }
+
+		friend DX11GraphicsCore;
 	};
 
 }

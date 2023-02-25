@@ -24,8 +24,6 @@ namespace GameEngineSpace
 		std::shared_ptr<IRenderer> renderer;
 		HMODULE graphicsDLL;
 
-		// 빛 정보들을 담은 큐..
-			// 지만 지금은 DirLit 하나만
 	public:
 		GraphicsManager() = default;
 		~GraphicsManager() = default;
@@ -51,13 +49,17 @@ namespace GameEngineSpace
 
 		// 빛 던지기
 		void PassDirectionalLight(SimpleMath::Vector3 color, SimpleMath::Vector3 direction, float power, SimpleMath::Matrix lightViewProj);
-		void PassPointLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, float power, float range, SimpleMath::Matrix lightViewProj);
-		void PassSpotLight(SimpleMath::Vector3 color, SimpleMath::Vector3 direction, float power, float halfAngle, float range, SimpleMath::Matrix lightViewProj);
+		void PassPointLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, float power, float range, bool isShadow, std::vector<SimpleMath::Matrix> lightViewProj);
+		void PassSpotLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, SimpleMath::Vector3 direction, float power, float innerSpotAngle, float outerSpotAngle, float range, bool
+		                   isShadow, SimpleMath::Matrix lightViewProj);
+		void PassAmbientSkyColor(SimpleMath::Vector4 color);
 
 		void CreateUITest(HWND hWnd);
 		void UIRender(float tick);
 
 		std::shared_ptr<Texture> LoadTexture(std::wstring path);
+
+		void MakeMesh(std::string name, std::vector<FBXBinaryData::VertexData> vertex, std::vector<std::vector<unsigned int>> indices);
 
 	public:
 		static std::shared_ptr<GraphicsManager> GetInstance();

@@ -5,6 +5,7 @@
 #include "TextUI.h"
 #include "SpriteUI.h"
 #include "ButtonUI.h"
+#include "ProgressBarUI.h"
 
 namespace GraphicsEngineSpace
 {
@@ -16,6 +17,7 @@ namespace GraphicsEngineSpace
 		std::map<std::string, std::shared_ptr<TextUI>> textUIMap;
 		std::map<std::string, std::shared_ptr<SpriteUI>> spriteUIMap;
 		std::map<std::string, std::shared_ptr<ButtonUI>> buttonUIMap;
+		std::map<std::string, std::shared_ptr<ProgressBarUI>> progressBarUIMap;
 		std::map<std::string, std::shared_ptr<Canvas>> canvasMap;
 
 		// 기존에 선택된 PickedUI
@@ -39,6 +41,8 @@ namespace GraphicsEngineSpace
 		virtual std::shared_ptr<Canvas> CreateCanvasUI(const std::string& name, float width, float height);
 		virtual std::shared_ptr<Canvas> GetCanvasUI(const std::string& name);
 
+		virtual std::shared_ptr<ProgressBarUI> CreateProgressBarUI(const std::string& name);
+		virtual std::shared_ptr<ProgressBarUI> GetProgressBarUI(const std::string& name);
 
 		// 버튼 진입 확인 코드
 		virtual void CheckCollidedButton(float mouseX, float mouseY, bool isClicked);
@@ -50,7 +54,7 @@ namespace GraphicsEngineSpace
 		virtual bool GetSelectMode() { return selectMode; }
 		virtual std::shared_ptr<UIBase> GetSelectedUI() { return selectedUI; }
 
-		void Render(float tick) override;
+		void Render(std::shared_ptr<IRenderer> renderer, float tick) override;
 		virtual void Release();
 
 	private:

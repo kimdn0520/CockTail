@@ -23,12 +23,12 @@ namespace GameEngineSpace
 		renderObj = Factory::GetInstance()->CreateDXObject<GraphicsEngineSpace::SpriteEffect>(
 			BuilderManger::GetInstance()->GetBuilder("SpriteEffectBuilder"), objName);
 
-		GraphicsManager::GetInstance()->GetRenderer()->AddRenderObj(renderObj);
+		GraphicsManager::GetInstance()->GetRenderer()->InitObject(renderObj);
 	}
 
 	void SpriteEffect::Render()
 	{
-
+		renderObj->Render();
 	}
 
 	void SpriteEffect::PrepareRender(float tick)
@@ -37,7 +37,9 @@ namespace GameEngineSpace
 
 		renderObj->Update(transform->GetWorldTM(), mainCam->GetViewMatrix(), mainCam->GetProjMatrix());
 
-		/*auto effect = std::dynamic_pointer_cast<GraphicsEngineSpace::SpriteEffect>(renderObj);
+		/*
+		*/
+		auto effect = std::dynamic_pointer_cast<GraphicsEngineSpace::SpriteEffect>(renderObj);
 
 		SimpleMath::Vector2 offset;
 
@@ -47,7 +49,7 @@ namespace GameEngineSpace
 		effect->SetTexOffset(offset.x + 5.0f * tick, offset.y);
 
 		if(offset.x > 1.0f)
-			effect->SetTexOffset(-1.0f, offset.y);*/
+			effect->SetTexOffset(-1.0f, offset.y);
 	}
 
 	void SpriteEffect::DebugIMGUIRender(float tick)

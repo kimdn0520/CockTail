@@ -1,21 +1,174 @@
-﻿  ResourceManager.cpp
-D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(74,68): warning C4267: '=': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(23,43): warning C4251: 'GraphicsEngineSpace::ResourceManager::instance': class 'std::shared_ptr<GraphicsEngineSpace::ResourceManager>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
-D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(23): message : 'std::shared_ptr<GraphicsEngineSpace::ResourceManager>' 선언을 참조하십시오.
-D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(33,63): warning C4251: 'GraphicsEngineSpace::ResourceManager::prefab': class 'std::unordered_map<std::string,std::shared_ptr<GraphicsEngineSpace::IDXObject>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<GraphicsEngineSpace::IDXObject>>>>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
-D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(33): message : 'std::unordered_map<std::string,std::shared_ptr<GraphicsEngineSpace::IDXObject>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<GraphicsEngineSpace::IDXObject>>>>' 선언을 참조하십시오.
-D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(36,15): warning C4251: 'GraphicsEngineSpace::ResourceManager::meshPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4871): message : 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' 선언을 참조하십시오.
-D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(37,15): warning C4251: 'GraphicsEngineSpace::ResourceManager::materialPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4871): message : 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' 선언을 참조하십시오.
-D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(38,15): warning C4251: 'GraphicsEngineSpace::ResourceManager::AnimationPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4871): message : 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' 선언을 참조하십시오.
-D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(39,15): warning C4251: 'GraphicsEngineSpace::ResourceManager::modelPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4871): message : 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' 선언을 참조하십시오.
-D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(40,15): warning C4251: 'GraphicsEngineSpace::ResourceManager::prefabPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4871): message : 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' 선언을 참조하십시오.
-D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(44,58): warning C4251: 'GraphicsEngineSpace::ResourceManager::basicMeshes': class 'std::unordered_map<std::string,std::shared_ptr<GraphicsEngineSpace::Mesh>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<GraphicsEngineSpace::Mesh>>>>'에서는 class 'GraphicsEngineSpace::ResourceManager'의 클라이언트에서 DLL 인터페이스를 사용하도록 지정해야 합니다.
-D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(44): message : 'std::unordered_map<std::string,std::shared_ptr<GraphicsEngineSpace::Mesh>,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,std::shared_ptr<GraphicsEngineSpace::Mesh>>>>' 선언을 참조하십시오.
+﻿  GraphicsPch.cpp
+  PostProcess.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+  AnimatorParmeter.cpp
+  AnimatorState.cpp
+  AnimatorTransition.cpp
+  LineBuilder.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+  PBRBuilder.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+  SkyBoxBuilder.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+  dllmain.cpp
+  SpriteEffectBuilder.cpp
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Builder\SpriteEffectBuilder.cpp(32,44): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
           with
           [
@@ -57,6 +210,600 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
               _Objty=unsigned int
           ]
 D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(57,1): warning C4267: '=': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(92): message : 컴파일되는 함수 템플릿 인스턴스화 'void GraphicsEngineSpace::Mesh::CreateVertexBuffer<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex>(const std::vector<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex,std::allocator<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex>> &)'에 대한 참조를 확인하세요.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(103): message : 컴파일되는 함수 템플릿 인스턴스화 'void GraphicsEngineSpace::Mesh::CreateVertexBuffer<GraphicsEngineSpace::VertexStruct::TexVertex>(const std::vector<GraphicsEngineSpace::VertexStruct::TexVertex,std::allocator<GraphicsEngineSpace::VertexStruct::TexVertex>> &)'에 대한 참조를 확인하세요.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Builder\SpriteEffectBuilder.cpp(112): message : 컴파일되는 함수 템플릿 인스턴스화 'const std::shared_ptr<GraphicsEngineSpace::Mesh> GraphicsEngineSpace::ResourceManager::CreateMesh<GraphicsEngineSpace::VertexStruct::TexVertex>(std::vector<GraphicsEngineSpace::VertexStruct::TexVertex,std::allocator<GraphicsEngineSpace::VertexStruct::TexVertex>>,std::vector<std::vector<std::_Vbase,std::allocator<std::_Vbase>>,std::allocator<std::vector<std::_Vbase,std::allocator<std::_Vbase>>>>,std::string,D3D_PRIMITIVE_TOPOLOGY,Microsoft::WRL::ComPtr<ID3D11RasterizerState>)'에 대한 참조를 확인하세요.
+  Factory.cpp
+  GeometryShader.cpp
+  DX11GraphicsCore.cpp
+  RasterizerState.cpp
+  DepthStencilResource.cpp
+  RenderTargetTexture.cpp
+  LightPass.cpp
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\GraphicsEngine\Pass\LightPass.cpp(132,49): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\GraphicsEngine\Pass\LightPass.cpp(133,47): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+  PassBase.cpp
+  Renderer.cpp
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\GraphicsEngine\Renderer.cpp(476,53): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\GraphicsEngine\Renderer.cpp(491,54): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\GraphicsEngine\Renderer.cpp(502,52): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+  BufferManager.cpp
+  BuilderManager.cpp
+  코드를 생성하고 있습니다...
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Builder\SpriteEffectBuilder.cpp(60): warning C4715: 'GraphicsEngineSpace::SpriteEffectBuilder::BuildGeometry': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  컴파일하고 있습니다...
+  ImGUIManager.cpp
+  ResourceManager.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(57,1): warning C4267: '=': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(103): message : 컴파일되는 함수 템플릿 인스턴스화 'void GraphicsEngineSpace::Mesh::CreateVertexBuffer<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex>(const std::vector<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex,std::allocator<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex>> &)'에 대한 참조를 확인하세요.
 D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.cpp(98): message : 컴파일되는 함수 템플릿 인스턴스화 'const std::shared_ptr<GraphicsEngineSpace::Mesh> GraphicsEngineSpace::ResourceManager::CreateMesh<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex>(std::vector<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex,std::allocator<GraphicsEngineSpace::VertexStruct::PBRSkinnedVertex>>,std::vector<std::vector<std::_Vbase,std::allocator<std::_Vbase>>,std::allocator<std::vector<std::_Vbase,std::allocator<std::_Vbase>>>>,std::string,D3D_PRIMITIVE_TOPOLOGY,Microsoft::WRL::ComPtr<ID3D11RasterizerState>)'에 대한 참조를 확인하세요.
+  SamplerManager.cpp
+  ShaderManager.cpp
+  UIUtilsManager.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+  ConstantBuffer.cpp
+  LineObj.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+  PBRObj.cpp
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Util\Animator.h(6,16): warning C4099: 'GraphicsEngineSpace::KeyFrame': 처음에는 'struct'을(를) 사용하여 형식 이름을 표시했는데 이제는 'class'을(를) 사용하여 표시합니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\ObjectResources.h(51): message : 'GraphicsEngineSpace::KeyFrame' 선언을 참조하십시오.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Util\Animator.h(7,29): warning C4099: 'GraphicsEngineSpace::AnimationClipResource': 처음에는 'struct'을(를) 사용하여 형식 이름을 표시했는데 이제는 'class'을(를) 사용하여 표시합니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\ObjectResources.h(73): message : 'GraphicsEngineSpace::AnimationClipResource' 선언을 참조하십시오.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\memory(3381,1): warning C4267: '인수': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Object\PBRObj.cpp(252): message : 컴파일되는 함수 템플릿 인스턴스화 'std::unique_ptr<GraphicsEngineSpace::Animator,std::default_delete<GraphicsEngineSpace::Animator>> std::make_unique<GraphicsEngineSpace::Animator,unsigned __int64,0>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+  PixelShader.cpp
+  VertexShader.cpp
+  SkyBox.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+  SpriteEffect.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(57,1): warning C4267: '=': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Manager\ResourceManager.h(103): message : 컴파일되는 함수 템플릿 인스턴스화 'void GraphicsEngineSpace::Mesh::CreateVertexBuffer<GraphicsEngineSpace::VertexStruct::TexVertex>(const std::vector<GraphicsEngineSpace::VertexStruct::TexVertex,std::allocator<GraphicsEngineSpace::VertexStruct::TexVertex>> &)'에 대한 참조를 확인하세요.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Object\SpriteEffect.cpp(179): message : 컴파일되는 함수 템플릿 인스턴스화 'const std::shared_ptr<GraphicsEngineSpace::Mesh> GraphicsEngineSpace::ResourceManager::CreateMesh<GraphicsEngineSpace::VertexStruct::TexVertex>(std::vector<GraphicsEngineSpace::VertexStruct::TexVertex,std::allocator<GraphicsEngineSpace::VertexStruct::TexVertex>>,std::vector<std::vector<std::_Vbase,std::allocator<std::_Vbase>>,std::allocator<std::vector<std::_Vbase,std::allocator<std::_Vbase>>>>,std::string,D3D_PRIMITIVE_TOPOLOGY,Microsoft::WRL::ComPtr<ID3D11RasterizerState>)'에 대한 참조를 확인하세요.
+  ButtonUI.cpp
+  Canvas.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+  SpriteUI.cpp
+  TextUI.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(2541,23): warning C4244: '인수': 'wchar_t'에서 'const _Elem'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Elem=char
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(2552): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<_InIt>(_Iter,const _Iter,std::input_iterator_tag)'에 대한 참조를 확인하세요.
+          with
+          [
+              _InIt=wchar_t *,
+              _Iter=wchar_t *
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(2552): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<_InIt>(_Iter,const _Iter,std::input_iterator_tag)'에 대한 참조를 확인하세요.
+          with
+          [
+              _InIt=wchar_t *,
+              _Iter=wchar_t *
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(2532): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<_InIt>(const _Iter,const _Iter,std::forward_iterator_tag)'에 대한 참조를 확인하세요.
+          with
+          [
+              _InIt=wchar_t *,
+              _Iter=wchar_t *
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(2532): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::basic_string<char,std::char_traits<char>,std::allocator<char>>::_Construct<_InIt>(const _Iter,const _Iter,std::forward_iterator_tag)'에 대한 참조를 확인하세요.
+          with
+          [
+              _InIt=wchar_t *,
+              _Iter=wchar_t *
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(3260): message : 컴파일되는 함수 템플릿 인스턴스화 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<wchar_t*,0>(_Iter,_Iter,const _Alloc &)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Iter=wchar_t *,
+              _Alloc=std::allocator<char>
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(3260): message : 컴파일되는 함수 템플릿 인스턴스화 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string<wchar_t*,0>(_Iter,_Iter,const _Alloc &)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Iter=wchar_t *,
+              _Alloc=std::allocator<char>
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Object\UI\TextUI.cpp(62): message : 컴파일되는 함수 템플릿 인스턴스화 'std::basic_string<char,std::char_traits<char>,std::allocator<char>> &std::basic_string<char,std::char_traits<char>,std::allocator<char>>::assign<std::_String_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(const _Iter,const _Iter)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Elem=wchar_t,
+              _Iter=std::_String_iterator<std::_String_val<std::_Simple_types<wchar_t>>>
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Object\UI\TextUI.cpp(62): message : 컴파일되는 함수 템플릿 인스턴스화 'std::basic_string<char,std::char_traits<char>,std::allocator<char>> &std::basic_string<char,std::char_traits<char>,std::allocator<char>>::assign<std::_String_iterator<std::_String_val<std::_Simple_types<_Elem>>>,0>(const _Iter,const _Iter)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Elem=wchar_t,
+              _Iter=std::_String_iterator<std::_String_val<std::_Simple_types<wchar_t>>>
+          ]
+  ProgressBarUI.cpp
+  RenderingMaterial.cpp
+  InputLayout.cpp
+  Mesh.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+  코드를 생성하고 있습니다...
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Object\SpriteEffect.h(55): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Object\SpriteEffect.h(54): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Object\SpriteEffect.h(53): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Object\SkyBox.h(52): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Object\SkyBox.h(51): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Object\SkyBox.h(50): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Object\LineObj.h(56): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Object\LineObj.h(57): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Object\LineObj.h(58): warning C4172: 지역 변수 또는 임시의 주소를 반환하고 있습니다.
+  컴파일하고 있습니다...
+  Resource.cpp
+  Texture.cpp
+  ShadowPass.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(135,1): warning C4267: '초기화 중': 'size_t'에서 '_Ty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Ty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(134): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty *std::construct_at<_Objty,unsigned __int64,void>(_Ty *const ,unsigned __int64 &&) noexcept(<expr>)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(708): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(713): message : 컴파일되는 함수 템플릿 인스턴스화 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,unsigned __int64>(_Alloc &,_Objty *const ,unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Alloc=std::allocator<std::_Vbase>,
+              _Ty=unsigned int,
+              _Objty=unsigned int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\vector(726): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::_Emplace_back_with_unused_capacity<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\Mesh.h(84): message : 컴파일되는 함수 템플릿 인스턴스화 '_Ty &std::vector<_Ty,std::allocator<_Ty>>::emplace_back<unsigned __int64>(unsigned __int64 &&)'에 대한 참조를 확인하세요.
+          with
+          [
+              _Ty=std::_Vbase
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(674,1): warning C4267: '초기화 중': 'size_t'에서 '_Objty'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+          with
+          [
+              _Objty=unsigned int
+          ]
+  Animator.cpp
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Util\Animator.h(6,16): warning C4099: 'GraphicsEngineSpace::KeyFrame': 처음에는 'struct'을(를) 사용하여 형식 이름을 표시했는데 이제는 'class'을(를) 사용하여 표시합니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\ObjectResources.h(51): message : 'GraphicsEngineSpace::KeyFrame' 선언을 참조하십시오.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Util\Animator.h(7,29): warning C4099: 'GraphicsEngineSpace::AnimationClipResource': 처음에는 'struct'을(를) 사용하여 형식 이름을 표시했는데 이제는 'class'을(를) 사용하여 표시합니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\FootGraphicsEngine\Resources\ObjectResources.h(73): message : 'GraphicsEngineSpace::AnimationClipResource' 선언을 참조하십시오.
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_dx11.cpp
+  imgui_impl_win32.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  MathHelper.cpp
+  코드를 생성하고 있습니다...
+     D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\FootGraphicsEngine_Debug_x64.lib 라이브러리 및 D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\FootGraphicsEngine_Debug_x64.exp 개체를 생성하고 있습니다.
+DirectXTex_x64_Debug.lib(BC.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_x64_Debug.lib(BC.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTex_x64_Debug.lib(BC4BC5.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_x64_Debug.lib(BC4BC5.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTex_x64_Debug.lib(BC6HBC7.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_x64_Debug.lib(BC6HBC7.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTex_x64_Debug.lib(DirectXTexCompress.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_x64_Debug.lib(DirectXTexCompress.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTex_x64_Debug.lib(DirectXTexConvert.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_x64_Debug.lib(DirectXTexConvert.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTex_x64_Debug.lib(DirectXTexD3D11.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_x64_Debug.lib(DirectXTexD3D11.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTex_x64_Debug.lib(DirectXTexDDS.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_x64_Debug.lib(DirectXTexDDS.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTex_x64_Debug.lib(DirectXTexHDR.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_x64_Debug.lib(DirectXTexHDR.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTex_x64_Debug.lib(DirectXTexImage.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_x64_Debug.lib(DirectXTexImage.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTex_x64_Debug.lib(DirectXTexMipMaps.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_x64_Debug.lib(DirectXTexMipMaps.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTex_x64_Debug.lib(DirectXTexTGA.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_x64_Debug.lib(DirectXTexTGA.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTex_x64_Debug.lib(DirectXTexUtil.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_x64_Debug.lib(DirectXTexUtil.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTex_x64_Debug.lib(DirectXTexWIC.obj) : warning LNK4099: 'DirectXTex.pdb' PDB를 'DirectXTex_x64_Debug.lib(DirectXTexWIC.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTex.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTK_x64_Debug.lib(BufferHelpers.obj) : warning LNK4099: 'DirectXTK.pdb' PDB를 'DirectXTK_x64_Debug.lib(BufferHelpers.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTK.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTK_x64_Debug.lib(CommonStates.obj) : warning LNK4099: 'DirectXTK.pdb' PDB를 'DirectXTK_x64_Debug.lib(CommonStates.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTK.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTK_x64_Debug.lib(BinaryReader.obj) : warning LNK4099: 'DirectXTK.pdb' PDB를 'DirectXTK_x64_Debug.lib(BinaryReader.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTK.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTK_x64_Debug.lib(pch.obj) : warning LNK4099: 'DirectXTK.pdb' PDB를 'DirectXTK_x64_Debug.lib(pch.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTK.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTK_x64_Debug.lib(SimpleMath.obj) : warning LNK4099: 'DirectXTK.pdb' PDB를 'DirectXTK_x64_Debug.lib(SimpleMath.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTK.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTK_x64_Debug.lib(SpriteBatch.obj) : warning LNK4099: 'DirectXTK.pdb' PDB를 'DirectXTK_x64_Debug.lib(SpriteBatch.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTK.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTK_x64_Debug.lib(SpriteFont.obj) : warning LNK4099: 'DirectXTK.pdb' PDB를 'DirectXTK_x64_Debug.lib(SpriteFont.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\DirectXTK.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+DirectXTK_x64_Debug.lib(VertexTypes.obj) : warning LNK4099: '' PDB를 'DirectXTK_x64_Debug.lib(VertexTypes.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
   FootGraphicsEngine.vcxproj -> D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\FootGraphicsEngine_Debug_x64.dll

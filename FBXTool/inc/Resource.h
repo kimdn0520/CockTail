@@ -11,6 +11,10 @@
 #define IDC_CONVERT                     1003
 #define IDC_LOAD                        1004
 #define IDC_EDIT1                       1005
+#define IDC_EDIT2                       1006
+#define IDC_SBUTTON                     1008
+#define IDC_SCONVERT                    1009
+#define IDC_All_CONVERT					1010
 
 // Next default values for new objects
 // 

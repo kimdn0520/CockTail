@@ -64,23 +64,24 @@ namespace GraphicsEngineSpace
 		return temp;
 	}
 
-	void TextUI::Render(float tick)
+	void TextUI::Render(std::shared_ptr<IRenderer> renderer, float tick)
 	{
 		if(isEnable != true)
 			return;
-
+			
 		// 그림 그리기.
 		std::shared_ptr<SpriteBatch> batch = UIUtilsManager::GetInstance()->GetSpriteBatch();
 		
 		batch->Begin(DirectX::SpriteSortMode_Deferred, nullptr, nullptr, UIUtilsManager::GetInstance()->GetDepthState().Get());
-		UIUtilsManager::GetInstance()->GetFont(font)->DrawString(batch.get(), text.c_str(), GetScreenPosition(), color, 0.0f
-		, DirectX::g_XMZero, SimpleMath::Vector2{ fontSize / 32.0f, fontSize / 32.0f } * GetScreenScale());
+		UIUtilsManager::GetInstance()->GetFont(font)->DrawString(batch.get(), text.c_str(), GetScreenPosition(), color, 0.0f,
+		DirectX::g_XMZero, SimpleMath::Vector2{ fontSize / 32.0f, fontSize / 32.0f } * GetScreenScale(),
+			DirectX::SpriteEffects_None, GetScreenPosition().z);
 		batch->End();
 
 		for(auto iter : children)
 		{
 			if(iter != nullptr)
-				iter->Render(tick);
+				iter->Render(renderer, tick);
 		}
 	}
 }

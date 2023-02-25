@@ -2,7 +2,8 @@
 #include "GraphicsCore/RasterizerState.h"
 #include "Resources/Mesh.h"
 #include "Resources/Texture.h"
-#include "Define/YAMLBinaryLayout.h"
+#include "YAMLBinaryLayout.h"
+#include "FBXBinaryLayout.h"
 
 #ifdef FOOTGRAPHICSENGINE_EXPORTS
 #define GRAPHICSENGINE_DECLSPEC __declspec(dllexport)
@@ -40,15 +41,13 @@ namespace GraphicsEngineSpace
 		std::string prefabPath;
 
 	public:
-		// 내부에서 들고 있을 기본 메시들
+		// 내부에서 들고 있을 기본 메시들(도형, navmesh)
 		std::unordered_map<std::string, std::shared_ptr<Mesh>> basicMeshes;
 
 	public:
 		std::shared_ptr<Mesh> LoadMesh(std::string name);
 
 		std::shared_ptr<Texture> LoadTexture(std::wstring path);
-
-		//std::shared_ptr<NavMesh> LoadNavMesh(std::string name);
 
 	public:
 		// 메시를 만들어서 넘겨준다.
@@ -57,23 +56,32 @@ namespace GraphicsEngineSpace
 		
 		void Initialize();
 
-		void LoadCubeMesh();			// CUBE_MESH = 0;
+		void Release();
 
-		void LoadSphereMesh();			// SPHERE_MESH = 1;
+		void LoadCubeMesh();			
 
-		void LoadAxisMesh();			// AXIS_MESH = 2;
+		void LoadSphereMesh();			
 
-		void LoadGridMesh();			// GRID_MESH = 3;
+		void LoadAxisMesh();			
 
-		void LoadScreenMesh();			// SCREEN_MESH = 4;
+		void LoadGridMesh();			
 
-		void LoadDebugScreenMesh();		// DEBUG_SCREEN_MESH = 5;
+		void LoadScreenMesh();			
 
-		void LoadWireCubeMesh();		// WIRECUBE_MESH = 6;
+		void LoadDebugScreenMesh();		
 
-		void LoadPlaneMesh();			// PLANE_MESH = 7;
+		void LoadWireCubeMesh();		
+
+		void LoadWireSphereMesh();
+
+		void LoadCapsuleMesh();
+
+		void LoadPlaneMesh();			
 
 		void LoadPrefab();
+
+		// 게임엔진 쪽에서 mesh를 만들어서 넣을 수 있도록 해주는 함수
+		void MakeMesh(std::string name, std::vector<FBXBinaryData::VertexData> vertex, std::vector<std::vector<unsigned int>> indices);
 
 		std::shared_ptr<YAMLBinaryData::Scene> LoadUnityScene(std::string path);
 	};
@@ -90,12 +98,15 @@ namespace GraphicsEngineSpace
 		
 		mesh->SetRenderState(rasterizerState);
 
-		mesh->CreateVertexBuffer(vertices);
-		for (int i = 0; i < indices.size(); i++)
+		if (!vertices.empty())
 		{
-			mesh->CreateIndexBuffer(indices[i]);
+			mesh->CreateVertexBuffer(vertices);
+			for (int i = 0; i < indices.size(); i++)
+			{
+				mesh->CreateIndexBuffer(indices[i]);
+			}
+			mesh->SetStride(sizeof(T));
 		}
-		mesh->SetStride(sizeof(T));
 
 		return mesh;
 	}

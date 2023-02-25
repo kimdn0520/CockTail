@@ -5,7 +5,7 @@
 #include <d3dcompiler.h>
 #include "Interface/IDXObject.h"
 #include "GraphicsCore/DX11GraphicsCore.h"
-#include "GraphicsCore/RenderTargetDepth.h"
+#include "GraphicsCore/DepthStencilResource.h"
 #include "GraphicsCore/RenderTargetTexture.h"
 #include "GraphicsCore/RasterizerState.h"
 
@@ -26,6 +26,8 @@
 #include "Object/UI/ButtonUI.h"
 
 #include "Pass/LightPass.h"
+#include "Pass/ShadowPass.h"
+#include "Pass/PostProcess.h"
 #include "Object/PBRObj.h"
 
 namespace GraphicsEngineSpace
@@ -36,12 +38,15 @@ namespace GraphicsEngineSpace
 		: hWnd(0)
 		, graphicsCore(nullptr)
 		, mainRenderTarget(nullptr)
+		, mainDepthStencil(nullptr)
 		, DMRAORenderTarget(nullptr)
 		, normalRenderTarget(nullptr)
 		, albedoRenderTarget(nullptr)
 		, worldPosRenderTarget(nullptr)
 		, emissiveRenderTarget(nullptr)
 		, lightPass(nullptr)
+		, shadowPass(nullptr)
+		, postProcessPass(nullptr)
 		, blendState(nullptr)
 		, annotation(nullptr)
 		, annotationCount(0)
@@ -71,7 +76,8 @@ namespace GraphicsEngineSpace
 		// 각종 디바이스 등 초기화.
 		graphicsCore->Initialize(hWnd, clientWidth, clientHeight);
 
-		mainRenderTarget = std::make_shared<RenderTargetDepth>();
+		mainRenderTarget = std::make_shared<RenderTargetTexture>();
+		mainDepthStencil = std::make_shared<DepthStencilResource>();
 		DMRAORenderTarget = std::make_shared<RenderTargetTexture>();
 		normalRenderTarget = std::make_shared<RenderTargetTexture>();
 		albedoRenderTarget = std::make_shared<RenderTargetTexture>();
@@ -80,7 +86,6 @@ namespace GraphicsEngineSpace
 
 		ComPtr<ID3D11Device> device = graphicsCore->GetDevice();
 		ComPtr<ID3D11DeviceContext> deviceContext = graphicsCore->GetImmediateDC();
-
 
 		// 각종 Effect 등 Static 클래스들 모두 초기화.
 		RasterizerState::InitAllRS(device);
@@ -94,9 +99,17 @@ namespace GraphicsEngineSpace
 		// 빌더 매니저 생성 및 Init => 디바이스를 받기 때문에 렌더러에서 Init을 해주어야한다.
 		BuilderManger::GetInstance()->InitBuilderAll(graphicsCore->GetDevice(), graphicsCore->GetImmediateDC());
 
-		lightPass = std::make_shared<LightPass>();
+		lightPass = std::make_unique<LightPass>();
 		lightPass->Init();
-		lightPass->Start(mainRenderTarget);
+		lightPass->Start(mainRenderTarget, mainDepthStencil);
+
+		shadowPass = std::make_unique<ShadowPass>();
+		shadowPass->Init();
+		shadowPass->Start(mainRenderTarget, mainDepthStencil);
+
+		postProcessPass = std::make_unique<PostProcess>();
+		postProcessPass->Init();
+		postProcessPass->Start(mainRenderTarget, mainDepthStencil);
 
 		OnResize();
 
@@ -111,12 +124,12 @@ namespace GraphicsEngineSpace
 		ZeroMemory(&blendDesc, sizeof(D3D11_BLEND_DESC));
 
 		blendDesc.RenderTarget[0].BlendEnable = true;
-		blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_RED | D3D11_COLOR_WRITE_ENABLE_GREEN | D3D11_COLOR_WRITE_ENABLE_BLUE;
+		blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 		blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 		blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 		blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-		blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-		blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
+		blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+		blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
 		blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 
 		HRESULT hr = graphicsCore->GetDevice()->CreateBlendState(&blendDesc, blendState.GetAddressOf());
@@ -132,6 +145,7 @@ namespace GraphicsEngineSpace
 		// imgui 초기화
 		ImGUIManager::GetInstance()->InitImplDX11(device.Get(), deviceContext.Get());
 
+
 		// 여기까지 하면 성공
 		return true;
 	}
@@ -140,7 +154,7 @@ namespace GraphicsEngineSpace
 	{
 		auto device = graphicsCore->GetDevice();
 		ResourceManager::GetInstance()->Initialize();
-		UIUtilsManager::GetInstance()->Init(device, spriteBatch, mainRenderTarget->GetDepthStencilState(), blendState);
+		UIUtilsManager::GetInstance()->Init(device, spriteBatch, mainDepthStencil->GetDepthStencilState(), blendState);
 
 		return true;
 	}
@@ -159,18 +173,15 @@ namespace GraphicsEngineSpace
 		BufferManager::GetInstance()->Finalize();
 		SamplerManager::GetInstance()->Release();
 		UIUtilsManager::GetInstance()->Finalize();
+		ResourceManager::GetInstance()->Release();
 
 		// 각종 COM 포인터를 Release 한다.
 		mainRenderTarget->Finalize();
 
 		graphicsCore->Finalize();
 
-		DMRAORenderTarget->Finalize();
-
-		if (annotation)
-			annotation->Release();
-
 		mainRenderTarget->Finalize();
+		mainDepthStencil->Finalize();
 		DMRAORenderTarget->Finalize();
 		normalRenderTarget->Finalize();
 		albedoRenderTarget->Finalize();
@@ -178,9 +189,12 @@ namespace GraphicsEngineSpace
 		emissiveRenderTarget->Finalize();
 
 		lightPass->Release();
+		shadowPass->Release();
+		postProcessPass->Release();
 
 		// 그리고포인터 변수를 지워준다.
 		SafeReset(mainRenderTarget);
+		SafeReset(mainDepthStencil);
 		SafeReset(DMRAORenderTarget);
 		SafeReset(normalRenderTarget);
 		SafeReset(albedoRenderTarget);
@@ -196,11 +210,9 @@ namespace GraphicsEngineSpace
 		ComPtr<ID3D11DeviceContext> deviceContext = graphicsCore->GetImmediateDC();
 
 		// 기존의 것을 지워주고..
-		mainRenderTarget->DeleteImmediateRenderTarget();
+		mainRenderTarget->Finalize();
 		// 새로 만들어준다.
-		mainRenderTarget->CreateRenderTarget(
-			device, deviceContext, graphicsCore->GetSwapChain(),
-			clientWidth, clientHeight, graphicsCore->GetMSAAQuality());
+		graphicsCore->CreateMainRenderTarget(mainRenderTarget, clientWidth, clientHeight, DXGI_FORMAT_R8G8B8A8_UNORM);
 
 		DMRAORenderTarget->Finalize();
 		DMRAORenderTarget->Init(device, clientWidth, clientHeight, graphicsCore->GetMSAAQuality());
@@ -217,10 +229,15 @@ namespace GraphicsEngineSpace
 		emissiveRenderTarget->Finalize();
 		emissiveRenderTarget->Init(device, clientWidth, clientHeight, graphicsCore->GetMSAAQuality());
 
+		mainDepthStencil->DeleteImmediateDepthStencil();
+		mainDepthStencil->CreateDepthStencil(device, deviceContext, clientWidth, clientHeight);
+
 		lightPass->OnResize(clientWidth, clientHeight);
+		shadowPass->OnResize(clientWidth, clientHeight);
+		postProcessPass->OnResize(clientWidth, clientHeight);
 
 		// 뷰포트 설정.
-		deviceContext->RSSetViewports(1, mainRenderTarget->GetViewport().get());
+		deviceContext->RSSetViewports(1, mainDepthStencil->GetViewport().get());
 
 		// core의 Width Height 최신화.
 		graphicsCore->SetScreenWidth(clientWidth);
@@ -249,31 +266,31 @@ namespace GraphicsEngineSpace
 		maximized = _isMaximized;
 	}
 
-	void Renderer::AddRenderObj(std::shared_ptr<IDXObject> obj)
+	/*void Renderer::AddRenderObj(std::shared_ptr<IDXObject> obj)
 	{
 		renderVector.push_back(obj);
-	}
+	}*/
 
-	void Renderer::InitObject()
+	/*void Renderer::InitObject()
 	{
 		for (auto obj : renderVector)
 		{
 			obj->Init(graphicsCore->GetDevice(), graphicsCore->GetImmediateDC());
 		}
-	}
+	}*/
 
 	void Renderer::InitObject(std::shared_ptr<IDXObject> obj)
 	{
 		obj->Init(graphicsCore->GetDevice(), graphicsCore->GetImmediateDC());
 	}
 
-	void Renderer::ClearRenderVector()
+	/*void Renderer::ClearRenderVector()
 	{
 		for (auto renderObj : renderVector)
 			renderObj.reset();
 
 		renderVector.clear();
-	}
+	}*/
 
 	std::shared_ptr<Canvas> Renderer::CreateCanvas(const std::string& name, float width, float height)
 	{
@@ -320,55 +337,44 @@ namespace GraphicsEngineSpace
 	void Renderer::PassDirectionalLight(SimpleMath::Vector3 color, SimpleMath::Vector3 direction, float power, SimpleMath::Matrix lightViewProj)
 	{
 		lightPass->SetDirectionalLight(color, direction, power, lightViewProj);
+		shadowPass->SetLightViewProj(lightViewProj);
 	}
 
-	void Renderer::PassPointLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, float power, float range, SimpleMath::Matrix lightViewProj)
+	void Renderer::PassPointLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, float power, float range, bool isShadow, std::vector<SimpleMath::Matrix> lightViewProj)
 	{
-		lightPass->SetPointLight(color, position, power, range, lightViewProj);
+		lightPass->SetPointLight(color, position, power, range, isShadow, lightViewProj);
 	}
 
-	void Renderer::PassSpotLight(SimpleMath::Vector3 color, SimpleMath::Vector3 direction, float power, float halfAngle, float range, SimpleMath::Matrix lightViewProj)
+	void Renderer::PassSpotLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, SimpleMath::Vector3 direction, float power, float innerSpotAngle, float outerSpotAngle, float range, bool
+	                             isShadow, SimpleMath::Matrix lightViewProj)
 	{
-		lightPass->SetSpotLight(color, direction, power, halfAngle, range, lightViewProj);
+		lightPass->SetSpotLight(color, position, direction, power, innerSpotAngle, outerSpotAngle, range, isShadow, lightViewProj);
+	}
+
+	void Renderer::PassAmbientSkyColor(SimpleMath::Vector4 color)
+	{
+		lightPass->SetAmbientSkyColor(color);
+	}
+
+	void Renderer::ResetShadowPass()
+	{
+		shadowPass->ResetIsSetPointLightCnt();
+		shadowPass->ResetIsSetSpotLightCnt();
 	}
 
 	void Renderer::BeginRender()
 	{
-		graphicsCore->ResetView(
-			mainRenderTarget->GetRenderTargetView(),
-			mainRenderTarget->GetDepthStencilView(),
-			Colors::Gray
-		);
+		graphicsCore->ResetRenderTargetView(mainRenderTarget->GetRenderTargetView(), Colors::Gray);
+		graphicsCore->ResetRenderTargetView(DMRAORenderTarget->GetRenderTargetView(), Colors::Black);
+		graphicsCore->ResetRenderTargetView(normalRenderTarget->GetRenderTargetView(), Colors::Black);
+		graphicsCore->ResetRenderTargetView(albedoRenderTarget->GetRenderTargetView(), Colors::Black);
+		// 빛 정보를 확실히 하기 위해 여기서 alpha 값도 0으로 세팅해봅니다..
+		graphicsCore->ResetRenderTargetView(worldPosRenderTarget->GetRenderTargetView(), XMVECTORF32{ 0.f, 0.f, 0.f, 0.f });
+		graphicsCore->ResetRenderTargetView(emissiveRenderTarget->GetRenderTargetView(), Colors::Black);
 
-		graphicsCore->ResetView(
-			DMRAORenderTarget->GetRenderTargetView(),
-			mainRenderTarget->GetDepthStencilView(),
-			Colors::Black
-		);
+		graphicsCore->ResetDepthStencilView(mainDepthStencil->GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-		graphicsCore->ResetView(
-			normalRenderTarget->GetRenderTargetView(),
-			mainRenderTarget->GetDepthStencilView(),
-			Colors::Black
-		);
-
-		graphicsCore->ResetView(
-			albedoRenderTarget->GetRenderTargetView(),
-			mainRenderTarget->GetDepthStencilView(),
-			Colors::Black
-		);
-
-		graphicsCore->ResetView(
-			worldPosRenderTarget->GetRenderTargetView(),
-			mainRenderTarget->GetDepthStencilView(),
-			Colors::Black
-		);
-
-		graphicsCore->ResetView(
-			emissiveRenderTarget->GetRenderTargetView(),
-			mainRenderTarget->GetDepthStencilView(),
-			Colors::Black
-		);
+		graphicsCore->GetImmediateDC()->OMSetDepthStencilState(mainDepthStencil->GetDepthStencilState().Get(), 0);
 
 		// Deferred
 		ComPtr<ID3D11RenderTargetView> renderTargets[] =
@@ -380,13 +386,15 @@ namespace GraphicsEngineSpace
 			worldPosRenderTarget->GetRenderTargetView(),
 			emissiveRenderTarget->GetRenderTargetView()
 		};
-		graphicsCore->GetImmediateDC()->OMSetRenderTargets(ARRAYSIZE(renderTargets), renderTargets->GetAddressOf(), mainRenderTarget->GetDepthStencilView().Get());
+		graphicsCore->GetImmediateDC()->OMSetRenderTargets(ARRAYSIZE(renderTargets), renderTargets->GetAddressOf(), mainDepthStencil->GetDepthStencilView().Get());
+
 
 		ImGUIManager::GetInstance()->Frame();
 	}
 
 	void Renderer::Render()
 	{
+		/*GraphicsDebugBeginEvent("Object Render");
 		// 각종 렌더.
 		for (auto obj : renderVector)
 		{
@@ -395,9 +403,19 @@ namespace GraphicsEngineSpace
 			obj->Render();
 			GraphicsDebugEndEvent();
 		}
+		GraphicsDebugEndEvent();*/
+
+		//lightPass->IMGuiRender();
+		//postProcessPass->ImGuiRender();
 
 		// lightPass Seting
-		lightPass->Render(gBuffer);
+		GraphicsDebugBeginEvent("Light Pass");
+		lightPass->Render(gBuffer, shadowPass->GetPointShadowDSV(), shadowPass->GetSpotShadowDSV());
+		GraphicsDebugEndEvent();
+
+		GraphicsDebugBeginEvent("PostProcess Pass");
+		postProcessPass->Render(lightPass->GetLightingRTV());
+		GraphicsDebugEndEvent();
 
 		graphicsCore->ResetRS();
 	}
@@ -408,33 +426,100 @@ namespace GraphicsEngineSpace
 		// 다 그리고 백버퍼에 그려주자.
 		graphicsCore->GetImmediateDC()->OMSetRenderTargets(1, &backbufferRTV, mainRenderTarget->GetDepthStencilView());*/
 
+		GraphicsDebugBeginEvent("Debug RTV");
+
 		ID3D11ShaderResourceView* null[] = { nullptr };
+
+		auto depthState = mainDepthStencil->GetDepthStencilState();
 
 		auto depthSRV = DMRAORenderTarget->GetShaderResourceView();
 
-		spriteBatch->Begin(DirectX::SpriteSortMode_Deferred, nullptr, nullptr, mainRenderTarget->GetDepthStencilState().Get());
-		spriteBatch->Draw(depthSRV.Get(), RECT{ 0, 0, static_cast<long>(clientWidth * 0.2f), static_cast<long>(clientHeight * 0.2f) });
+		spriteBatch->Begin(DirectX::SpriteSortMode_Deferred, nullptr, nullptr, depthState.Get());
+		spriteBatch->Draw(depthSRV.Get(), RECT{ 0, 0, static_cast<long>(clientWidth * 0.1f), static_cast<long>(clientHeight * 0.1f) });
 		spriteBatch->End();
 
 		auto normalSRV = normalRenderTarget->GetShaderResourceView();
 
-		spriteBatch->Begin(DirectX::SpriteSortMode_Deferred, nullptr, nullptr, mainRenderTarget->GetDepthStencilState().Get());
-		spriteBatch->Draw(normalSRV.Get(), RECT{ 0, static_cast<long>(clientHeight * 0.2f), static_cast<long>(clientWidth * 0.2f), static_cast<long>(clientHeight * 0.4f) });
+		spriteBatch->Begin(DirectX::SpriteSortMode_Deferred, nullptr, nullptr, depthState.Get());
+		spriteBatch->Draw(normalSRV.Get(), RECT{ static_cast<long>(clientWidth * 0.1f), 0, static_cast<long>(clientWidth * 0.2f), static_cast<long>(clientHeight * 0.1f) });
 		spriteBatch->End();
 
 		auto albedoSRV = albedoRenderTarget->GetShaderResourceView();
 
-		spriteBatch->Begin(DirectX::SpriteSortMode_Deferred, nullptr, nullptr, mainRenderTarget->GetDepthStencilState().Get());
-		spriteBatch->Draw(albedoSRV.Get(), RECT{ 0, static_cast<long>(clientHeight * 0.4f), static_cast<long>(clientWidth * 0.2f), static_cast<long>(clientHeight * 0.6f) });
+		spriteBatch->Begin(DirectX::SpriteSortMode_Deferred, nullptr, nullptr, depthState.Get());
+		spriteBatch->Draw(albedoSRV.Get(), RECT{ static_cast<long>(clientWidth * 0.2f), 0, static_cast<long>(clientWidth * 0.3f), static_cast<long>(clientHeight * 0.1f) });
 		spriteBatch->End();
 
 		auto worldPosSRV = worldPosRenderTarget->GetShaderResourceView();
 
-		spriteBatch->Begin(DirectX::SpriteSortMode_Deferred, nullptr, nullptr, mainRenderTarget->GetDepthStencilState().Get());
-		spriteBatch->Draw(worldPosSRV.Get(), RECT{ 0, static_cast<long>(clientHeight * 0.6f), static_cast<long>(clientWidth * 0.2f), static_cast<long>(clientHeight * 0.8f) });
+		spriteBatch->Begin(DirectX::SpriteSortMode_Deferred, nullptr, nullptr, depthState.Get());
+		spriteBatch->Draw(worldPosSRV.Get(), RECT{ static_cast<long>(clientWidth * 0.3f), 0, static_cast<long>(clientWidth * 0.4f), static_cast<long>(clientHeight * 0.1f) });
+		spriteBatch->End();
+
+		auto shadowSRV = shadowPass->GetShadowDSV()->GetShaderResource();
+
+		spriteBatch->Begin(DirectX::SpriteSortMode_Deferred, nullptr, nullptr, depthState.Get());
+		spriteBatch->Draw(shadowSRV.Get(), RECT{ static_cast<long>(clientWidth * 0.4f), 0, static_cast<long>(clientWidth * 0.5f), static_cast<long>(clientHeight * 0.1f) });
 		spriteBatch->End();
 
 		graphicsCore->GetImmediateDC()->PSSetShaderResources(0, 1, null);
+
+		GraphicsDebugEndEvent();
+	}
+
+	void Renderer::ShadowRenderStart()
+	{
+		GraphicsDebugBeginEvent("Shadow Render");
+
+		auto pointLights = lightPass->GetPointLights();
+		if (shadowPass->GetIsSetPointLightCnt() != true)
+			shadowPass->SetPointLightArray(pointLights.size());
+
+		shadowPass->RenderStart();
+		//shadowPass->PointRenderStart();
+	}
+
+	void Renderer::ShadowRenderStart(int idx, bool isPointLight)
+	{
+		GraphicsDebugBeginEvent("Shadow Render");
+
+		// pointLight면 true
+		if (isPointLight == true)
+		{
+			auto pointLights = lightPass->GetPointLights();
+			if (shadowPass->GetIsSetPointLightCnt() != true)
+				shadowPass->SetPointLightArray(pointLights.size());
+
+			//shadowPass->RenderStart();
+			shadowPass->PointRenderStart(idx);
+			shadowPass->SetLightMatrix(pointLights[idx]);
+		}
+		else
+		{
+			// 아니면 false (== SpotLight)
+			auto spotLights = lightPass->GetSpotLights();
+			if(shadowPass->GetIsSetSpotLightCnt() != true)
+				shadowPass->SetSpotLightArray(spotLights.size());
+
+			shadowPass->SpotRenderStart(idx);
+			shadowPass->SetLightViewProj(spotLights[idx].lightViewProj);
+		}
+	}
+
+	void Renderer::ShadowRender(std::shared_ptr<IDXObject> obj, bool isPointLight)
+	{
+		// BeginRender 전에 해줘야함.
+		if(isPointLight == true)
+			shadowPass->PointRender(obj);
+		else
+			shadowPass->Render(obj);
+	}
+
+	void Renderer::ShadowRenderEnd()
+	{
+		shadowPass->EndRender();
+		//shadowPass->PointEndRender();
+		GraphicsDebugEndEvent();
 	}
 
 

@@ -30,7 +30,6 @@ namespace GraphicsEngineSpace
 		virtual bool LateInitialize() abstract;
 
 		// 렌더러 자체의 초기화가 끝난 후, 오브젝트 들을 초기화 해주는 함수 추가
-		virtual void InitObject() abstract;
 		virtual void InitObject(std::shared_ptr<IDXObject> obj) abstract;
 
 		// 엔진 종료
@@ -42,6 +41,10 @@ namespace GraphicsEngineSpace
 		virtual void BeginRender() abstract;
 		virtual void Render() abstract;
 		virtual void DebugRender() abstract;
+		virtual void ShadowRenderStart() abstract;
+		virtual void ShadowRenderStart(int idx, bool isPointLight) abstract;
+		virtual void ShadowRender(std::shared_ptr<IDXObject> obj, bool isPointLight) abstract;
+		virtual void ShadowRenderEnd() abstract;
 		virtual void EndRender() abstract;
 
 		// 창 사이즈와 관련된 함수 목록 => 외부에서 사용 가능해야하기 때문에 인터페이스에 추가
@@ -51,12 +54,6 @@ namespace GraphicsEngineSpace
 
 		// 화면비 얻어오기
 		virtual float GetAspectRatio() const abstract;
-
-		// 렌더 오브젝트 추가.
-		virtual void AddRenderObj(std::shared_ptr<IDXObject> obj) abstract;
-		
-		// 씬이 바뀔 때 렌더 obj를 지워주는 함수
-		virtual void ClearRenderVector() abstract;
 
 		// UI 관련 생성함수
 		virtual std::shared_ptr<Canvas> CreateCanvas(const std::string& name, float width, float height) abstract;
@@ -70,8 +67,13 @@ namespace GraphicsEngineSpace
 
 		// 빛 던지기
 		virtual void PassDirectionalLight(SimpleMath::Vector3 color, SimpleMath::Vector3 direction, float power, SimpleMath::Matrix lightViewProj) abstract;
-		virtual void PassPointLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, float power, float range, SimpleMath::Matrix lightViewProj) abstract;
-		virtual void PassSpotLight(SimpleMath::Vector3 color, SimpleMath::Vector3 direction, float power, float halfAngle, float range, SimpleMath::Matrix lightViewProj) abstract;
+		virtual void PassPointLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, float power, float range, bool isShadow, std::vector<SimpleMath::Matrix> lightViewProj) abstract;
+		virtual void PassSpotLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, SimpleMath::Vector3 direction, float power, float innerSpotAngle, float outerSpotAngle, float range, bool
+		                           isShadow, SimpleMath::Matrix lightViewProj) abstract;
+		virtual void PassAmbientSkyColor(SimpleMath::Vector4 color) abstract;
+
+		// Scene이 바뀔 때 초기화 해주는 부분(특히 shadow Map을 초기화)
+		virtual void ResetShadowPass() abstract;
 	};
 
 }

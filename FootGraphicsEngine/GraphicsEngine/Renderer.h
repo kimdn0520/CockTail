@@ -10,9 +10,11 @@ using namespace DirectX::SimpleMath;
 namespace GraphicsEngineSpace
 {
 	class DX11GraphicsCore;
-	class RenderTargetDepth;
+	class DepthStencilResource;
 	class RenderTargetTexture;
 	class LightPass;
+	class ShadowPass;
+	class PostProcess;
 
 	/**
 	 * \brief IRenderer를 상속받아 실제로 구현한 클래스.
@@ -31,7 +33,8 @@ namespace GraphicsEngineSpace
 		std::shared_ptr<DX11GraphicsCore> graphicsCore;
 
 		// View들을 가지고 있는 렌더 타겟 클래스
-		std::shared_ptr<RenderTargetDepth> mainRenderTarget;
+		std::shared_ptr<RenderTargetTexture> mainRenderTarget;
+		std::shared_ptr<DepthStencilResource> mainDepthStencil;
 
 		// depth debug용 렌더 타겟.
 		std::shared_ptr<RenderTargetTexture> DMRAORenderTarget;
@@ -41,8 +44,14 @@ namespace GraphicsEngineSpace
 		std::shared_ptr<RenderTargetTexture> emissiveRenderTarget;
 
 		// lightPass 적용.
-		std::shared_ptr<LightPass> lightPass;
+		std::unique_ptr<LightPass> lightPass;
 		std::vector<std::shared_ptr<RenderTargetTexture>> gBuffer;
+
+		// ShadowPass 적용
+		std::unique_ptr<ShadowPass> shadowPass;
+
+		// PostProcess 적용
+		std::unique_ptr<PostProcess> postProcessPass;
 
 		// BlendState 세팅
 		Microsoft::WRL::ComPtr<ID3D11BlendState> blendState;
@@ -71,7 +80,7 @@ namespace GraphicsEngineSpace
 		// 팩토리를 만들면
 			// 화면에 그려줄 오브젝트 목록들.
 			// 렌더 큐? 렌더 벡터?
-		vector<std::shared_ptr<IDXObject>> renderVector;
+		//vector<std::shared_ptr<IDXObject>> renderVector;
 	
 	public:
 		Renderer();
@@ -90,14 +99,17 @@ namespace GraphicsEngineSpace
 		virtual void SetClientSize(int _width, int _height) override;
 		virtual void SetWinMinMax(bool _isMinimized, bool _isMaximized) override;
 
-		virtual void AddRenderObj(std::shared_ptr<IDXObject> obj) override;
-		virtual void InitObject() override;
+		//virtual void AddRenderObj(std::shared_ptr<IDXObject> obj) override;
 		virtual void InitObject(std::shared_ptr<IDXObject> obj) override;
-		virtual void ClearRenderVector() override;
+		//virtual void ClearRenderVector() override;
 
 		virtual void BeginRender() override;
 		virtual void Render() override;
 		virtual void DebugRender() override;
+		virtual void ShadowRenderStart() override;
+		virtual void ShadowRenderStart(int idx, bool isPointLight) override;
+		virtual void ShadowRender(std::shared_ptr<IDXObject> obj, bool isPointLight) override;
+		virtual void ShadowRenderEnd() override;
 		virtual void EndRender() override;
 		// 캔버스 생성
 		virtual std::shared_ptr<Canvas> CreateCanvas(const std::string& name, float width, float height) override;
@@ -109,8 +121,12 @@ namespace GraphicsEngineSpace
 		virtual void SetCameraPos(float posX, float posY, float posZ) override;
 
 		virtual void PassDirectionalLight(SimpleMath::Vector3 color, SimpleMath::Vector3 direction, float power, SimpleMath::Matrix lightViewProj) override;
-		virtual void PassPointLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, float power, float range, SimpleMath::Matrix lightViewProj) override;
-		virtual void PassSpotLight(SimpleMath::Vector3 color, SimpleMath::Vector3 direction, float power, float halfAngle, float range, SimpleMath::Matrix lightViewProj) override;
+		virtual void PassPointLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, float power, float range, bool isShadow, std::vector<SimpleMath::Matrix> lightViewProj) override;
+		virtual void PassSpotLight(SimpleMath::Vector3 color, SimpleMath::Vector3 position, SimpleMath::Vector3 direction, float power, float innerSpotAngle, float outerSpotAngle, float range, bool
+		                           isShadow, SimpleMath::Matrix lightViewProj) override;
+		virtual void PassAmbientSkyColor(SimpleMath::Vector4 color) override;
+
+		virtual void ResetShadowPass() override;
 	};
 }
 

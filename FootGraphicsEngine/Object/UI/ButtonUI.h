@@ -15,7 +15,8 @@ namespace GraphicsEngineSpace
 		UP,			// 뗀 그 시점
 		PRESS,		// 누르고 있는 상태
 		HOVER,		// 올려두고 있는 상태
-		ENTER		// 가장 처음 진입한 상태(hover 직전, 한 번만 나와야하는 이벤트)
+		ENTER,		// 가장 처음 진입한 상태(hover 직전, 한 번만 나와야하는 이벤트)
+		DISABLE		// 모든 선택에 영향을 받지 않는 상태 (bool 값으로 하지 않고 ButtonState로 설정)
 	};
 
 	// 기본적으로 Sprite UI와 유사하지만, 각종 이벤트들을 functor로 가지고 있는 버튼 UI
@@ -51,6 +52,8 @@ namespace GraphicsEngineSpace
 		virtual void SetPressMaskColor(float r, float g, float b, float a);
 		virtual void SetButtonState(ButtonState state);
 
+		virtual void SetButtonEnable(bool enable);
+
 		virtual void SetClickEvent(std::function<void()> clickEvent);
 		virtual void SetPressEvent(std::function<void()> pressEvent);
 		virtual void SetEnterEvent(std::function<void()> enterEvent);
@@ -60,7 +63,7 @@ namespace GraphicsEngineSpace
 		virtual ButtonState GetButtonState();
 
 	protected:
-		void Render(float tick) override;
+		void Render(std::shared_ptr<IRenderer> renderer, float tick) override;
 
 		friend Canvas;
 

@@ -53,6 +53,10 @@ namespace GraphicsEngineSpace
 		virtual std::string GetObjName() override;
 		virtual std::vector<std::shared_ptr<MeshResources>> GetMeshResources() override;
 
+		virtual const SimpleMath::Matrix& GetWorld() override { return world; }
+		virtual const SimpleMath::Matrix& GetView() override { return view; }
+		virtual const SimpleMath::Matrix& GetProj() override { return proj; }
+
 		// dynamic 캐스팅을 이용하여 color를 세팅해준다.
 		void SetHasColor(bool hasColor) { this->hasColor = hasColor; }
 	};

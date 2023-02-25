@@ -12,8 +12,6 @@ void BinarySerializer::SaveBinaryFile(std::shared_ptr<FBXModel> fbxModel, std::s
 	
 	document.ParseStream(isw);
 
-	rapidjson::Value& matKey = document["Materials"];
-
 	std::string modelPathStr = "Model/";
 	std::string materialPathStr = "Material/";
 	std::string meshPathStr = "Mesh/";
@@ -24,7 +22,6 @@ void BinarySerializer::SaveBinaryFile(std::shared_ptr<FBXModel> fbxModel, std::s
 		std::vector<std::string> materialList;
 
 		rapidjson::Document::AllocatorType allocator = document.GetAllocator();
-		rapidjson::Value matArray(rapidjson::kArrayType);
 
 		for (auto& mat : fbxModel->materialList)
 		{
@@ -37,7 +34,7 @@ void BinarySerializer::SaveBinaryFile(std::shared_ptr<FBXModel> fbxModel, std::s
 				// 이름이 같은 머터리얼이 있다면 구성 요소를 비교해준다.
 				// 이름이 같은데 구성 요소 성분들의 값이 다르다면..! 이름을 바꿔주고 추가해준다.
 				// 이름이 같은데 구성 요소 성분들의 값이 같다면 추가를 하면 안된다.
-				// "red" + "0" 0을 계속추가해주자 그리고 해당 머터리얼을 참고하고있던 메시의 머터리얼 이름도 바꿔줘야한다.
+				// "red" + name 해당 머터리얼을 참고하고있던 메시의 머터리얼 이름도 바꿔줘야한다.
 				if (matName == mat->materialName)
 				{
 					// 이름이 같았던 머터리얼을 가져온다.
@@ -62,7 +59,7 @@ void BinarySerializer::SaveBinaryFile(std::shared_ptr<FBXModel> fbxModel, std::s
 					{
 						isMat = true;
 					}
-					// 성분이 다른게 있다면 "0" 을 붙여주고 메시의 머터리얼 이름도 바꿔준다.
+					// 성분이 다른게 있다면 name 을 붙여주고 메시의 머터리얼 이름도 바꿔준다.
 					else
 					{
 						// fbxModel에 Mesh의 머터리얼 이름바꾸기

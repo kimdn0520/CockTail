@@ -19,12 +19,14 @@
 #pragma comment(lib, "PhysXCooking_Debug_64.lib")
 #pragma comment(lib, "PhysXExtensions_static_64.lib")
 #pragma comment(lib, "PhysXPvdSDK_static_64.lib")
+#pragma comment(lib, "PhysXCharacterKinematic_static_64.lib")
 #else // Release
 #pragma comment(lib, "PhysX_Release_64.lib")
 #pragma comment(lib, "PhysXCommon_Release_64.lib")
 #pragma comment(lib, "PhysXFoundation_Release_64.lib")
 #pragma comment(lib, "PhysXCooking_Release_64.lib")
 #pragma comment(lib, "PhysXExtensions_static_64.lib")
+#pragma comment(lib, "PhysXCharacterKinematic_static_64.lib")
 #endif
 
 #include <windows.h>

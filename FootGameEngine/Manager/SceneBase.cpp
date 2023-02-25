@@ -2,18 +2,17 @@
 #include "SceneBase.h"
 
 #include "Object/GameObject.h"
-#include "Component/RendererBase.h"
+#include "InputManager.h"
 #include "GraphicsManager.h"
-
+#include "GraphicsManager.h"
 #include "Timer.h"
 #include "UIManager.h"
 
-#include "Component/ColliderBase.h"
-
+#include "Component/RendererBase.h"
+#include "Component/Light.h"
+#include "Component/Collider.h"
 #include "Component/Camera.h"
-#include "InputManager.h"
-#include "GraphicsManager.h"
-
+#include "NavigationManager.h"
 
 namespace GameEngineSpace
 {
@@ -28,7 +27,8 @@ namespace GameEngineSpace
 		, mainCamera(nullptr)
 		, gameObjectInScene(std::vector<std::shared_ptr<GameObject>>())
 		, renderObjInScene(std::vector<std::shared_ptr<RendererBase>>())
-		, colliderObjInScene(std::vector<std::shared_ptr<ColliderBase>>())
+		, colliderObjInScene(std::vector<std::shared_ptr<Collider>>())
+		, fixedTimeStep(0.01444f)
 	{
 
 	}
@@ -51,6 +51,17 @@ namespace GameEngineSpace
 		for (auto& gameObj : gameObjectInScene)
 		{
 			gameObj->Start();
+		}
+	}
+
+	void SceneBase::FixedUpdate(float tick)
+	{
+		if (tick >= fixedTimeStep)
+		{
+			for (auto& gameObj : gameObjectInScene)
+			{
+				gameObj->FixedUpdate(tick);
+			}
 		}
 	}
 
@@ -83,9 +94,7 @@ namespace GameEngineSpace
 		// 각 오브젝트들의 렌더전 작업
 		for (auto& renderObj : renderObjInScene)
 		{
-			// TODO : 바운딩 볼륨 생기면 해당 영역에서 프러스텀 컬링을 해줍니다.
-
-			if (renderObj->GetIsEnable())
+			if (renderObj->GetIsEnable() == true)
 			{
 				renderObj->PrepareRender(tick);
 			}
@@ -93,30 +102,87 @@ namespace GameEngineSpace
 
 		auto renderer = GraphicsManager::GetInstance()->GetRenderer();
 
-		renderer->BeginRender();
-		//renderer->DebugRender();
-
-		// 그려진 다음 Collider Render
-		for (auto& collider : colliderObjInScene)
+		// ShadowRender
+		// PointLight 수만큼 돌려봅시다..
+		for (int i = 0; i < pointLightInScene.size(); i++)
 		{
-			if (collider->GetIsEnable())
-				collider->ColliderRender();
+			if(pointLightInScene[i]->GetIsShadow() != true)
+				continue;
+
+			renderer->ShadowRenderStart(i, true);
+			for (auto& renderObj : renderObjInScene)
+			{
+				if (renderObj->GetIsEnable() == true)
+				{
+					renderer->ShadowRender(renderObj->GetRenderObj(), true);
+				}
+			}
+			renderer->ShadowRenderEnd();
 		}
+
+		// SpotLight Shadow
+		for (int i = 0; i < spotLightInScene.size(); i++)
+		{
+			if (spotLightInScene[i]->GetIsShadow() != true)
+				continue;
+
+			renderer->ShadowRenderStart(i, false);
+			for (auto& renderObj : renderObjInScene)
+			{
+				if (renderObj->GetIsEnable() == true)
+				{
+					renderer->ShadowRender(renderObj->GetRenderObj(), false);
+				}
+			}
+			renderer->ShadowRenderEnd();
+		}
+
+		renderer->GraphicsDebugBeginEvent("BeginRender");
+		renderer->BeginRender();
+		renderer->GraphicsDebugEndEvent();
+
+		// forward에서 SkyBox 렌더
+		if (mainCamera != nullptr)
+			mainCamera->Render();
+
+		if (debugRender == true)
+		{
+			// 그려진 다음 Collider Render
+			renderer->GraphicsDebugBeginEvent("ColliderRender");
+			for (auto& collider : colliderObjInScene)
+			{
+				if (collider->GetIsEnable() == true)
+					collider->ColliderRender();
+			}
+			renderer->GraphicsDebugEndEvent();
+		}
+
+		// Object Render
+		renderer->GraphicsDebugBeginEvent("ObjectRender");
+		for (auto& renderObj : renderObjInScene)
+		{
+			if (renderObj->GetIsEnable() == true)
+			{
+				std::string objName;
+				objName.assign(renderObj->GetGameObject()->GetName().begin(), renderObj->GetGameObject()->GetName().end());
+				renderer->GraphicsDebugBeginEvent(objName);
+				renderObj->Render();
+				renderer->GraphicsDebugEndEvent();
+			}
+		}
+		renderer->GraphicsDebugEndEvent();
+
+		// LightPass
 		renderer->Render();
 
-		// IMGUI 렌더
-		for (auto& gameObj : gameObjectInScene)
-		{
-			gameObj->DebugIMGUIRender(tick);
-		}
-		
-		UIManager::GetInstance()->SelectGUIRender();
+		// DebugRender
+		DebugRender(tick);
 
+		//UIManager::GetInstance()->SelectGUIRender();
 		// Scene이 다 그려지고, UIManager 렌더
 		UIManager::GetInstance()->Render(tick);
 
 		renderer->EndRender();
-
 	}
 
 	void SceneBase::OnEnable()
@@ -136,9 +202,14 @@ namespace GameEngineSpace
 			gameObj->Release();
 		}
 
+		if(objectPool != nullptr)
+			objectPool->Release();
+
 		gameObjectInScene.clear();
 		renderObjInScene.clear();
 		colliderObjInScene.clear();
+		pointLightInScene.clear();
+		spotLightInScene.clear();
 
 		// UI 지워주기
 		//UIManager::GetInstance()->ClearUI();
@@ -154,6 +225,84 @@ namespace GameEngineSpace
 		for (auto child : children)
 		{
 			this->AddGameObject(child);
+		}
+	}
+
+	std::shared_ptr<GameObject> SceneBase::InstantiateGameObject(std::shared_ptr<GameObject> _newGameObj)
+	{
+		std::shared_ptr<GameObject> newGameObj = std::make_shared<GameObject>();
+
+		newGameObj->AddComponent<Transform>();
+
+		AddGameObject(newGameObj);
+
+		newGameObj->Awake();
+
+		newGameObj->Start();
+
+		return newGameObj;
+	}
+
+	void SceneBase::DebugRender(float tick)
+	{
+		auto renderer = GraphicsManager::GetInstance()->GetRenderer();
+
+		// Debug Render
+		if (debugRender == true)
+		{
+			renderer->DebugRender();
+
+			// Debug 출력 임시로 FPS 측정
+			static float frameTime = 0.0f;
+			static int fps = 0;
+			static int frameCount = 0;
+
+			frameTime += tick;
+			frameCount++;
+
+			if (frameTime >= 1.0f)
+			{
+				fps = frameCount;
+				frameCount = 0;
+				frameTime = 0.0f;
+			}
+
+			auto imgui = ImGUIManager::GetInstance();
+
+			if (imgui->Begin("Main Debug Menu"))
+			{
+				if (imgui->CollapsingHeader("FPS"))
+				{
+					imgui->Text("FPS : " + std::to_string(fps));
+					imgui->Text("DeltaTime : " + std::to_string(tick));
+				}
+				imgui->Spacing();
+
+				imgui->CollapsingHeader("Light In Scene");
+				imgui->Spacing();
+
+				// IMGUI 렌더
+				for (auto& gameObj : gameObjectInScene)
+				{
+					gameObj->DebugIMGUIRender(tick);
+				}
+			}
+			imgui->End();
+
+			if (imgui->Begin("Battle Info Menu"))
+			{
+				// IMGUI 렌더
+				for (auto& gameObj : gameObjectInScene)
+				{
+					gameObj->DebugIMGUIRender(tick);
+				}
+			}
+			imgui->End();
+
+			// navmesh가 있는 scene 이라면 그려준다.
+			NavigationManager::GetInstance()->DebugRenderNavMesh();
+
+			UIManager::GetInstance()->SelectGUIRender();
 		}
 	}
 
@@ -176,9 +325,18 @@ namespace GameEngineSpace
 		renderObjInScene.push_back(renderObj);
 	}
 
-	void SceneBase::AddCollider(std::shared_ptr<ColliderBase> colliderObj)
+	void SceneBase::AddCollider(std::shared_ptr<Collider> colliderObj)
 	{
 		colliderObjInScene.push_back(colliderObj);
 	}
 
+	void SceneBase::AddPointLight(std::shared_ptr<Light> pLight)
+	{
+		pointLightInScene.push_back(pLight);
+	}
+
+	void SceneBase::AddSpotLight(std::shared_ptr<Light> sLight)
+	{
+		spotLightInScene.push_back(sLight);
+	}
 }

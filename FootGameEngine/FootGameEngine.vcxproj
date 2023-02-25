@@ -19,14 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Util\ObjectPool.cpp" />
+    <ClCompile Include="Util\JsonReader.cpp" />
+    <ClCompile Include="Manager\UICreator.cpp" />
+    <ClCompile Include="Util\BehaviorTree.cpp" />
+    <ClCompile Include="Component\CapsuleCollider.cpp" />
+    <ClCompile Include="Component\Collider.cpp" />
     <ClCompile Include="Component\BasicCameraController.cpp" />
     <ClCompile Include="Component\BoxCollider.cpp" />
     <ClCompile Include="Component\Camera.cpp" />
-    <ClCompile Include="Component\ColliderBase.cpp" />
     <ClCompile Include="Component\Light.cpp" />
     <ClCompile Include="Component\MeshRenderer.cpp" />
     <ClCompile Include="Component\PosColorRenderer.cpp" />
-    <ClCompile Include="Component\RayCollider.cpp" />
     <ClCompile Include="Component\RendererBase.cpp" />
     <ClCompile Include="Component\SphereCollider.cpp" />
     <ClCompile Include="Component\Transform.cpp" />
@@ -49,16 +53,21 @@
     <ClCompile Include="Object\GameObject.cpp" />
     <ClCompile Include="Object\Object.cpp" />
     <ClCompile Include="Component\SpriteEffect.cpp" />
+    <ClCompile Include="Component\Rigidbody.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Util\ObjectPool.h" />
+    <ClInclude Include="Util\JsonReader.h" />
+    <ClInclude Include="Manager\UICreator.h" />
+    <ClInclude Include="Util\BehaviorTree.h" />
+    <ClInclude Include="Component\CapsuleCollider.h" />
+    <ClInclude Include="Component\Collider.h" />
     <ClInclude Include="Component\BasicCameraController.h" />
     <ClInclude Include="Component\BoxCollider.h" />
     <ClInclude Include="Component\Camera.h" />
-    <ClInclude Include="Component\ColliderBase.h" />
     <ClInclude Include="Component\Light.h" />
     <ClInclude Include="Component\MeshRenderer.h" />
     <ClInclude Include="Component\PosColorRenderer.h" />
-    <ClInclude Include="Component\RayCollider.h" />
     <ClInclude Include="Component\RendererBase.h" />
     <ClInclude Include="Component\SphereCollider.h" />
     <ClInclude Include="Component\Transform.h" />
@@ -83,6 +92,10 @@
     <ClInclude Include="Object\MonoBehavior.h" />
     <ClInclude Include="Object\Object.h" />
     <ClInclude Include="Component\SpriteEffect.h" />
+    <ClInclude Include="Component\Rigidbody.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -244,6 +257,7 @@
       <PrecompiledHeaderFile>GamePch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)CommonLibrary\inc\;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>

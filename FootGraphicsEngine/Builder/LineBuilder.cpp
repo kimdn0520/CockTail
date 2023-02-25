@@ -16,7 +16,7 @@ namespace GraphicsEngineSpace
 			return nullptr;
 		}
 
-		pDXObj->SetMeshResources(BuildGeometry(pDXObj, objectName));
+		BuildGeometry(pDXObj, objectName);
 
 		return pDXObj;
 	}
@@ -33,17 +33,34 @@ namespace GraphicsEngineSpace
 		{
 			_tmpObjRes = BuildGridResources(_tmpObjRes);
 			std::dynamic_pointer_cast<LineObj>(DXObject)->SetHasColor(true);
+			DXObject->SetMeshResources(_tmpObjRes);
 		}
 		else if (objectPath == "Axis")
 		{
 			_tmpObjRes = BuildAxisResources(_tmpObjRes);
 			std::dynamic_pointer_cast<LineObj>(DXObject)->SetHasColor(true);
+			DXObject->SetMeshResources(_tmpObjRes);
 		}
 		else if (objectPath == "WireCube")
 		{
 			_tmpObjRes->mesh = resourceManager->LoadMesh("WireCubeMesh");
 			_tmpObjRes->setMesh = true;
 			std::dynamic_pointer_cast<LineObj>(DXObject)->SetHasColor(false);
+			DXObject->SetMeshResources(_tmpObjRes);
+		}
+		else if (objectPath == "WireSphere")
+		{
+			_tmpObjRes->mesh = resourceManager->LoadMesh("WireSphereMesh");
+			_tmpObjRes->setMesh = true;
+			std::dynamic_pointer_cast<LineObj>(DXObject)->SetHasColor(false);
+			DXObject->SetMeshResources(_tmpObjRes);
+		}
+		else if (objectPath == "Capsule")
+		{
+			_tmpObjRes->mesh = resourceManager->LoadMesh("WireCapsuleMesh");
+			_tmpObjRes->setMesh = true;
+			std::dynamic_pointer_cast<LineObj>(DXObject)->SetHasColor(false);
+			DXObject->SetMeshResources(_tmpObjRes);
 		}
 		else
 		{
@@ -51,7 +68,7 @@ namespace GraphicsEngineSpace
 			return nullptr;
 		}
 
-		return _tmpObjRes;
+		return nullptr;
 	}
 
 	void LineBuilder::InitBuilder(ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pDC)

@@ -33,6 +33,12 @@ namespace GraphicsEngineSpace
 		CreateConstantBuffer("ColorCB", sizeof(SimpleMath::Vector4));
 		CreateConstantBuffer("TexOffsetCB", sizeof(SimpleMath::Vector4));
 
+		// Shadow를 위한 Light의 ViewProjCB
+		CreateConstantBuffer("LightViewProjCB", sizeof(SimpleMath::Matrix));
+		CreateConstantBuffer("LightMatrixCB", sizeof(SimpleMath::Matrix) * 6);
+		// 쉐도우 맵의 텍셀 크기를 얻어올 textureInfo Buffer
+		CreateConstantBuffer("TextureInfoCB", sizeof(SimpleMath::Vector4));
+
 		CreateConstantBuffer("ViewPosCB", sizeof(SimpleMath::Vector4));
 
 		// 벡터 4의 네 개 만큼의 크기.

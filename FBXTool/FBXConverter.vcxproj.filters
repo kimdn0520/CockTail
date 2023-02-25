@@ -45,6 +45,15 @@
     <ClInclude Include="inc\BinarySerializer\BinarySerializer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="inc\YAMLParser\YAMLParser.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\YAMLBinaryLayout.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="res\resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\FBXConverter\FBXConverter.cpp">
@@ -60,6 +69,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="src\BinarySerializer\BinarySerializer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\YAMLParser\YAMLParser.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -78,6 +90,12 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="res\toolbar1.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\res\FBXConverter.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="res\res\toolbar1.bmp">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

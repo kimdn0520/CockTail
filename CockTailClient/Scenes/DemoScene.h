@@ -11,5 +11,8 @@ namespace ClientSpace
 
 	public:
 		virtual void BuildScene() override;
+
+	private:
+		std::shared_ptr<GameObject> CreateUI();
 	};
 }

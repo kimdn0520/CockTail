@@ -13,7 +13,7 @@ namespace GraphicsEngineSpace
 		// Skinned mesh만 가지고 있으면 되기 때문
 	__declspec(align(16)) struct cbBoneMatrix
 	{
-		SimpleMath::Matrix boneMatrix[100];
+		SimpleMath::Matrix boneMatrix[120];
 	};
 
 	/**
@@ -29,7 +29,7 @@ namespace GraphicsEngineSpace
 			// Mesh가 여러개 존재할 수 있다.
 		std::vector<std::shared_ptr<MeshResources>> meshResources;
 		std::shared_ptr<BoneResources> boneResources;
-		std::shared_ptr<AnimationResources> animResources;
+		//std::shared_ptr<AnimationResources> animResources;
 
 		// ResourceManager 캐싱 용도
 		std::shared_ptr<ResourceManager> resourceManager;
@@ -81,14 +81,41 @@ namespace GraphicsEngineSpace
 		virtual void PreRender(float tick) override;
 		virtual void Render() override;
 		virtual void SetMeshResources(std::shared_ptr<MeshResources> objResources) override;
-		virtual void SetBoneResource(std::shared_ptr<BoneResources> boneResources) override { this->boneResources = boneResources; }
-		virtual void SetAnimationResource(std::shared_ptr<AnimationResources> animResources) override { this->animResources = animResources; }
+		virtual void SetBoneResource(std::shared_ptr<BoneResources> boneResources) override;
+		virtual void SetAnimationResource(std::shared_ptr<AnimationResources> animResources) override;
 
 		virtual std::string GetObjName() override;
 		virtual std::vector<std::shared_ptr<MeshResources>> GetMeshResources() override;
-		virtual std::shared_ptr<AnimationResources> GetAnimationResources() override { return animResources; }
+		//virtual std::shared_ptr<AnimationResources> GetAnimationResources() override { return objAnimator->animResources; }
 
 		virtual void PlayAnim(std::string animCilpName, bool isLoop) override;
+
+		virtual void AddAnimationState(const std::string& stateName, const std::string& animClipName, float speed, bool loop) override;
+		virtual void SettingAnimationStateTransition(const std::string& stateName, const std::string& stateStart, const std::string& stateEnd, bool hasExitTime, float exitTime, float transitionDuration) override;
+		virtual void EntryPlayAnimationState(const std::string& stateName) override;
+		virtual void AddCondition(const std::string& transitionName, const std::string& parameterName, const std::string& conditionName, float val) override;
+		virtual void AddCondition(const std::string& transitionName, const std::string& parameterName, const std::string& conditionName, int val) override;
+		virtual void AddCondition(const std::string& transitionName, const std::string& parameterName, const std::string& conditionName, bool val) override;
+		virtual void AddCondition(const std::string& transitionName, const std::string& parameterName, const std::string& conditionName) override;
+
+		virtual void AddFloat(const std::string& name, float val) override;
+		virtual void AddInteger(const std::string& name, int val) override;
+		virtual void AddBool(const std::string& name, bool val) override;
+		virtual void AddTrigger(const std::string& name) override;
+
+		virtual void SetFloat(const std::string& name, float val) override;
+		virtual void SetInteger(const std::string& name, int val) override;
+		virtual void SetBool(const std::string& name, bool val) override;
+		virtual void SetTrigger(const std::string& name) override;
+
+		virtual int GetAnimCurrentFrame() override;
+		virtual int GetAnimCurrentTotalFrame() override;
+
+		virtual const SimpleMath::Matrix& GetWorld() override { return world; }
+		virtual const SimpleMath::Matrix& GetView() override { return view; }
+		virtual const SimpleMath::Matrix& GetProj() override { return proj; }
+
+		const std::vector<SimpleMath::Matrix>& GetNowBoneTM() { return nowBoneTM; }
 
 	private:
 		void StaticRender(const std::shared_ptr<MeshResources>& objRes);

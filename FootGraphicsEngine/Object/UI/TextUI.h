@@ -27,9 +27,10 @@ namespace GraphicsEngineSpace
 		virtual void SetFontSize(float fontSize);
 
 		virtual std::string GetText();
+		virtual float GetFontSize() { return fontSize; }
 
 	protected:
-		void Render(float tick) override;
+		void Render(std::shared_ptr<IRenderer> renderer, float tick) override;
 
 		friend Canvas;
 	};

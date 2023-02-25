@@ -26,12 +26,12 @@ namespace GameEngineSpace
 		BuilderManger::GetInstance()->GetBuilder("LineBuilder"), _objName);
 
 		// 그려지는 오브젝트로 넣어줍니다.
-		GraphicsManager::GetInstance()->GetRenderer()->AddRenderObj(renderObj);
+		GraphicsManager::GetInstance()->GetRenderer()->InitObject(renderObj);
 	}
 
 	void PosColorRenderer::Render()
 	{
-		//renderObj->Render();
+		renderObj->Render();
 	}
 
 	void PosColorRenderer::PrepareRender(float tick)

@@ -5,6 +5,7 @@ namespace GameEngineSpace
 {
 	class SceneBase;
 	class PhysicsManager;
+	class GameObject;
 
 	/**
 	 * \brief Scene을 관리하는 SceneManager 클래스
@@ -36,8 +37,7 @@ namespace GameEngineSpace
 		// 현재 틱에 변경이 있는가 알아보는 불변수
 		bool isChangedTick = false;
 
-		// 디버그 키고 끄고
-		bool isDebugString = false;
+		bool isChangeScene = false;
 
 	public:
 		SceneManager() = default;
@@ -73,6 +73,9 @@ namespace GameEngineSpace
 		void SetTickOrigin() { isChangedTick = false; }
 
 		void LoadSceneData(std::string sceneName);
+
+		std::shared_ptr<GameObject> FindObject(std::string uid);
+		std::shared_ptr<GameObject> FindObjectName(tstring name);
 
 	private:
 		void ChangeScene();

@@ -1,0 +1,200 @@
+﻿[
+  {
+    "ItemName": "rum",
+    "Index": 1,
+    "ItemType": 2,
+    "ItemCombineNum": 0
+  },
+  {
+    "ItemName": "vodka",
+    "Index": 2,
+    "ItemType": 2,
+    "ItemCombineNum": 0
+  },
+  {
+    "ItemName": "gin",
+    "Index": 3,
+    "ItemType": 2,
+    "ItemCombineNum": 0
+  },
+  {
+    "ItemName": "liquor",
+    "Index": 4,
+    "ItemType": 1,
+    "ItemCombineNum": 0
+  },
+  {
+    "ItemName": "juice",
+    "Index": 5,
+    "ItemType": 1,
+    "ItemCombineNum": 0
+  },
+  {
+    "ItemName": "soda",
+    "Index": 6,
+    "ItemType": 1,
+    "ItemCombineNum": 0
+  },
+  {
+    "ItemName": "spice",
+    "Index": 7,
+    "ItemType": 1,
+    "ItemCombineNum": 0
+  },
+  {
+    "ItemName": "Rum",
+    "Index": 8,
+    "ItemType": 5,
+    "ItemCombineNum": 10101
+  },
+  {
+    "ItemName": "Rum & Coke",
+    "Index": 9,
+    "ItemType": 5,
+    "ItemCombineNum": 60601
+  },
+  {
+    "ItemName": "Cuba Libre",
+    "Index": 10,
+    "ItemType": 5,
+    "ItemCombineNum": 50601
+  },
+  {
+    "ItemName": "Daiquiri",
+    "Index": 11,
+    "ItemType": 5,
+    "ItemCombineNum": 50501
+  },
+  {
+    "ItemName": "Rum Punch",
+    "Index": 12,
+    "ItemType": 5,
+    "ItemCombineNum": 40501
+  },
+  {
+    "ItemName": "Pain Killer",
+    "Index": 13,
+    "ItemType": 5,
+    "ItemCombineNum": 70501
+  },
+  {
+    "ItemName": "Mai Tai",
+    "Index": 14,
+    "ItemType": 5,
+    "ItemCombineNum": 50101
+  },
+  {
+    "ItemName": "Planter's Punch",
+    "Index": 15,
+    "ItemType": 5,
+    "ItemCombineNum": 70101
+  },
+  {
+    "ItemName": "Bushwacker",
+    "Index": 16,
+    "ItemType": 5,
+    "ItemCombineNum": 40701
+  },
+  {
+    "ItemName": "Vodka",
+    "Index": 17,
+    "ItemType": 5,
+    "ItemCombineNum": 20202
+  },
+  {
+    "ItemName": "Espressotini",
+    "Index": 18,
+    "ItemType": 5,
+    "ItemCombineNum": 70402
+  },
+  {
+    "ItemName": "Moscow Mule",
+    "Index": 19,
+    "ItemType": 5,
+    "ItemCombineNum": 50602
+  },
+  {
+    "ItemName": "Black Russian",
+    "Index": 20,
+    "ItemType": 5,
+    "ItemCombineNum": 40202
+  },
+  {
+    "ItemName": "Cosmopolitan",
+    "Index": 21,
+    "ItemType": 5,
+    "ItemCombineNum": 40502
+  },
+  {
+    "ItemName": "Bloody Mary",
+    "Index": 22,
+    "ItemType": 5,
+    "ItemCombineNum": 70502
+  },
+  {
+    "ItemName": "Poet Killer",
+    "Index": 23,
+    "ItemType": 5,
+    "ItemCombineNum": 50202
+  },
+  {
+    "ItemName": "Sunrise",
+    "Index": 24,
+    "ItemType": 5,
+    "ItemCombineNum": 50502
+  },
+  {
+    "ItemName": "Gin",
+    "Index": 25,
+    "ItemType": 5,
+    "ItemCombineNum": 30303
+  },
+  {
+    "ItemName": "Gin Fizz",
+    "Index": 26,
+    "ItemType": 5,
+    "ItemCombineNum": 50603
+  },
+  {
+    "ItemName": "Gin Tonic",
+    "Index": 27,
+    "ItemType": 5,
+    "ItemCombineNum": 60603
+  },
+  {
+    "ItemName": "Aviation",
+    "Index": 28,
+    "ItemType": 5,
+    "ItemCombineNum": 50503
+  },
+  {
+    "ItemName": "Pickle Cooler",
+    "Index": 29,
+    "ItemType": 5,
+    "ItemCombineNum": 60703
+  },
+  {
+    "ItemName": "Bramble",
+    "Index": 30,
+    "ItemType": 5,
+    "ItemCombineNum": 40503
+  },
+  {
+    "ItemName": "Last Word",
+    "Index": 31,
+    "ItemType": 5,
+    "ItemCombineNum": 40403
+  },
+  {
+    "ItemName": "Snapper",
+    "Index": 32,
+    "ItemType": 5,
+    "ItemCombineNum": 70503
+  },
+  {
+    "ItemName": "Martini",
+    "Index": 33,
+    "ItemType": 5,
+    "ItemCombineNum": 70403
+  }
+]

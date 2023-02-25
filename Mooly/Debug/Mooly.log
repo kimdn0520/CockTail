@@ -4,16 +4,18 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
   MoolyEngineX.cpp
   EventCallback.cpp
   Scene.cpp
-D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(144,43): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
-D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(271,27): warning C4244: '=': 'float'에서 'physx::PxU32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(275,41): warning C4244: '=': 'float'에서 'physx::PxU32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(345,27): warning C4244: '=': 'float'에서 'physx::PxU32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(1008,35): warning C4267: '초기화 중': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(169,43): warning C4390: ';': 제어된 빈 문이 있습니다. 이 문이 필요합니까?
+D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(300,27): warning C4244: '=': 'float'에서 'physx::PxU32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(304,41): warning C4244: '=': 'float'에서 'physx::PxU32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(374,27): warning C4244: '=': 'float'에서 'physx::PxU32'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(1137,35): warning C4267: '초기화 중': 'size_t'에서 'UINT'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   IMoolyEngine.cpp
   MoolyInfoHelper.cpp
   코드를 생성하고 있습니다...
-D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(334): warning C4715: 'MoolyEngine::Scene::CreateTriangleMeshActor': 모든 제어 경로에서 값을 반환하지는 않습니다.
-D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(402): warning C4715: 'MoolyEngine::Scene::CreateConvexMeshActor': 모든 제어 경로에서 값을 반환하지는 않습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(431): warning C4715: 'MoolyEngine::Scene::CreateConvexMeshActor': 모든 제어 경로에서 값을 반환하지는 않습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(363): warning C4715: 'MoolyEngine::Scene::CreateTriangleMeshActor': 모든 제어 경로에서 값을 반환하지는 않습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\PhysX\Scene.cpp(710): warning C4715: 'MoolyEngine::Scene::MovePCC': 모든 제어 경로에서 값을 반환하지는 않습니다.
+D:\GA3rdFinalProject_CarlTail\5_Project\Mooly\src\MoolyEngine\MoolyEngineX.cpp(206): warning C4715: 'MoolyEngine::MoolyEngineX::CreatePlayerController': 모든 제어 경로에서 값을 반환하지는 않습니다.
      D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\Mooly_Debug_x64.lib 라이브러리 및 D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\Mooly_Debug_x64.exp 개체를 생성하고 있습니다.
 PhysXExtensions_static_64.lib(ExtCpuWorkerThread.obj) : warning LNK4099: 'PhysXExtensions_static_64.pdb' PDB를 'PhysXExtensions_static_64.lib(ExtCpuWorkerThread.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXExtensions_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
 PhysXExtensions_static_64.lib(ExtDefaultCpuDispatcher.obj) : warning LNK4099: 'PhysXExtensions_static_64.pdb' PDB를 'PhysXExtensions_static_64.lib(ExtDefaultCpuDispatcher.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXExtensions_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
@@ -21,6 +23,7 @@ PhysXExtensions_static_64.lib(ExtDefaultErrorCallback.obj) : warning LNK4099: 'P
 PhysXExtensions_static_64.lib(ExtDefaultStreams.obj) : warning LNK4099: 'PhysXExtensions_static_64.pdb' PDB를 'PhysXExtensions_static_64.lib(ExtDefaultStreams.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXExtensions_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
 PhysXExtensions_static_64.lib(ExtRigidBodyExt.obj) : warning LNK4099: 'PhysXExtensions_static_64.pdb' PDB를 'PhysXExtensions_static_64.lib(ExtRigidBodyExt.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXExtensions_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
 PhysXExtensions_static_64.lib(ExtSimpleFactory.obj) : warning LNK4099: 'PhysXExtensions_static_64.pdb' PDB를 'PhysXExtensions_static_64.lib(ExtSimpleFactory.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXExtensions_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+PhysXExtensions_static_64.lib(ExtTriangleMeshExt.obj) : warning LNK4099: 'PhysXExtensions_static_64.pdb' PDB를 'PhysXExtensions_static_64.lib(ExtTriangleMeshExt.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXExtensions_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
 PhysXPvdSDK_static_64.lib(PxProfileEventImpl.obj) : warning LNK4099: 'PhysXPvdSDK_static_64.pdb' PDB를 'PhysXPvdSDK_static_64.lib(PxProfileEventImpl.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXPvdSDK_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
 PhysXPvdSDK_static_64.lib(PxPvd.obj) : warning LNK4099: 'PhysXPvdSDK_static_64.pdb' PDB를 'PhysXPvdSDK_static_64.lib(PxPvd.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXPvdSDK_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
 PhysXPvdSDK_static_64.lib(PxPvdDataStream.obj) : warning LNK4099: 'PhysXPvdSDK_static_64.pdb' PDB를 'PhysXPvdSDK_static_64.lib(PxPvdDataStream.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXPvdSDK_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
@@ -30,6 +33,16 @@ PhysXPvdSDK_static_64.lib(PxPvdMemClient.obj) : warning LNK4099: 'PhysXPvdSDK_st
 PhysXPvdSDK_static_64.lib(PxPvdObjectModelMetaData.obj) : warning LNK4099: 'PhysXPvdSDK_static_64.pdb' PDB를 'PhysXPvdSDK_static_64.lib(PxPvdObjectModelMetaData.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXPvdSDK_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
 PhysXPvdSDK_static_64.lib(PxPvdObjectRegistrar.obj) : warning LNK4099: 'PhysXPvdSDK_static_64.pdb' PDB를 'PhysXPvdSDK_static_64.lib(PxPvdObjectRegistrar.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXPvdSDK_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
 PhysXPvdSDK_static_64.lib(PxPvdProfileZoneClient.obj) : warning LNK4099: 'PhysXPvdSDK_static_64.pdb' PDB를 'PhysXPvdSDK_static_64.lib(PxPvdProfileZoneClient.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXPvdSDK_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+PhysXCharacterKinematic_static_64.lib(CctBoxController.obj) : warning LNK4099: 'PhysXCharacterKinematic_static_64.pdb' PDB를 'PhysXCharacterKinematic_static_64.lib(CctBoxController.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXCharacterKinematic_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+PhysXCharacterKinematic_static_64.lib(CctCapsuleController.obj) : warning LNK4099: 'PhysXCharacterKinematic_static_64.pdb' PDB를 'PhysXCharacterKinematic_static_64.lib(CctCapsuleController.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXCharacterKinematic_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+PhysXCharacterKinematic_static_64.lib(CctCharacterController.obj) : warning LNK4099: 'PhysXCharacterKinematic_static_64.pdb' PDB를 'PhysXCharacterKinematic_static_64.lib(CctCharacterController.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXCharacterKinematic_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+PhysXCharacterKinematic_static_64.lib(CctCharacterControllerCallbacks.obj) : warning LNK4099: 'PhysXCharacterKinematic_static_64.pdb' PDB를 'PhysXCharacterKinematic_static_64.lib(CctCharacterControllerCallbacks.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXCharacterKinematic_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+PhysXCharacterKinematic_static_64.lib(CctCharacterControllerManager.obj) : warning LNK4099: 'PhysXCharacterKinematic_static_64.pdb' PDB를 'PhysXCharacterKinematic_static_64.lib(CctCharacterControllerManager.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXCharacterKinematic_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+PhysXCharacterKinematic_static_64.lib(CctController.obj) : warning LNK4099: 'PhysXCharacterKinematic_static_64.pdb' PDB를 'PhysXCharacterKinematic_static_64.lib(CctController.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXCharacterKinematic_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+PhysXCharacterKinematic_static_64.lib(CctObstacleContext.obj) : warning LNK4099: 'PhysXCharacterKinematic_static_64.pdb' PDB를 'PhysXCharacterKinematic_static_64.lib(CctObstacleContext.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXCharacterKinematic_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+PhysXCharacterKinematic_static_64.lib(CctSweptBox.obj) : warning LNK4099: 'PhysXCharacterKinematic_static_64.pdb' PDB를 'PhysXCharacterKinematic_static_64.lib(CctSweptBox.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXCharacterKinematic_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+PhysXCharacterKinematic_static_64.lib(CctSweptCapsule.obj) : warning LNK4099: 'PhysXCharacterKinematic_static_64.pdb' PDB를 'PhysXCharacterKinematic_static_64.lib(CctSweptCapsule.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXCharacterKinematic_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+PhysXCharacterKinematic_static_64.lib(CctSweptVolume.obj) : warning LNK4099: 'PhysXCharacterKinematic_static_64.pdb' PDB를 'PhysXCharacterKinematic_static_64.lib(CctSweptVolume.obj)' 또는 'D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\PhysXCharacterKinematic_static_64.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
   Mooly.vcxproj -> D:\GA3rdFinalProject_CarlTail\5_Project\Output\DLL\Mooly_Debug_x64.dll
           1개 파일이 복사되었습니다.
           1개 파일이 복사되었습니다.

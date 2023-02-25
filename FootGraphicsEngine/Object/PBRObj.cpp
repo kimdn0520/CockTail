@@ -11,6 +11,8 @@
 #include "Resources/Texture.h"
 #include "Resources/RenderingMaterial.h"
 #include "Util/Animator.h"
+#include "Util/AnimatorTransition.h"
+#include "Util/AnimatorState.h"
 
 #include "GraphicsEngine/Renderer.h"
 
@@ -22,7 +24,6 @@ namespace GraphicsEngineSpace
 		, D3DDeviceContext(nullptr)
 		, resourceManager(nullptr)
 		, boneResources(nullptr)
-		, animResources(nullptr)
 		, objAnimator(nullptr)
 		, world()
 		, view()
@@ -39,7 +40,7 @@ namespace GraphicsEngineSpace
 
 		SafeReset(boneResources);
 
-		if (animResources != nullptr)
+		/*if (animResources != nullptr)
 		{
 			for (auto animClip : animResources->animationClipList)
 			{
@@ -47,7 +48,7 @@ namespace GraphicsEngineSpace
 			}
 		}
 
-		SafeReset(animResources);
+		SafeReset(animResources);*/
 	}
 
 	bool PBRObj::Init(ComPtr<ID3D11Device> pDevice, ComPtr<ID3D11DeviceContext> pDeviceContext)
@@ -162,11 +163,11 @@ namespace GraphicsEngineSpace
 		}
 
 		// 본 개수 만큼 생성.
-		if (boneResources != nullptr && animResources != nullptr)
-		{
-			objAnimator = std::make_unique<Animator>(boneResources->bones.size());
-			nowBoneTM.assign(boneResources->bones.size(), SimpleMath::Matrix::Identity);
-		}
+		//if (boneResources != nullptr /* && objAnimator->animResources != nullptr*/)
+		//{
+		//	objAnimator = std::make_unique<Animator>(boneResources->bones.size());
+		//	nowBoneTM.assign(boneResources->bones.size(), SimpleMath::Matrix::Identity);
+		//}
 
 		return true;
 	}
@@ -182,9 +183,7 @@ namespace GraphicsEngineSpace
 	void PBRObj::PreRender(float tick)
 	{
 		// 본트랜스폼을 바꿔준다.
-			// TODO : 부모와의 연관 위계구조 필요함 => world로 보내줄 node TM을 가지고 있어야함. 
-
-
+	
 		if (boneResources != nullptr)
 		{
 			std::vector<SimpleMath::Matrix> animVector;
@@ -244,6 +243,22 @@ namespace GraphicsEngineSpace
 		meshResources.push_back(objResources);
 	}
 
+	void PBRObj::SetBoneResource(std::shared_ptr<BoneResources> boneResources)
+	{
+		this->boneResources = boneResources;
+
+		if (boneResources != nullptr)
+		{
+			objAnimator = std::make_unique<Animator>(boneResources->bones.size());
+			nowBoneTM.assign(boneResources->bones.size(), SimpleMath::Matrix::Identity);
+		}
+	}
+
+	void PBRObj::SetAnimationResource(std::shared_ptr<AnimationResources> animResources)
+	{
+		objAnimator->animResources = animResources;
+	}
+
 	std::string PBRObj::GetObjName()
 	{
 		return meshResources[0]->ObjName;
@@ -256,13 +271,137 @@ namespace GraphicsEngineSpace
 
 	void PBRObj::PlayAnim(std::string animCilpName, bool isLoop)
 	{
-		if (animResources != nullptr)
+		if (objAnimator->animResources != nullptr)
 		{
-			auto findIt = animResources->animationClipList.find(animCilpName);
+			auto findIt = objAnimator->animResources->animationClipList.find(animCilpName);
 
-			if (findIt != animResources->animationClipList.end())
+			if (findIt != objAnimator->animResources->animationClipList.end())
 				objAnimator->SetAnimationClip(findIt->second, isLoop);
 		}
+	}
+
+	void PBRObj::AddAnimationState(const std::string& stateName, const std::string& animClipName, float speed, bool loop)
+	{
+		if (objAnimator->animResources != nullptr)
+		{
+			std::shared_ptr<AnimatorState> animatorState = std::make_shared<AnimatorState>();
+
+			animatorState->SetStateName(stateName);
+
+			animatorState->SetMotion(animClipName);
+
+			animatorState->SetSpeed(speed);
+
+			animatorState->SetLoop(loop);
+
+			objAnimator->SetAnimatorState(stateName, animatorState);
+		}
+	}
+
+	void PBRObj::SettingAnimationStateTransition(const std::string& stateName, const std::string& stateStart, const std::string& stateEnd, bool hasExitTime, float exitTime, float transitionDuration)
+	{
+		if (objAnimator->animResources != nullptr)
+		{
+			// Animator에 있는 states 들에서 해당 state name이 있는지 찾는다.
+			auto tmp = objAnimator->GetAnimatorStates();
+
+			auto findIt = tmp.find(stateName);
+			
+			// 해당 stateName을 들고있다면
+			if (findIt != tmp.end())
+			{
+				std::shared_ptr<AnimatorTransition> transition = std::make_shared<AnimatorTransition>();
+
+				transition->SetTransitionState(stateStart, stateEnd);
+
+				transition->SetAnimationStateStart(stateStart);
+
+				transition->SetAnimationStateEnd(stateEnd);
+
+				transition->SetHasExitTime(hasExitTime);
+
+				transition->SetExitTime(exitTime);
+
+				transition->SetTransitionDuration(transitionDuration);
+
+				findIt->second->AddTransition(transition);
+			}
+		}
+	}
+
+	void PBRObj::EntryPlayAnimationState(const std::string& stateName)
+	{
+		objAnimator->EntryAnimatorState(stateName);
+	}
+
+	void PBRObj::AddCondition(const std::string& transitionName, const std::string& parameterName, const std::string& conditionName, float val)
+	{
+		objAnimator->AddCondition(transitionName, parameterName, conditionName, val);
+	}
+
+	void PBRObj::AddCondition(const std::string& transitionName, const std::string& parameterName, const std::string& conditionName, int val)
+	{
+		objAnimator->AddCondition(transitionName, parameterName, conditionName, val);
+	}
+
+	void PBRObj::AddCondition(const std::string& transitionName, const std::string& parameterName, const std::string& conditionName, bool val)
+	{
+		objAnimator->AddCondition(transitionName, parameterName, conditionName, val);
+	}
+
+	void PBRObj::AddCondition(const std::string& transitionName, const std::string& parameterName, const std::string& conditionName)
+	{
+		objAnimator->AddCondition(transitionName, parameterName, conditionName);
+	}
+
+	void PBRObj::AddFloat(const std::string& name, float val)
+	{
+		objAnimator->AddFloat(name, val);
+	}
+
+	void PBRObj::AddInteger(const std::string& name, int val)
+	{
+		objAnimator->AddInteger(name, val);
+	}
+
+	void PBRObj::AddBool(const std::string& name, bool val)
+	{
+		objAnimator->AddBool(name, val);
+	}
+
+	void PBRObj::AddTrigger(const std::string& name)
+	{
+		objAnimator->AddTrigger(name);
+	}
+
+	void PBRObj::SetFloat(const std::string& name, float val)
+	{
+		objAnimator->SetFloat(name, val);
+	}
+
+	void PBRObj::SetInteger(const std::string& name, int val)
+	{
+		objAnimator->SetInteger(name, val);
+	}
+
+	void PBRObj::SetBool(const std::string& name, bool val)
+	{
+		objAnimator->SetBool(name, val);
+	}
+
+	void PBRObj::SetTrigger(const std::string& name)
+	{
+		objAnimator->SetTrigger(name);
+	}
+
+	int PBRObj::GetAnimCurrentFrame()
+	{
+		return objAnimator->GetNowFrame();
+	}
+
+	int PBRObj::GetAnimCurrentTotalFrame()
+	{
+		return objAnimator->GetTotalFrame();
 	}
 
 	void PBRObj::StaticRender(const std::shared_ptr<MeshResources>& objRes)
@@ -272,6 +411,9 @@ namespace GraphicsEngineSpace
 
 		for (int matCnt = 0; matCnt < material.size(); matCnt++)
 		{
+			if(mesh->indexBuffersSize.empty())
+				break;
+			
 			auto& albedo = material[matCnt]->albedoTex;
 			auto& normal = material[matCnt]->normalTex;
 			auto& metallic = material[matCnt]->metallicTex;
@@ -370,6 +512,7 @@ namespace GraphicsEngineSpace
 			cbPBRMat.emissiveColor.x = material[matCnt]->material_Emissive.x;
 			cbPBRMat.emissiveColor.y = material[matCnt]->material_Emissive.y;
 			cbPBRMat.emissiveColor.z = material[matCnt]->material_Emissive.z;
+
 			BufferManager::GetInstance()->GetBuffer("PBRMaterialCB")->SetUpBuffer(1, &cbPBRMat, ShaderType::VERTEX);
 			BufferManager::GetInstance()->GetBuffer("PBRMaterialCB")->SetUpBuffer(0, &cbPBRMat, ShaderType::PIXEL);
 
@@ -415,6 +558,9 @@ namespace GraphicsEngineSpace
 
 		for (int matCnt = 0; matCnt < material.size(); matCnt++)
 		{
+			if (mesh->indexBuffersSize.empty())
+				break;
+
 			auto& albedo = material[matCnt]->albedoTex;
 			auto& normal = material[matCnt]->normalTex;
 			auto& metallic = material[matCnt]->metallicTex;
@@ -520,12 +666,11 @@ namespace GraphicsEngineSpace
 				// => boneResources의 boneTransform이 애니메이션에 의해 어디선가에서 변경된다고 가정.
 				// PreRender부분이 될 수도 있고, 해당 object의 Update일수도 있음.
 			cbBoneMatrix cbBone;
-			auto bone = nowBoneTM;
+			
 
-
-			for (int i = 0; i < bone.size(); i++)
+			for (int i = 0; i < nowBoneTM.size(); i++)
 			{
-				cbBone.boneMatrix[i] = bone[i];
+				cbBone.boneMatrix[i] = nowBoneTM[i];
 			}
 
 			BufferManager::GetInstance()->GetBuffer("BoneMatrixCB")->SetUpBuffer(2, &cbBone, ShaderType::VERTEX);
