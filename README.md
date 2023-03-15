@@ -7,7 +7,7 @@
   - 하나의 Mesh에 Material 여러개이면 하나의 Mesh에 하나의 Material로 쪼개는 함수를 쓰면
     Index를 알게 되어서 그 Mesh들을 다시 하나로 합치는 작업 수행
   - Boost Library의 Serialization을 이용해 FBXLoad 수행 후 자체포맷 BinaryFile로 저장 (Mesh, Material, Animation)
-  - Process 여러개 생성해서 FBXLoad 시간을 줄여보려고 시도중..
+  - CreateProcess, WaitForMultipleObjects 로 FBX파일을 나누어서 Load를 빠르게 할 수 있도록 하였음.
   
 ![image](https://user-images.githubusercontent.com/58064839/211225625-b363df75-24f4-4082-ba86-9badfdd46287.png)
 ![image](https://user-images.githubusercontent.com/58064839/211225638-f98bcbf8-796a-419e-8a53-8ab8b81be585.png)
