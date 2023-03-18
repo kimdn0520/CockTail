@@ -9,7 +9,7 @@
   - Boost Library의 Serialization을 이용해 FBXLoad 수행 후 자체포맷 BinaryFile로 저장 (Mesh, Material, Animation)
   - CreateProcess, WaitForMultipleObjects 로 FBX파일을 나누어서 Load를 빠르게 할 수 있도록 하였음.
   
-![image](https://user-images.githubusercontent.com/58064839/211225625-b363df75-24f4-4082-ba86-9badfdd46287.png)
+![image](https://user-images.githubusercontent.com/58064839/226089958-6932760d-8e6f-4495-882f-1b40ecbe21b0.png)
 ![image](https://user-images.githubusercontent.com/58064839/211225638-f98bcbf8-796a-419e-8a53-8ab8b81be585.png)
 ![image](https://user-images.githubusercontent.com/58064839/211225580-f170796e-202b-470c-95f8-a65e5bf9361e.png)
 
