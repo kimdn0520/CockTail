@@ -71,6 +71,12 @@ void FBXParser::Import(const std::string& path)
 	lFbxFileSystemUnit.m.ConvertScene(scene, lConversionOptions);
 	lFbxOriginSystemUnit.m.ConvertScene(scene, lConversionOptions);
 
+	// 좌표축을 가져온다.
+	FbxAxisSystem sceneAxisSystem = scene->GetGlobalSettings().GetAxisSystem();
+
+	// 씬 내의 좌표축을 바꾼다.
+	scene->GetGlobalSettings().SetAxisSystem(fbxsdk::FbxAxisSystem::DirectX);
+
 	// GeometryConverter 객체 생성
 	geometryConverter = new FbxGeometryConverter(manager);
 
@@ -182,6 +188,16 @@ void FBXParser::LoadMesh(fbxsdk::FbxNode* node, fbxsdk::FbxMesh* mesh, std::shar
 	std::vector<Vertex> tmpMeshVertexList;
 	tmpMeshVertexList.resize(vertexCount);
 
+	const int deformerCount = mesh->GetDeformerCount(FbxDeformer::eSkin);
+
+	if (deformerCount > 0)
+	{
+		// 스키닝 메쉬 count가 있으므로 스키닝 메쉬이다.
+		meshData->isSkinned = true;
+
+		fbxModel->isSkinnedAnimation = true;
+	}
+
 	// Position정보를 가져옴(축 바꿔서 가져옴)
 	FbxVector4* controlPoints = mesh->GetControlPoints();
 	for (int i = 0; i < vertexCount; ++i)
@@ -189,15 +205,15 @@ void FBXParser::LoadMesh(fbxsdk::FbxNode* node, fbxsdk::FbxMesh* mesh, std::shar
 		tmpMeshVertexList[i].position.x = static_cast<float>(controlPoints[i].mData[0]);
 		tmpMeshVertexList[i].position.y = static_cast<float>(controlPoints[i].mData[2]);
 		tmpMeshVertexList[i].position.z = static_cast<float>(controlPoints[i].mData[1]);
-	}
 
-	const int deformerCount = mesh->GetDeformerCount(FbxDeformer::eSkin);
+		tmpMeshVertexList[i].position = DirectX::XMVector3TransformCoord(tmpMeshVertexList[i].position, nodeMatrix);
+	}
 
 	for (int i = 0; i < deformerCount; i++)
 	{
-		meshData->isSkinned = true;
+		//meshData->isSkinned = true;
 
-		fbxModel->isSkinnedAnimation = true;	// 일단 여기서..
+		//fbxModel->isSkinnedAnimation = true;	// 일단 여기서..
 
 		FbxSkin* fbxSkin = static_cast<FbxSkin*>(mesh->GetDeformer(i, FbxDeformer::eSkin));
 
@@ -262,9 +278,9 @@ void FBXParser::LoadMesh(fbxsdk::FbxNode* node, fbxsdk::FbxMesh* mesh, std::shar
 					DirectX::SimpleMath::Matrix geometryMatrix = ConvertMatrix(geometryTransform);
 
 					// OffsetMatrix는 WorldBindPose의 역행렬
-					DirectX::SimpleMath::Matrix offsetMatrix = clusterMatrix * clusterlinkMatrix.Invert() * geometryMatrix;
+					DirectX::SimpleMath::Matrix offsetMatrix = clusterMatrix * clusterlinkMatrix.Invert();
 
-					fbxModel->fbxBoneInfoList[boneIdx]->offsetMatrix = offsetMatrix;
+					fbxModel->fbxBoneInfoList[boneIdx]->offsetMatrix = nodeMatrix.Invert() * offsetMatrix;
 				}
 			}
 		}
@@ -292,6 +308,8 @@ void FBXParser::LoadMesh(fbxsdk::FbxNode* node, fbxsdk::FbxMesh* mesh, std::shar
 			DirectX::SimpleMath::Vector3 normal;
 
 			normal = GetNormal(mesh, controlPointIndex, vertexCounter);
+
+			normal = DirectX::XMVector3TransformNormal(normal, nodeMatrix);
 
 			DirectX::SimpleMath::Vector2 uv;
 
@@ -350,6 +368,7 @@ void FBXParser::LoadMesh(fbxsdk::FbxNode* node, fbxsdk::FbxMesh* mesh, std::shar
 }
 
 /// <summary>
+/// [주의] fbx export 할때 add leaf node 해제 해야한다!!!
 /// FBXModel의 fbxBoneInfoList에 bone들을 전부 저장한다.
 /// 정보는 boneName, parentIndex 이 담긴다.
 /// </summary>
@@ -359,6 +378,8 @@ void FBXParser::ProcessBones(fbxsdk::FbxNode* node, int idx, int parentIdx)
 
 	if (attribute && attribute->GetAttributeType() == fbxsdk::FbxNodeAttribute::eSkeleton)
 	{
+		fbxModel->isSkinnedAnimation = true;	// 계속 체크하기에 좀 그렇지만... 어쨌든 본이 있으면 true해서 넘겨주자
+
 		std::shared_ptr<FBXBoneInfo> fbxBoneInfo = std::make_shared<FBXBoneInfo>();
 
 		fbxBoneInfo->boneName = node->GetName();
@@ -418,8 +439,9 @@ void FBXParser::LoadMaterial(fbxsdk::FbxSurfaceMaterial* surfaceMaterial, std::s
 
 	material->materialName = surfaceMaterial->GetName();
 
-	std::transform(material->materialName.begin(), material->materialName.end(), material->materialName.begin(),
-		[](char c) { return tolower(c); });
+	// 전부 소문자로.. 했다가 중복체크 안하기로해서 다시 원래대로 돌림
+	/*std::transform(material->materialName.begin(), material->materialName.end(), material->materialName.begin(),
+		[](char c) { return tolower(c); });*/
 
 	if (surfaceMaterial->GetClassId().Is(FbxSurfacePhong::ClassId))
 	{
@@ -563,7 +585,7 @@ void FBXParser::ProcessAnimationData(FbxNode* node)
 			// Local Transform = 부모 Bone의 Global Transform의 inverse Transform * 자신 Bone의 Global Transform;
 			FbxAMatrix localTransform = node->EvaluateGlobalTransform(fbxTime);
 
-			DirectX::SimpleMath::Matrix localTM;
+			DirectX::SimpleMath::Matrix localTM = DirectX::XMMatrixIdentity();
 
 			if (FbxNode* parent = node->GetParent())
 			{
@@ -605,7 +627,7 @@ void FBXParser::ProcessAnimationData(FbxNode* node)
 			keyFrameList.push_back(keyFrameInfo);
 		}
 
-		fbxModel->animationClipList[animIdx]->keyFrameList.push_back(keyFrameList);
+		fbxModel->animationClipList[animIdx]->keyFrameList.push_back(std::move(keyFrameList));
 	}
 }
 
@@ -655,22 +677,13 @@ DirectX::SimpleMath::Vector3 FBXParser::GetNormal(fbxsdk::FbxMesh* mesh, int con
 			else
 				normalIdx = normal->GetIndexArray().GetAt(controlPointIndex);
 		}
-
+		 
 		FbxVector4 vec = normal->GetDirectArray().GetAt(normalIdx);
 
-		/*if (isNegativeScale)
-		{
-			fbxNormal.x = static_cast<float>(-vec.mData[0]);
-			fbxNormal.y = static_cast<float>(-vec.mData[2]);
-			fbxNormal.z = static_cast<float>(-vec.mData[1]);
-		}
-		else
-		{*/
-			fbxNormal.x = static_cast<float>(vec.mData[0]);
-			fbxNormal.y = static_cast<float>(vec.mData[2]);
-			fbxNormal.z = static_cast<float>(vec.mData[1]);
-		//}
-
+		fbxNormal.x = static_cast<float>(vec.mData[0]);
+		fbxNormal.y = static_cast<float>(vec.mData[2]);
+		fbxNormal.z = static_cast<float>(vec.mData[1]);
+		
 		return fbxNormal;
 	}
 

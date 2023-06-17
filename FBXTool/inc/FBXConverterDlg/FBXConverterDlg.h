@@ -10,7 +10,7 @@ class CFBXConverterDlg : public CDialogEx
 {
 // 생성입니다.
 public:
-	CFBXConverterDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
+	CFBXConverterDlg(CString _argv, int _argc, CWnd* pParent = nullptr);	// 표준 생성자입니다.
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
@@ -21,7 +21,7 @@ public:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 지원입니다.
 
 public:
-	std::vector<std::string> GetFilesInDirectory(const std::string& path);
+	void ProcessLoadFBX(CString _argv, int _argc);
 
 // 구현입니다.
 protected:
@@ -30,6 +30,11 @@ protected:
 	CString m_loadSceneFilePath = L"None";
 	std::string fbxFileName = "";
 	std::string sceneFileName;
+
+	CString argv;
+	int argc;
+
+	int processCnt = 2;
 
 	// 생성된 메시지 맵 함수
 	virtual BOOL OnInitDialog();

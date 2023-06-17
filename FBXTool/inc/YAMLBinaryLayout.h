@@ -364,6 +364,8 @@ namespace YAMLBinaryData
 			: name(std::move(_name))
 			, prefabID("")
 			, transform(std::move(_transform))
+			, boxCollider(nullptr)
+			, sphereCollider(nullptr)
 		{}
 
 	public:
@@ -371,6 +373,8 @@ namespace YAMLBinaryData
 		std::string prefabID;
 
 		Transform transform;
+		std::shared_ptr<BoxCollider> boxCollider;
+		std::shared_ptr<SphereCollider> sphereCollider;
 
 	private:
 		template<typename Archive>
@@ -380,6 +384,8 @@ namespace YAMLBinaryData
 			ar& prefabID;
 
 			ar& transform;
+			ar& boxCollider;
+			ar& sphereCollider;
 		}
 	};
 

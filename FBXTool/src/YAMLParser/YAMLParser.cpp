@@ -50,7 +50,7 @@ void YAMLParser::OpenFile(const std::string& path, const std::string& saveName)
 		}
 	}
 
-	std::shared_ptr<YAMLBinaryData::Scene> scene = std::make_shared<YAMLBinaryData::Scene>();
+	scene = std::make_shared<YAMLBinaryData::Scene>();
 
 	// yaml scene 순서가 엉킬수가 있다. 그렇기에 게임오브젝트부터 다 넣은다음 컴포넌트에서 게임오브젝트 id를 찾아서 넣어줘야한다.
 	for (int i = 0; i < yamlNodeList.size(); i++)
@@ -97,11 +97,6 @@ void YAMLParser::OpenFile(const std::string& path, const std::string& saveName)
 			YAML::Node m_GameObject = Transform["m_GameObject"];
 
 			transform->gameObjectID = m_GameObject["fileID"].as<std::string>();
-
-			std::string fuck = m_GameObject["fileID"].as<std::string>();
-
-			if(fuck == "9005389334250950617")
-				int a = 3;
 
 			YAML::Node m_Children = Transform["m_Children"];
 
@@ -311,6 +306,8 @@ void YAMLParser::OpenFile(const std::string& path, const std::string& saveName)
 
 			YAML::Node m_Modifications = m_Modification["m_Modifications"];
 
+			float localRotationW;
+
 			for (YAML::const_iterator it = m_Modifications.begin(); it != m_Modifications.end(); ++it)
 			{
 				if (it->operator[]("propertyPath").as<std::string>().compare("m_Name") == 0)
@@ -329,23 +326,34 @@ void YAMLParser::OpenFile(const std::string& path, const std::string& saveName)
 				{
 					transform.localPosition.z = it->operator[]("value").as<float>();
 				}
-				else if (it->operator[]("propertyPath").as<std::string>().compare("m_LocalEulerAnglesHint.x") == 0)
+				else if (it->operator[]("propertyPath").as<std::string>().compare("m_LocalRotation.x") == 0)
 				{
 					transform.localRotation.x = it->operator[]("value").as<float>();
 				}
-				else if (it->operator[]("propertyPath").as<std::string>().compare("m_LocalEulerAnglesHint.y") == 0)
+				else if (it->operator[]("propertyPath").as<std::string>().compare("m_LocalRotation.y") == 0)
 				{
 					transform.localRotation.y = it->operator[]("value").as<float>();
 				}
-				else if (it->operator[]("propertyPath").as<std::string>().compare("m_LocalEulerAnglesHint.z") == 0)
+				else if (it->operator[]("propertyPath").as<std::string>().compare("m_LocalRotation.z") == 0)
 				{
 					transform.localRotation.z = it->operator[]("value").as<float>();
 				}
+				else if (it->operator[]("propertyPath").as<std::string>().compare("m_LocalRotation.w") == 0)
+				{
+					localRotationW = it->operator[]("value").as<float>();
+				}
 			}
+
+			YAMLBinaryData::Float3 rot = QuatToEuler(transform.localRotation.x, transform.localRotation.y, transform.localRotation.z, localRotationW);
+			transform.localRotation.x = rot.x;
+			transform.localRotation.y = rot.y;
+			transform.localRotation.z = rot.z;
 
 			prefabInstance.transform = transform;
 
 			scene->prefabs.emplace_back(prefabInstance);
+
+			OpenPrefab(prefabInstance.name);
 		}
 	}
 
@@ -356,6 +364,223 @@ void YAMLParser::OpenFile(const std::string& path, const std::string& saveName)
 	boost::archive::binary_oarchive oa(buffer);
 
 	oa << scene;
+}
+
+void YAMLParser::OpenPrefab(const std::string& prefabName)
+{
+	std::string delimiter = " ";
+	std::string token;
+
+	if (prefabName.find(delimiter) != std::string::npos)
+	{
+		token = prefabName.substr(0, prefabName.find(delimiter));
+	}
+	else
+	{
+		token = prefabName.substr(0, prefabName.length());
+	}
+
+	std::string path = prefabPath + token + ".prefab";
+
+	// TopNode 정보들을 LoadAll 한다.
+	std::vector<YAML::Node> yamlPrefabNodeList;
+
+	// UnityScene 전용 ID 담기
+	std::vector<std::string> fildPrefabIDList;
+
+	try
+	{
+		yamlPrefabNodeList = YAML::LoadAllFromFile(path);
+	}
+	catch (YAML::Exception& e)
+	{
+		std::cerr << "Error parsing YAML document : " << e.what() << std::endl;
+	}
+
+	/// <summary>
+	/// yaml-cpp 로는 유니티의 --- !u!29 &1 이거를 파싱할수가 없다.
+	/// 그래서 직접 '---' 텍스트를 읽어서 ID값을 넣어주도록 하자
+	/// </summary>
+	FILE* file;
+	fopen_s(&file, path.c_str(), "r");
+
+	// feof(FILE* stream) - 파일의 끝에 도달하게되면 0이 아닌 값을 반환
+	while (!feof(file))
+	{
+		fgets(line, 256, file);
+
+		int ch_Index = 0;
+
+		// --- 인 경우만 하자.
+		if (line[ch_Index] == '-')
+		{
+			// &가 나올때까지 다음 문자로 간다.
+			while (line[ch_Index] != '&')
+			{
+				ch_Index++;
+			}
+
+			ch_Index++;
+
+			std::string fildID = "";
+			int index = 0;
+
+			while (line[ch_Index] >= '0' && line[ch_Index] <= '9')
+			{
+				fildID += line[ch_Index];
+				ch_Index++;
+			}
+
+			fildPrefabIDList.emplace_back(fildID);
+		}
+	}
+
+	std::shared_ptr<YAMLBinaryData::Scene> prefabScene = std::make_shared<YAMLBinaryData::Scene>();
+
+	// yaml scene 순서가 엉킬수가 있다. 그렇기에 게임오브젝트부터 다 넣은다음 컴포넌트에서 게임오브젝트 id를 찾아서 넣어줘야한다.
+	for (int i = 0; i < yamlPrefabNodeList.size(); i++)
+	{
+		if (yamlPrefabNodeList[i]["GameObject"])
+		{
+			YAMLBinaryData::GameObject gameObject;
+
+			gameObject.gameObjectID = fildPrefabIDList[i];
+
+			YAML::Node GameObject = yamlPrefabNodeList[i]["GameObject"];
+
+			gameObject.name = GameObject["m_Name"].as<std::string>();
+
+			gameObject.tag = GameObject["m_TagString"].as<std::string>();
+
+			gameObject.layer = GameObject["m_Layer"].as<int>();
+
+			prefabScene->gameObjects.emplace_back(gameObject);
+		}
+	}
+
+	for (int i = 0; i < yamlPrefabNodeList.size(); i++)
+	{
+		if (yamlPrefabNodeList[i]["Transform"])
+		{
+			std::shared_ptr<YAMLBinaryData::Transform> transform = std::make_shared<YAMLBinaryData::Transform>();
+
+			transform->componentID = fildPrefabIDList[i];
+
+			YAML::Node Transform = yamlPrefabNodeList[i]["Transform"];
+
+			YAML::Node m_GameObject = Transform["m_GameObject"];
+
+			transform->gameObjectID = m_GameObject["fileID"].as<std::string>();
+
+			YAML::Node m_Children = Transform["m_Children"];
+
+			for (int childCnt = 0; childCnt < m_Children.size(); childCnt++)
+			{
+				transform->childIDList.push_back(m_Children[childCnt]["fileID"].as<std::string>());
+			}
+
+			YAML::Node m_LocalPosition = Transform["m_LocalPosition"];
+
+			transform->localPosition.x = m_LocalPosition["x"].as<float>();
+			transform->localPosition.y = m_LocalPosition["y"].as<float>();
+			transform->localPosition.z = m_LocalPosition["z"].as<float>();
+
+			YAML::Node m_LocalRotation = Transform["m_LocalRotation"];
+			YAMLBinaryData::Float3 rot = QuatToEuler(m_LocalRotation["x"].as<float>(), m_LocalRotation["y"].as<float>(), m_LocalRotation["z"].as<float>(), m_LocalRotation["w"].as<float>());
+			transform->localRotation.x = rot.x;
+			transform->localRotation.y = rot.y;
+			transform->localRotation.z = rot.z;
+
+			YAML::Node m_LocalScale = Transform["m_LocalScale"];
+
+			transform->localScale.x = m_LocalScale["x"].as<float>();
+			transform->localScale.y = m_LocalScale["y"].as<float>();
+			transform->localScale.z = m_LocalScale["z"].as<float>();
+
+			//scene->gameObjects.back().transform = transform;
+
+			auto it = find_if(prefabScene->gameObjects.begin(), prefabScene->gameObjects.end(), [&id = transform->gameObjectID](YAMLBinaryData::GameObject s)->bool {return (s.gameObjectID == id); });
+
+			if (it != prefabScene->gameObjects.end())
+				it->transform = transform;
+		}
+		else if (yamlPrefabNodeList[i]["BoxCollider"])
+		{
+			std::shared_ptr<YAMLBinaryData::BoxCollider> boxCollider = std::make_shared<YAMLBinaryData::BoxCollider>();
+
+			boxCollider->componentID = fildIDList[i];
+
+			YAML::Node BoxCollider = yamlPrefabNodeList[i]["BoxCollider"];
+
+			YAML::Node m_GameObject = BoxCollider["m_GameObject"];
+
+			boxCollider->gameObjectID = m_GameObject["fileID"].as<std::string>();
+
+			boxCollider->isTrigger = BoxCollider["m_IsTrigger"].as<int>();
+
+			YAML::Node m_Size = BoxCollider["m_Size"];
+
+			boxCollider->size.x = m_Size["x"].as<float>();
+			boxCollider->size.y = m_Size["y"].as<float>();
+			boxCollider->size.z = m_Size["z"].as<float>();
+
+			YAML::Node m_Center = BoxCollider["m_Center"];
+
+			boxCollider->center.x = m_Center["x"].as<float>();
+			boxCollider->center.y = m_Center["y"].as<float>();
+			boxCollider->center.z = m_Center["z"].as<float>();
+
+			auto it = find_if(prefabScene->gameObjects.begin(), prefabScene->gameObjects.end(), [&id = boxCollider->gameObjectID](YAMLBinaryData::GameObject s)->bool {return (s.gameObjectID == id); });
+
+			if (it != prefabScene->gameObjects.end())
+				it->boxCollider = boxCollider;
+		}
+		else if (yamlPrefabNodeList[i]["SphereCollider"])
+		{
+			std::shared_ptr<YAMLBinaryData::SphereCollider> sphereCollider = std::make_shared<YAMLBinaryData::SphereCollider>();
+
+			sphereCollider->componentID = fildIDList[i];
+
+			YAML::Node SphereCollider = yamlPrefabNodeList[i]["SphereCollider"];
+
+			YAML::Node m_GameObject = SphereCollider["m_GameObject"];
+
+			sphereCollider->gameObjectID = m_GameObject["fileID"].as<std::string>();
+
+			sphereCollider->isTrigger = SphereCollider["m_IsTrigger"].as<bool>();
+
+			sphereCollider->radius = SphereCollider["m_Radius"].as<float>();
+
+			YAML::Node m_Center = SphereCollider["m_Center"];
+
+			sphereCollider->center.x = m_Center["x"].as<float>();
+			sphereCollider->center.y = m_Center["y"].as<float>();
+			sphereCollider->center.z = m_Center["z"].as<float>();
+
+			auto it = find_if(prefabScene->gameObjects.begin(), prefabScene->gameObjects.end(), [&id = sphereCollider->gameObjectID](YAMLBinaryData::GameObject s)->bool {return (s.gameObjectID == id); });
+
+			if (it != prefabScene->gameObjects.end())
+				it->sphereCollider = sphereCollider;
+		}
+	}
+
+	// prfabScene 에서 prefab의 이름을 가진 게임오브젝트 찾기
+	auto it = find_if(prefabScene->gameObjects.begin(), prefabScene->gameObjects.end(), [&name = token](YAMLBinaryData::GameObject s)->bool {return (s.name == name); });
+
+	// 있다면 원래 scene에서 Scene이 갖고있는 Prefab들중 해당하는 Prefab에 정보 넣어줘야함
+	if (it != prefabScene->gameObjects.end())
+	{
+		auto scenePrefabIt = find_if(scene->prefabs.begin(), scene->prefabs.end(), [&name = prefabName](YAMLBinaryData::Prefab s)->bool {return (s.name == name); });
+
+		if (scenePrefabIt != scene->prefabs.end())
+		{
+			scenePrefabIt->transform.localScale = it->transform->localScale;
+		
+			scenePrefabIt->boxCollider = it->boxCollider;
+
+			scenePrefabIt->sphereCollider = it->sphereCollider;
+		}
+	}
 }
 
 YAMLBinaryData::Float3 YAMLParser::QuatToEuler(float qx, float qy, float qz, float qw)

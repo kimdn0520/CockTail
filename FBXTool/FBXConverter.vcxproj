@@ -226,6 +226,7 @@
     <ResourceCompile Include="res\FBXConverter.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="inc\FBXConverterDlg\ProcessAsset.inl" />
     <None Include="res\FBXConverter.rc2" />
   </ItemGroup>
   <ItemGroup>

@@ -230,13 +230,12 @@ namespace FBXBinaryData
 		MeshData() = default;
 
 		MeshData(std::string _meshName, std::string _parentName, std::vector<std::string> _materials, std::vector<VertexData> _meshVertexList
-			, std::vector<std::vector<unsigned int>> _indices, Float4x4 _nodeTM, bool _isSkinned = false)
+			, std::vector<std::vector<unsigned int>> _indices, bool _isSkinned = false)
 			: meshName(std::move(_meshName))
 			, parentName(std::move(_parentName))
 			, materials(std::move(_materials))
 			, meshVertexList(std::move(_meshVertexList))
 			, indices(std::move(_indices))
-			, nodeTM(std::move(_nodeTM))
 			, isSkinned(std::move(_isSkinned))
 		{}
 
@@ -246,8 +245,6 @@ namespace FBXBinaryData
 		std::vector<std::string>				materials;
 		std::vector<VertexData>					meshVertexList;
 		std::vector<std::vector<unsigned int>>	indices;
-
-		Float4x4 nodeTM;
 
 		bool isSkinned = false;
 
@@ -260,7 +257,6 @@ namespace FBXBinaryData
 			ar& materials;
 			ar& meshVertexList;
 			ar& indices;
-			ar& nodeTM;
 			ar& isSkinned;
 		}
 	};
